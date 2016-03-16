@@ -28,7 +28,6 @@ public class MQListenerImpl implements MQListener {
     public void listen() {
         Message msg;
         MessageConsumer consumer = null;
-        System.out.println("start");
 
         try {
                 Destination destination = session.createQueue(mqName);
