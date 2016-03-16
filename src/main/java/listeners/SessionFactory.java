@@ -13,14 +13,12 @@ public class SessionFactory {
             return InConnection.getConnection().createSession(false, AUTO_ACKNOWLEDGE);
         } catch (JMSException e) {
             e.printStackTrace();
+            try {
+                InConnection.getConnection().close();
+            } catch (JMSException e1) {
+                e1.printStackTrace();
+            }
         }
-//        finally {
-//            try {
-//                InConnection.getConnection().close();
-//            } catch (JMSException e) {
-//                e.printStackTrace();
-//            }
-//        }
         return null;
     }
 
