@@ -21,10 +21,10 @@ public class SLISListener extends JMSReceiver implements MQListener {
 
     public void listen() {
         while(true) {
-            Message msg = super.receiveMsg();
-            messages.add(msg);
+            super.receiveMsg();
+            messages.add(super.getMessage());
             try {
-                System.out.println(((TextMessage)msg).getText());
+                System.out.println(((TextMessage)super.getMessage()).getText());
             } catch (JMSException e) {
                 e.printStackTrace();
             } catch (NullPointerException e) {
