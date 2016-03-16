@@ -1,15 +1,9 @@
 package listeners;
 
-import org.omg.CORBA.TIMEOUT;
-
 import javax.jms.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Prosner on 3/16/2016.
- *
- */
 public class MQListenerImpl implements MQListener {
 
     private static final int TIMEOUT = 1000;
