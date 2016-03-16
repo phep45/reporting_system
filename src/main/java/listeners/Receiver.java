@@ -9,6 +9,6 @@ import javax.jms.Message;
  */
 public interface Receiver {
 
-    Message receiveMsg() throws JMSException;
+    void receiveMsg() throws JMSException;
     Message getMessage();
 }
