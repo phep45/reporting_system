@@ -1,7 +1,5 @@
 package listeners;
 
-import javax.jms.TextMessage;
-
 /**
  * Created by Prosner on 3/16/2016.
  *

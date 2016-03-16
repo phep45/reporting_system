@@ -3,7 +3,6 @@ package listeners;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
-import javax.naming.Context;
 
 /**
  * Created by Prosner on 3
