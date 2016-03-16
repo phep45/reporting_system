@@ -19,7 +19,9 @@ public class ReportingSystemApp {
         } catch (InvalidQueueNameException e) {
             e.printStackTrace();
         }
+
         slisListener.listen();
+        xlisListener.listen();
     }
 
 }

@@ -25,8 +25,9 @@ public class ConsumersFactory {
             return new SLISListener(queueName, URL);
         else if("XLIS".equals(queueName))
             return new XLISListener(queueName, URL);
-        else
+        else {
             throw new InvalidQueueNameException("No queue named: " + queueName);
+        }
     }
 
 }
