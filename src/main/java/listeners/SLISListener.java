@@ -35,4 +35,8 @@ public class SLISListener extends JMSReceiver implements MQListener {
 
         }
     }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
 }
