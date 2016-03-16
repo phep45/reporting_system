@@ -10,20 +10,20 @@ import java.util.List;
  * Created by Prosner on 3/16/2016.
  *
  */
-public class SLISListener extends JMSReceiver implements MQListener {
+public class SLISListener implements MQListener {
 
     private List<Message> messages;
+    private Receiver receiver;
 
     public SLISListener(String queueName, String url) {
-        super(queueName, url);
+        receiver = new JMSReceiver(queueName, url);
         messages = new ArrayList<Message>();
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void listen() {
         while(true) {
-            super.receiveMsg();
-            Message msg = super.getMessage();
+            Message msg = receiver.receive();
             if(msg == null)
                 continue;
             messages.add(msg);

@@ -8,20 +8,20 @@ import javax.jms.*;
  * Created by Prosner on 3
  * /16/2016.
  */
-public class JMSReceiver implements ExceptionListener {
+public class JMSReceiver implements Receiver, ExceptionListener {
 
     private static final int TIMEOUT = 1000;
     private String queueName;
     private String url;
 
-    private Message message;
+//    private Message message;
 
     public JMSReceiver(String queueName, String url) {
         this.queueName = queueName;
         this.url = url;
     }
 
-    public void receiveMsg() {
+    public Message receive() {
         MessageConsumer messageConsumer = null;
         Session session = null;
         Connection connection = null;
@@ -34,7 +34,7 @@ public class JMSReceiver implements ExceptionListener {
             Destination destination = session.createQueue(queueName);
             messageConsumer = session.createConsumer(destination);
 
-            message = messageConsumer.receive(TIMEOUT);
+            return messageConsumer.receive(TIMEOUT);
 
         } catch (JMSException e) {
             e.printStackTrace();
@@ -53,11 +53,12 @@ public class JMSReceiver implements ExceptionListener {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
-    public Message getMessage() {
-        return message;
-    }
+//    public Message getMessage() {
+//        return message;
+//    }
 
     public void onException(JMSException e) {
         e.printStackTrace();
