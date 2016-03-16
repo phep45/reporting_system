@@ -20,12 +20,15 @@ public class MQListenerImpl implements MQListener {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void listen() {
+        if (session == null) {
+            System.err.println("session failed");
+            return;
+        }
         Message msg;
         MessageConsumer consumer = null;
-
         try {
-                Destination destination = session.createQueue(mqName);
-                consumer = session.createConsumer(destination);
+            Destination destination = session.createQueue(mqName);
+            consumer = session.createConsumer(destination);
             while(true) {
                 msg = consumer.receive(TIMEOUT);
                 if (msg == null)
