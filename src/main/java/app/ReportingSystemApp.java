@@ -16,13 +16,7 @@ public class ReportingSystemApp {
         String url = "tcp://localhost:61616";
         String SLIS = "SLIS";
         MQListener slisListener = new SLISListener(SLIS, url);
-        try {
-            slisListener.receiveMsg();
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(slisListener.getMessage());
+        slisListener.listen();
     }
 
 }

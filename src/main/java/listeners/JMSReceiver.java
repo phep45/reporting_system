@@ -21,20 +21,32 @@ public class JMSReceiver implements ExceptionListener {
         this.url = url;
     }
 
-    public void receiveMsg() throws JMSException {
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
-        Connection connection = connectionFactory.createConnection();
-        connection.start();
-        connection.setExceptionListener(this);
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createQueue(queueName);
-        MessageConsumer messageConsumer = session.createConsumer(destination);
+    public Message receiveMsg() {
+        MessageConsumer messageConsumer = null;
+        Session session = null;
+        Connection connection = null;
+        try {
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+            connection = connectionFactory.createConnection();
+            connection.start();
+            connection.setExceptionListener(this);
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = session.createQueue(queueName);
+            messageConsumer = session.createConsumer(destination);
 
-        message = messageConsumer.receive(1000);
-
-        messageConsumer.close();
-        session.close();
-        connection.close();
+            message = messageConsumer.receive(1000);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                messageConsumer.close();
+                session.close();
+                connection.close();
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        }
+        return message;
     }
 
     public Message getMessage() {
