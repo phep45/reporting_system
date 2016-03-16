@@ -9,7 +9,8 @@ import javax.jms.JMSException;
 public class InConnection {
 
 
-    private static final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+    private static final String URL = "tcp://localhost:61616";
+    private static final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
     private static Connection connection;
 
     public static Connection getConnection() {
