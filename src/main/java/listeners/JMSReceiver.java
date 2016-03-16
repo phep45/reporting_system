@@ -14,8 +14,6 @@ public class JMSReceiver implements Receiver, ExceptionListener {
     private String queueName;
     private String url;
 
-//    private Message message;
-
     public JMSReceiver(String queueName, String url) {
         this.queueName = queueName;
         this.url = url;
@@ -55,10 +53,6 @@ public class JMSReceiver implements Receiver, ExceptionListener {
         }
         return null;
     }
-
-//    public Message getMessage() {
-//        return message;
-//    }
 
     public void onException(JMSException e) {
         e.printStackTrace();
