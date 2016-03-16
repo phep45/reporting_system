@@ -19,15 +19,17 @@ public class XLISListener extends JMSReceiver implements MQListener {
         messages = new ArrayList<Message>();
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public void listen() {
         while(true) {
             super.receiveMsg();
-            messages.add(super.getMessage());
+            Message msg = super.getMessage();
+            if(msg == null)
+                continue;
+            messages.add(msg);
             try {
-                System.out.println(((TextMessage)super.getMessage()).getText());
+                System.out.println(((TextMessage)msg).getText());
             } catch (JMSException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 
