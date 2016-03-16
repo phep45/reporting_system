@@ -14,8 +14,8 @@ public class ReportingSystemApp {
         MQListener slisListener = null;
         MQListener xlisListener = null;
         try {
-            slisListener = ListenersFactory.instance().createConsumer(SLIS);
-            xlisListener = ListenersFactory.instance().createConsumer(XLIS);
+            slisListener = ListenersFactory.instance().createListener(SLIS);
+            xlisListener = ListenersFactory.instance().createListener(XLIS);
         } catch (InvalidQueueNameException e) {
             e.printStackTrace();
         }

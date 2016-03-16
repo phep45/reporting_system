@@ -20,7 +20,7 @@ public class ListenersFactory {
 
     }
 
-    public MQListener createConsumer(String queueName) throws InvalidQueueNameException {
+    public MQListener createListener(String queueName) throws InvalidQueueNameException {
         if("SLIS".equals(queueName))
             return new SLISListener(queueName, URL);
         else if("XLIS".equals(queueName))
