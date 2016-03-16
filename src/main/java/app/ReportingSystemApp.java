@@ -10,6 +10,7 @@ public class ReportingSystemApp {
         String url = "tcp://localhost:61616";
         String SLIS = "SLIS";
         String XLIS = "XLIS";
+
         MQListener slisListener = null;
         MQListener xlisListener = null;
         try {
@@ -19,8 +20,11 @@ public class ReportingSystemApp {
             e.printStackTrace();
         }
 
-        slisListener.listen();
-        xlisListener.listen();
+        if(slisListener != null)
+            slisListener.listen();
+
+        if(xlisListener != null)
+            xlisListener.listen();
     }
 
 }
