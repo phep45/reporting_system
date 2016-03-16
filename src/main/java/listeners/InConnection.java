@@ -12,15 +12,16 @@ public class InConnection {
     private static final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
     private static Connection connection;
 
-    static {
-        try {
-            connection = connectionFactory.createConnection();
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Connection getConnection() {
-        return connection;
+        if(connection != null)
+            return connection;
+        else {
+            try {
+                connection = connectionFactory.createConnection();
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+            return connection;
+        }
     }
 }
