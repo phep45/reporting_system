@@ -10,7 +10,7 @@ import javax.jms.*;
  */
 public class JMSReceiver implements ExceptionListener {
 
-    public static final int TIMEOUT = 1000;
+    private static final int TIMEOUT = 1000;
     private String queueName;
     private String url;
 
