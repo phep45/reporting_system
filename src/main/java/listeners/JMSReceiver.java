@@ -40,9 +40,15 @@ public class JMSReceiver implements ExceptionListener {
             e.printStackTrace();
         } finally {
             try {
-                messageConsumer.close();
-                session.close();
-                connection.close();
+                if (messageConsumer != null) {
+                    messageConsumer.close();
+                }
+                if (session != null) {
+                    session.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (JMSException e) {
                 e.printStackTrace();
             }
