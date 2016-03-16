@@ -10,7 +10,7 @@ public class InConnection {
 
 
     private static final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-    public static Connection connection;
+    private static Connection connection;
 
     static {
         try {
