@@ -15,11 +15,11 @@ public class SessionFactory {
             e.printStackTrace();
         }
         finally {
-            try {
-                InConnection.getConnection().close();
-            } catch (JMSException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                InConnection.getConnection().close();
+//            } catch (JMSException e) {
+//                e.printStackTrace();
+//            }
         }
         return null;
     }

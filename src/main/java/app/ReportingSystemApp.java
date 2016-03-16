@@ -14,8 +14,7 @@ public class ReportingSystemApp {
         MQListener xlisListener = new MQListenerImpl(XLIS);
 
         slisListener.listen();
-        xlisListener.listen();
-
+        System.out.println("end");
 
     }
 

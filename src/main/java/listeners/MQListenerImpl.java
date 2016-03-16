@@ -1,5 +1,7 @@
 package listeners;
 
+import org.omg.CORBA.TIMEOUT;
+
 import javax.jms.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
  *
  */
 public class MQListenerImpl implements MQListener {
+
+    private static final int TIMEOUT = 1000;
 
     private List<Message> messages;
     private Session session;
@@ -23,26 +27,35 @@ public class MQListenerImpl implements MQListener {
     @SuppressWarnings("InfiniteLoopStatement")
     public void listen() {
         Message msg;
-        MessageConsumer consumer;
-        while(true) {
-            try {
+        MessageConsumer consumer = null;
+        System.out.println("start");
+
+        try {
                 Destination destination = session.createQueue(mqName);
                 consumer = session.createConsumer(destination);
-                msg = consumer.receive();
+            while(true) {
+                msg = consumer.receive(TIMEOUT);
+                if (msg == null)
+                    continue;
                 messages.add(msg);
-                System.out.println(((TextMessage)msg).getText());
-            }catch (JMSException e) {
-                e.printStackTrace();
+                System.out.println(((TextMessage) msg).getText());
             }
-            finally {
-                try {
-                    InConnection.getConnection().close();
-                } catch (JMSException e) {
-                    e.printStackTrace();
+        }catch (JMSException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (consumer != null) {
+                    consumer.close();
                 }
+                session.close();
+                InConnection.getConnection().close();
+            } catch (JMSException e) {
+                e.printStackTrace();
             }
         }
     }
+
 
     public List<Message> getMessages() {
         return messages;
