@@ -11,6 +11,7 @@ import javax.naming.Context;
  */
 public class JMSReceiver implements ExceptionListener {
 
+    public static final int TIMEOUT = 1000;
     private String queueName;
     private String url;
 
@@ -21,7 +22,7 @@ public class JMSReceiver implements ExceptionListener {
         this.url = url;
     }
 
-    public Message receiveMsg() {
+    public void receiveMsg() {
         MessageConsumer messageConsumer = null;
         Session session = null;
         Connection connection = null;
@@ -34,7 +35,8 @@ public class JMSReceiver implements ExceptionListener {
             Destination destination = session.createQueue(queueName);
             messageConsumer = session.createConsumer(destination);
 
-            message = messageConsumer.receive(1000);
+            message = messageConsumer.receive(TIMEOUT);
+
         } catch (JMSException e) {
             e.printStackTrace();
         } finally {
@@ -46,7 +48,6 @@ public class JMSReceiver implements ExceptionListener {
                 e.printStackTrace();
             }
         }
-        return message;
     }
 
     public Message getMessage() {
