@@ -1,20 +1,20 @@
 package listeners;
 
-public class ConsumersFactory {
+public class ListenersFactory {
 
     private static final String URL = "tcp://localhost:61616";
 
-    private static ConsumersFactory instance;
+    private static ListenersFactory instance;
 
-    private ConsumersFactory() {
+    private ListenersFactory() {
 
     }
 
-    public static ConsumersFactory instance() {
+    public static ListenersFactory instance() {
         if(instance != null)
             return instance;
         else {
-            instance = new ConsumersFactory();
+            instance = new ListenersFactory();
             return instance;
         }
 
