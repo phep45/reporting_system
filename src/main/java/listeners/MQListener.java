@@ -8,6 +8,6 @@ import javax.jms.TextMessage;
  */
 public interface MQListener extends Receiver {
 
-    void listen(TextMessage message);
+    void listen();
 
 }

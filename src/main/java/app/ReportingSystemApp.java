@@ -21,6 +21,8 @@ public class ReportingSystemApp {
         } catch (JMSException e) {
             e.printStackTrace();
         }
+
+        System.out.println(slisListener.getMessage());
     }
 
 }

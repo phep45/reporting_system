@@ -12,7 +12,7 @@ public class SLISListener extends JMSReceiver implements MQListener {
         super(queueName, url);
     }
 
-    public void listen(TextMessage message) {
+    public void listen() {
 
     }
 }
