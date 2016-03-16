@@ -1,8 +1,7 @@
 package app;
 
-import listeners.ListenersFactory;
-import listeners.InvalidQueueNameException;
 import listeners.MQListener;
+import listeners.MQListenerImpl;
 
 public class ReportingSystemApp {
 
@@ -11,23 +10,13 @@ public class ReportingSystemApp {
         String SLIS = "SLIS";
         String XLIS = "XLIS";
 
-        MQListener slisListener = null;
-        MQListener xlisListener = null;
+        MQListener slisListener = new MQListenerImpl(SLIS);
+        MQListener xlisListener = new MQListenerImpl(XLIS);
 
-        ListenersFactory listenersFactory = ListenersFactory.instance();
+        slisListener.listen();
+        xlisListener.listen();
 
-        try {
-            slisListener = listenersFactory.createListener(SLIS);
-            xlisListener = listenersFactory.createListener(XLIS);
-        } catch (InvalidQueueNameException e) {
-            e.printStackTrace();
-        }
 
-        if(slisListener != null)
-            slisListener.listen();
-
-        if(xlisListener != null)
-            xlisListener.listen();
     }
 
 }
