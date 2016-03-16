@@ -14,13 +14,13 @@ public class SessionFactory {
         } catch (JMSException e) {
             e.printStackTrace();
         }
-        finally {
+//        finally {
 //            try {
 //                InConnection.getConnection().close();
 //            } catch (JMSException e) {
 //                e.printStackTrace();
 //            }
-        }
+//        }
         return null;
     }
 
