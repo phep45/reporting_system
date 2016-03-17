@@ -30,14 +30,21 @@ public class MQListenerImpl implements MQListener {
             Destination destination = session.createQueue(mqName);
             consumer = session.createConsumer(destination);
             while(true) {
-                msg = consumer.receive(TIMEOUT);
-                if (msg == null)
-                    continue;
-                messages.add(msg);
-                System.out.println(((TextMessage) msg).getText());
+                if(!Thread.interrupted()) {
+                    msg = consumer.receive(TIMEOUT);
+                    if (msg == null)
+                        continue;
+                    messages.add(msg);
+                    System.out.println(mqName + ": " + ((TextMessage) msg).getText());
+                }
+                else break;
             }
         }catch (JMSException e) {
-            e.printStackTrace();
+           if(e.getCause() instanceof InterruptedException) {
+               System.out.println(mqName + " stopped");
+           }
+           else
+               e.printStackTrace();
         }
         finally {
             try {
