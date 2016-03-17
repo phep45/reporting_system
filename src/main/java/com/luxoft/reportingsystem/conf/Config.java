@@ -15,6 +15,7 @@ import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 @ComponentScan("com.luxoft.reportingsystem.listeners")
 public class Config {
 
+
     @Bean
     public Session session() {
         try {
