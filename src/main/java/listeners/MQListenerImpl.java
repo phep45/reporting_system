@@ -45,7 +45,7 @@ public class MQListenerImpl implements MQListener {
                     consumer.close();
                 }
                 session.close();
-                InConnection.getConnection().close();
+//                InConnection.getConnection().close();
             } catch (JMSException e) {
                 e.printStackTrace();
             }

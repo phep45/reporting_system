@@ -1,7 +1,10 @@
 package app;
 
+import listeners.InConnection;
 import listeners.MQListener;
 import listeners.MQListenerImpl;
+
+import javax.jms.JMSException;
 
 public class ReportingSystemApp {
 
@@ -11,6 +14,11 @@ public class ReportingSystemApp {
         MQListener slisListener = new MQListenerImpl(SLIS);
 
         slisListener.listen();
+        try {
+            InConnection.getConnection().close();
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
 
     }
 
