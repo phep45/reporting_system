@@ -1,28 +1,38 @@
 package app;
 
-import listeners.MQListener;
-import listeners.SLISListener;
+import listeners.InConnection;
+import listeners.MQListenerThread;
 
 import javax.jms.JMSException;
-
-/**
- * Created by Prosner on 3/16/2016.
- *
- */
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ReportingSystemApp {
 
+    private static final String SLIS = "SLIS";
+    private static final String XLIS = "XLIS";
+
     public static void main(String[] args) {
-        String url = "tcp://localhost:61616";
-        String SLIS = "SLIS";
-        MQListener slisListener = new SLISListener(SLIS, url);
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        pool.execute(new MQListenerThread(SLIS));
+        pool.execute(new MQListenerThread(XLIS));
+
+
+        Scanner scan = new Scanner(System.in);
+
+        //wait until 'q' is pressed
+        while(!"q".equals(scan.nextLine()));
+
+        pool.shutdownNow();
+
         try {
-            slisListener.receiveMsg();
+            InConnection.getConnection().close();
         } catch (JMSException e) {
             e.printStackTrace();
         }
 
-        System.out.println(slisListener.getMessage());
     }
 
 }
