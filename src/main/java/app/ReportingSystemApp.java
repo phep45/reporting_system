@@ -24,8 +24,10 @@ public class ReportingSystemApp {
 
 
         Scanner scan = new Scanner(System.in);
-        while(!"q".equals(scan.nextLine())){
-        }
+
+        //wait until 'q' is pressed
+        while(!"q".equals(scan.nextLine()));
+
         pool.shutdownNow();
 
         try {
