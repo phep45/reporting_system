@@ -1,15 +1,12 @@
 package app;
 
 import listeners.InConnection;
-import listeners.MQListener;
-import listeners.MQListenerImpl;
 import listeners.MQListenerThread;
 
 import javax.jms.JMSException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class ReportingSystemApp {
 
