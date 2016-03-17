@@ -1,4 +1,4 @@
-package listeners;
+package com.luxoft.reportingsystem.listeners;
 
 /**
  * Created by Prosner on 3/16/2016.

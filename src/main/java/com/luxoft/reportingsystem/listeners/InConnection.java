@@ -1,6 +1,8 @@
-package listeners;
+package com.luxoft.reportingsystem.listeners;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -8,8 +10,10 @@ import javax.jms.JMSException;
 
 public class InConnection {
 
+    private static ApplicationContext context = new ClassPathXmlApplicationContext("app-config.xml");
 
-    private static final String URL = "tcp://localhost:61616";
+    private static String URL = (String)context.getBean("url");// = "tcp://localhost:61616";
+
     private static final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
     private static Connection connection;
 
@@ -25,4 +29,5 @@ public class InConnection {
             return connection;
         }
     }
+
 }
