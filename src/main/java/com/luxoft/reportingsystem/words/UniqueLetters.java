@@ -26,8 +26,7 @@ public class UniqueLetters {
                     map.put(set, 1);
                 else {
                     Integer val = map.get(set);
-
-                    val = val + 1;
+                    val++;
                     map.put(set, val);
                 }
             }
