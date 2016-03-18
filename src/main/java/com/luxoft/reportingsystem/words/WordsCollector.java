@@ -1,15 +1,17 @@
 package com.luxoft.reportingsystem.words;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 public class WordsCollector {
 
-    public static final String TEXT_FILE_EXTENSION = ".txt";
+    public static final String SPECIAL_CHARACTERS = "[\\W\\D]";
+    private static final String TEXT_FILE_EXTENSION = ".txt";
+    public static final String EMPTY_STR = "";
     private File file;
 
     public WordsCollector(File file) {
@@ -21,15 +23,13 @@ public class WordsCollector {
     public List<String> collect() {
         List<String> wordsList = new LinkedList<>();
 
-        try (Scanner scan = new Scanner(new FileInputStream(file))) {
-
-            while(scan.hasNext()) {
-                String word = scan.next();
-                word = word.replaceAll("[\\W\\D]]","");
-                wordsList.add(word);
+        try {
+            String[] fileStr = FileUtils.readFileToString(file).split(EMPTY_STR);
+            for(String str : fileStr) {
+                str.replaceAll(SPECIAL_CHARACTERS, EMPTY_STR);
+                wordsList.add(str);
             }
-
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
