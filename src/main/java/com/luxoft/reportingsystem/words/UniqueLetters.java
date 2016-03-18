@@ -19,9 +19,7 @@ public class UniqueLetters {
     private Map<Set<String>, Integer> countUniques(File file) {
         map = new HashMap<>();
 
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            Scanner scan = new Scanner(fileInputStream);
+        try (Scanner scan = new Scanner(new FileInputStream(file))) {
             while (scan.hasNext()) {
                 Set<String> set = new TreeSet<>(Arrays.asList(scan.next().split("")));
                 if (!map.containsKey(set))
