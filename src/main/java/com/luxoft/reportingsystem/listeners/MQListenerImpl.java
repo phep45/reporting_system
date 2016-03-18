@@ -8,27 +8,20 @@ import javax.jms.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class MQListenerImpl implements MQListener {
 
-    private ApplicationContext context;
 
     private static final int TIMEOUT = 1000;
 
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<Message>();
 
-    @Autowired
     private Session session;
 
     private String mqName;
 
-    public MQListenerImpl(){
-        this(null);
-    }
-
-    public MQListenerImpl(String mqName) {
+    public MQListenerImpl(String mqName, Session session) {
         this.mqName = mqName;
-        this.messages = new ArrayList<Message>();
+        this.session = session;
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
