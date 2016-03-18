@@ -12,11 +12,18 @@ public class UniqueLettersTest {
 
     private UniqueLetters uniqueLetters;
     private List<Integer> outputForTest = Arrays.asList(3, 2, 2, 1, 1);
+    private List<Integer> outputForTest2 = Arrays.asList(12, 2, 2, 2, 2, 2, 1, 1, 1, 1);
 
     @Test
-    public void test() {
+    public void testFileTest() {
         uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\test.txt"));
         assertEquals(outputForTest, uniqueLetters.getAmounts());
+    }
+
+    @Test
+    public void testFileTest2() {
+        uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\test2.txt"));
+        assertEquals(outputForTest2, uniqueLetters.getAmounts());
     }
 
     @Test(expected = IllegalArgumentException.class)
