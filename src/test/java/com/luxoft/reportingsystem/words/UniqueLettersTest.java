@@ -11,7 +11,6 @@ public class UniqueLettersTest {
     @Test
     public void test() {
         uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\test2.txt"));
-        uniqueLetters.countUniques();
 
     }
 

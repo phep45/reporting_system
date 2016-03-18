@@ -8,14 +8,13 @@ import java.util.stream.Collectors;
 
 public class UniqueLetters {
 
-    private File file;
     private Map<Set<String>, Integer> map;
 
     public UniqueLetters(File file) {
-        this.file = file;
+        map = countUniques(file);
     }
 
-    public Map<Set<String>, Integer> countUniques() {
+    private Map<Set<String>, Integer> countUniques(File file) {
 
         map = new HashMap<>();
 
@@ -28,6 +27,7 @@ public class UniqueLetters {
                     map.put(set, 1);
                 else {
                     Integer val = map.get(set);
+
                     val = val + 1;
                     map.put(set, val);
                 }
@@ -40,20 +40,23 @@ public class UniqueLetters {
     }
 
     public List<Integer> getAmounts() {
+        if(map == null)
+            return null;
         List<Integer> listOfAmounts = map.values().stream().collect(Collectors.toList());
-        Collections.sort(listOfAmounts, Integer::compareTo);
+        Collections.sort(listOfAmounts, (val1, val2) -> val2.compareTo(val1));
         return listOfAmounts;
     }
 
     public void printUniques() {
-        for(Set s : map.keySet())
-            System.out.println(map.get(s) + " => " + s);
+        if(map != null)
+            for(Set s : map.keySet())
+                System.out.println(map.get(s) + " => " + s);
     }
 
 
     public static void main(String[] args) {
         UniqueLetters uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\INPUT.txt"));
-        uniqueLetters.countUniques();
+//        uniqueLetters.countUniques();
         System.out.println(uniqueLetters.getAmounts());
         uniqueLetters.printUniques();
     }
