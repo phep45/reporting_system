@@ -26,8 +26,23 @@ public class UniqueLettersTest {
         assertEquals(outputForTest2, uniqueLetters.getAmounts());
     }*/
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowException() {
-        uniqueLetters = new UniqueLetters(new File("asdfasfdssde"));
-    }
+//    @Test(expected = IllegalArgumentException.class)
+//    public void shouldThrowException() {
+//        uniqueLetters = new UniqueLetters(new File("asdfasfdssde"));
+//    }
+
+//    OnPoint point = new OnPoint();
+//
+//    @Test
+//    public void test() {
+//        point.setWordsCollector(new WordsCollector() {
+//            @Override
+//            public List<String> collect() {
+//                return Arrays.asList("asdf", "afds");
+//            }
+//        });
+
+//    }
+
+
 }
