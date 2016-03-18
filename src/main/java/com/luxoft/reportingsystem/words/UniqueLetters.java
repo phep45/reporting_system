@@ -11,19 +11,20 @@ public class UniqueLetters {
     private Map<Set<String>, Integer> map;
 
     public UniqueLetters(File file) {
+        if (!file.getName().endsWith(".txt"))
+            throw new IllegalArgumentException();
         map = countUniques(file);
     }
 
     private Map<Set<String>, Integer> countUniques(File file) {
-
         map = new HashMap<>();
 
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             Scanner scan = new Scanner(fileInputStream);
-            while(scan.hasNext()) {
+            while (scan.hasNext()) {
                 Set<String> set = new TreeSet<>(Arrays.asList(scan.next().split("")));
-                if(!map.containsKey(set))
+                if (!map.containsKey(set))
                     map.put(set, 1);
                 else {
                     Integer val = map.get(set);
@@ -40,7 +41,7 @@ public class UniqueLetters {
     }
 
     public List<Integer> getAmounts() {
-        if(map == null)
+        if (map == null)
             return null;
         List<Integer> listOfAmounts = map.values().stream().collect(Collectors.toList());
         Collections.sort(listOfAmounts, (val1, val2) -> val2.compareTo(val1));
@@ -48,15 +49,14 @@ public class UniqueLetters {
     }
 
     public void printUniques() {
-        if(map != null)
-            for(Set s : map.keySet())
+        if (map != null)
+            for (Set s : map.keySet())
                 System.out.println(map.get(s) + " => " + s);
     }
 
 
     public static void main(String[] args) {
         UniqueLetters uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\INPUT.txt"));
-//        uniqueLetters.countUniques();
         System.out.println(uniqueLetters.getAmounts());
         uniqueLetters.printUniques();
     }
