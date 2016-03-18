@@ -52,7 +52,7 @@ public class UniqueLetters {
 
 
     public static void main(String[] args) {
-        UniqueLetters uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\test2.txt"));
+        UniqueLetters uniqueLetters = new UniqueLetters(new File("src\\main\\resources\\words\\INPUT.txt"));
         uniqueLetters.countUniques();
         System.out.println(uniqueLetters.getAmounts());
         uniqueLetters.printUniques();
