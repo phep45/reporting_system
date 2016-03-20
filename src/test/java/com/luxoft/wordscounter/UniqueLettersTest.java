@@ -2,17 +2,25 @@ package com.luxoft.wordscounter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes =Config.class, loader = AnnotationConfigContextLoader.class)
 public class UniqueLettersTest {
 
     private static final List<String> listOfWords = Arrays.asList(
             "test", "user", "tes", "test", "test", "usre", "eurs", "teeeeeess", "sers", "pawel", "pawwlle", "pwwww");
     private Map<SetOfPairs, Integer> expectedMap;
 
+    @Autowired
     private UniqueLetters uniqueLetters;
 
     @Before
