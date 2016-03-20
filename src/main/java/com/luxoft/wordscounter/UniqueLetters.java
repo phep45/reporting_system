@@ -10,39 +10,28 @@ public class UniqueLetters {
 
     private static final String EMPTY_STR = "";
 
-    private Map<Set<EntryPair>, Integer> map;
+    private Map<ResultMapEntry, Integer> mapped;
 
-    public Map<Set<EntryPair>, Integer> countUniques(List<String> wordsList) {
+    public Map<ResultMapEntry, Integer> count(List<String> wordsList) {
         Preconditions.checkNotNull(wordsList);
-        map = new HashMap<>();
+        mapped = new TreeMap<>();
         wordsList.forEach(s -> {
             List<String> letters = Arrays.asList(s.split(EMPTY_STR));
-            Set<EntryPair> set = new TreeSet<>();
-            letters.forEach(letter ->
-                    incrementIfExists(set, letter)
+            ResultMapEntry set = new ResultMapEntry();
+            letters.forEach(set::incrementIfExists
             );
             populateMap(set);
         });
-        return map;
+        return mapped;
     }
-
-    private void incrementIfExists(Set<EntryPair> set, String letter) {
-        for (EntryPair oldPair : set) {
-            if (oldPair.getLetter().equals(letter)) {
-                oldPair.incrementAmount();
-                return;
-            }
+    private void populateMap(ResultMapEntry set) {
+        if (!mapped.containsKey(set)) {
+            mapped.put(set, 1);
         }
-        set.add(new EntryPair(letter, 1));
-    }
-
-    private void populateMap(Set<EntryPair> set) {
-        if (!map.containsKey(set))
-            map.put(set, 1);
         else {
-            Integer val = map.get(set);
+            Integer val = mapped.get(set);
             val++;
-            map.put(set, val);
+            mapped.put(set, val);
         }
     }
 

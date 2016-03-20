@@ -8,9 +8,10 @@ import java.util.Set;
 
 @Component
 public class ReportPrinter {
-    public void printReport(Map<Set<EntryPair>, Integer> map) {
+    public void printReport(Map map) {
         Preconditions.checkNotNull(map, "No data to print");
-        for (Set s : map.keySet())
+        for (Object s : map.keySet())
             System.out.println(map.get(s) + " => " + s);
     }
+
 }

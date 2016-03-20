@@ -26,7 +26,9 @@ public class EntryPair implements Comparable<EntryPair> {
         this.letter = letter;
     }
 
-    public void incrementAmount() { amount++; }
+    public void incrementAmount() {
+        amount++;
+    }
 
     @Override
     public String toString() {
@@ -35,11 +37,17 @@ public class EntryPair implements Comparable<EntryPair> {
 
     @Override
     public int compareTo(EntryPair o) {
-        return letter.compareTo(o.getLetter());
+        if (this.amount > o.amount)
+            return 1;
+        else if (this.amount < o.amount)
+            return -1;
+        else
+            return letter.compareTo(o.getLetter());
     }
 
     @Override
     public boolean equals(Object o) {
+        System.out.println(this + " equals " + o);
         if (this == o)
             return true;
         if (!(o instanceof EntryPair))

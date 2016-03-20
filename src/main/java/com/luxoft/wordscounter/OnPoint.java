@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Component
 public class OnPoint {
@@ -26,14 +25,14 @@ public class OnPoint {
     @Autowired
     private ReportPrinter printer;
 
-    private void process(String path) {
+    public void process(String path) {
 
         File file = new File(path);
         try {
             List<String> words = reader.readFromFile(file);
 
             List<String> trimWords = wordsCollector.collect(words);
-            Map<Set<EntryPair>, Integer> result = uniqueLetters.countUniques(trimWords);
+            Map result = uniqueLetters.count(trimWords);
             printer.printReport(result);
         } catch (IOException e) {
             log.error("Could not read from file: " + file.getName(), e);
