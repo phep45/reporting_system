@@ -47,7 +47,6 @@ public class EntryPair implements Comparable<EntryPair> {
 
     @Override
     public boolean equals(Object o) {
-        System.out.println(this + " equals " + o);
         if (this == o)
             return true;
         if (!(o instanceof EntryPair))
