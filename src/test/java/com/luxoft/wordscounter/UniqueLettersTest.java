@@ -1,6 +1,5 @@
 package com.luxoft.wordscounter;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +21,6 @@ public class UniqueLettersTest {
 
     @Autowired
     private UniqueLetters uniqueLetters;
-
-    @Before
-    public void setUp() {
-        uniqueLetters = new UniqueLetters();
-    }
 
     @Test
     public void shouldReturnCorrectMap() {
