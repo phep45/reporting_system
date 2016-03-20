@@ -40,12 +40,15 @@ public class EntryPair implements Comparable<EntryPair> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EntryPair)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof EntryPair))
+            return false;
 
         EntryPair entryPair = (EntryPair) o;
 
-        if (amount != entryPair.amount) return false;
+        if (amount != entryPair.amount)
+            return false;
         return letter.equals(entryPair.letter);
 
     }

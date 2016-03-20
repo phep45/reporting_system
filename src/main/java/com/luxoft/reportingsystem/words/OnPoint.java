@@ -1,28 +1,81 @@
 package com.luxoft.reportingsystem.words;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+@Component
 public class OnPoint {
 
-//    private WordsCollector wordsCollector = new WordsCollector();
-//    private Reader reader = new Reader();
-//    private UniqueLetters uniqueLetters = new ...
-//    private PrinterW printer = new ...
-//
-//    public void setWordsCollector(WordsCollector wordsCollector) {
-//        this.wordsCollector = wordsCollector;
-//    }
-//
-//    public static void main(String ... args) {
-//        OnPoint onPoint = new OnPoint();
-//        onPoint.process(args[0);
-//    }
-//
-//    private void process(String path) {
-//        List<String> words = reader.read(path);
-//        List<String> trimWords = wordsCollector.collect(words);
-//        Map result = uniqueLetters.countUniques(words);
-//        printer.printReport(result);
-//
-//    }
+    private static final Logger log = LoggerFactory.getLogger(OnPoint.class);
+
+    @Autowired private TextFileReader reader;
+    @Autowired private WordsCollector wordsCollector;
+    @Autowired private UniqueLetters uniqueLetters;
+    @Autowired private ReportPrinter printer;
+
+    private void process(String path) {
+        File file = new File(path);
+        List<String> words = null;
+        try {
+            words = getReader().readFromFile(file);
+        } catch (IOException e) {
+            log.error("Could not read from file: " + file.getName(), e);
+        }
+        List<String> trimWords = getWordsCollector().collect(words);
+        Map result = getUniqueLetters().countUniques(trimWords);
+        getPrinter().printReport(result);
+
+    }
+
+    public static void main(String ... args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(WordsConfig.class);
+
+        OnPoint onPoint = context.getBean(OnPoint.class);
+        onPoint.process("src\\main\\resources\\words\\test2.txt");
+
+        context.close();
+    }
+
+    public WordsCollector getWordsCollector() {
+        return wordsCollector;
+    }
+
+    public void setWordsCollector(WordsCollector wordsCollector) {
+        this.wordsCollector = wordsCollector;
+    }
+
+    public TextFileReader getReader() {
+        return reader;
+    }
+
+    public void setReader(TextFileReader reader) {
+        this.reader = reader;
+    }
+
+    public UniqueLetters getUniqueLetters() {
+        return uniqueLetters;
+    }
+
+    public void setUniqueLetters(UniqueLetters uniqueLetters) {
+        this.uniqueLetters = uniqueLetters;
+    }
+
+    public ReportPrinter getPrinter() {
+        return printer;
+    }
+
+    public void setPrinter(ReportPrinter printer) {
+        this.printer = printer;
+    }
 }
 
 
