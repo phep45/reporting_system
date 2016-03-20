@@ -3,7 +3,7 @@ package com.luxoft.wordscounter;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EntrySet implements Comparable<EntrySet> {
+public class SetOfPairs implements Comparable<SetOfPairs> {
 
     private Set<EntryPair> entryPairSet = new TreeSet<>();
 
@@ -22,7 +22,7 @@ public class EntrySet implements Comparable<EntrySet> {
     }
 
     @Override
-    public int compareTo(EntrySet other) {
+    public int compareTo(SetOfPairs other) {
         if(this.entryPairSet.equals(other.entryPairSet))
             return 0;
         if(entryPairSet.size() > other.entryPairSet.size())
@@ -47,7 +47,7 @@ public class EntrySet implements Comparable<EntrySet> {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        EntrySet that = (EntrySet) o;
+        SetOfPairs that = (SetOfPairs) o;
 
         return entryPairSet != null ? entryPairSet.equals(that.entryPairSet) : that.entryPairSet == null;
 
