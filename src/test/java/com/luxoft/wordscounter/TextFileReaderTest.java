@@ -17,7 +17,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =Config.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes =WordsConfig.class, loader = AnnotationConfigContextLoader.class)
 public class TextFileReaderTest {
 
     @Autowired

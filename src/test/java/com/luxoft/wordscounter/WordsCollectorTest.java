@@ -15,7 +15,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =Config.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes =WordsConfig.class, loader = AnnotationConfigContextLoader.class)
 public class WordsCollectorTest {
 
     @Autowired

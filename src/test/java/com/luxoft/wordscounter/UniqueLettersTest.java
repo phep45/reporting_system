@@ -13,7 +13,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =Config.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes =WordsConfig.class, loader = AnnotationConfigContextLoader.class)
 public class UniqueLettersTest {
 
     private static final List<String> listOfWords = Arrays.asList(
