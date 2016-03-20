@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UniqueLettersTest {
 
-    private List<String> listOfWords = Arrays.asList(
+    private static final List<String> listOfWords = Arrays.asList(
             "test", "user", "tes", "test", "test", "usre", "eurs", "teeeeeess", "sers", "pawel", "pawwlle", "pwwww");
     private Map<SetOfPairs, Integer> expectedMap;
 
