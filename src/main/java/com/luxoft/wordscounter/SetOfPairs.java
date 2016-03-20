@@ -7,7 +7,7 @@ public class SetOfPairs implements Comparable<SetOfPairs> {
 
     private Set<EntryPair> entryPairSet = new TreeSet<>();
 
-    public void incrementIfExists( String letter) {
+    public void insert(String letter) {
         for (EntryPair oldPair : entryPairSet) {
             if (oldPair.getLetter().equals(letter)) {
                 oldPair.incrementAmount();

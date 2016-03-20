@@ -18,8 +18,7 @@ public class UniqueLetters {
         wordsList.forEach(s -> {
             List<String> letters = Arrays.asList(s.split(EMPTY_STR));
             SetOfPairs set = new SetOfPairs();
-            letters.forEach(set::incrementIfExists
-            );
+            letters.forEach(set::insert);
             populateMap(set);
         });
         return mapped;
