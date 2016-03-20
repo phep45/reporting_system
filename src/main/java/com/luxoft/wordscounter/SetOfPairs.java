@@ -1,18 +1,23 @@
 package com.luxoft.wordscounter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 public class SetOfPairs implements Comparable<SetOfPairs> {
-
+    private static final Logger log = LoggerFactory.getLogger(SetOfPairs.class);
     private Set<EntryPair> entryPairSet = new TreeSet<>();
 
     public void insert(String letter) {
         for (EntryPair oldPair : entryPairSet) {
             if (oldPair.getLetter().equals(letter)) {
+                log.trace("Pair {} exists; incrementing amount", oldPair);
                 oldPair.incrementAmount();
                 return;
             }
         }
+        log.trace("Creating new pair: {}:1", letter);
         entryPairSet.add(new EntryPair(letter, 1));
     }
 
