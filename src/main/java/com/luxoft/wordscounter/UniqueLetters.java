@@ -8,18 +8,20 @@ import java.util.*;
 @Component
 public class UniqueLetters {
 
-    public static final String EMPTY_STR = "";
+    private static final String EMPTY_STR = "";
+
+    private Map<Set<EntryPair>, Integer> map;
 
     public Map<Set<EntryPair>, Integer> countUniques(List<String> wordsList) {
         Preconditions.checkNotNull(wordsList);
-        Map<Set<EntryPair>, Integer> map = new HashMap<>();
+        map = new HashMap<>();
         wordsList.forEach(s -> {
             List<String> letters = Arrays.asList(s.split(EMPTY_STR));
             Set<EntryPair> set = new TreeSet<>();
             letters.forEach(letter ->
                     incrementIfExists(set, letter)
             );
-            populateMap(map, set);
+            populateMap(set);
         });
         return map;
     }
@@ -34,7 +36,7 @@ public class UniqueLetters {
         set.add(new EntryPair(letter, 1));
     }
 
-    private void populateMap(Map<Set<EntryPair>, Integer> map, Set<EntryPair> set) {
+    private void populateMap(Set<EntryPair> set) {
         if (!map.containsKey(set))
             map.put(set, 1);
         else {
