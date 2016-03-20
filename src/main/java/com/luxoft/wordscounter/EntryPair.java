@@ -37,12 +37,19 @@ public class EntryPair implements Comparable<EntryPair> {
 
     @Override
     public int compareTo(EntryPair o) {
-        if (this.amount > o.amount)
+        if(this.letter.compareTo(o.letter) > 0)
             return 1;
-        else if (this.amount < o.amount)
+        if(this.letter.compareTo(o.letter) < 0)
             return -1;
-        else
-            return letter.compareTo(o.getLetter());
+        else {
+            if(this.amount > o.amount)
+                return 1;
+            if(this.amount < o.amount)
+                return -1;
+            else
+                return 0;
+        }
+
     }
 
     @Override

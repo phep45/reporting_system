@@ -21,7 +21,6 @@ public class UniqueLettersTest {
         uniqueLetters = new UniqueLetters();
     }
 
-    //TODO
     @Test
     public void shouldReturnCorrectMap() {
         expectedMap = generateExpectedMap();

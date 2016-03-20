@@ -1,8 +1,6 @@
 package com.luxoft.wordscounter;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SetOfPairs implements Comparable<SetOfPairs> {
 
@@ -24,21 +22,29 @@ public class SetOfPairs implements Comparable<SetOfPairs> {
 
     @Override
     public int compareTo(SetOfPairs other) {
-        if(this.entryPairSet.equals(other.entryPairSet))
+        if(this.entryPairSet.equals(other.getEntryPairSet()))
             return 0;
-        if(entryPairSet.size() > other.entryPairSet.size())
+        if(entryPairSet.size() > other.getEntryPairSet().size())
             return 1;
-        else if(entryPairSet.size() < other.entryPairSet.size())
+        else if(entryPairSet.size() < other.getEntryPairSet().size())
             return -1;
         else {
-            for(EntryPair pair : this.entryPairSet) {
-                for(EntryPair otherPair : other.entryPairSet) {
-                    if(pair.compareTo(otherPair) != 0)
-                        return pair.compareTo(otherPair);
-                }
-            }
-            return 0;
+            return compareHelper(other);
         }
+    }
+
+    private int compareHelper(SetOfPairs other) {
+        List<EntryPair> thisSetAsList = new ArrayList<>(entryPairSet);
+        List<EntryPair> otherSetAsList = new ArrayList<>(other.getEntryPairSet());
+
+        Collections.sort(thisSetAsList);
+        Collections.sort(otherSetAsList);
+
+        for(int i = 0; i < thisSetAsList.size(); i++) {
+            if(thisSetAsList.get(i).compareTo(otherSetAsList.get(i)) != 0)
+                return thisSetAsList.get(i).compareTo(otherSetAsList.get(i));
+        }
+        return 0;
     }
 
     @Override
