@@ -43,7 +43,7 @@ public class UniqueLettersTest {
 //        1 => [a:1, e:1, l:2, p:1, w:2]
 //        1 => [a:1, e:1, l:1, p:1, w:1]
 
-        Map<SetOfPairs, Integer> map = new HashMap<>();
+        Map<SetOfPairs, Integer> map = new TreeMap<>();
 
         SetOfPairs setOfPairs = new SetOfPairs();
         setOfPairs.insert("p");

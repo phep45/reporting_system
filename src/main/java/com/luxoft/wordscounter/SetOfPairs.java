@@ -29,11 +29,11 @@ public class SetOfPairs implements Comparable<SetOfPairs> {
         else if(entryPairSet.size() < other.getEntryPairSet().size())
             return -1;
         else {
-            return compareHelper(other);
+            return compareSameSizeSets(other);
         }
     }
 
-    private int compareHelper(SetOfPairs other) {
+    private int compareSameSizeSets(SetOfPairs other) {
         List<EntryPair> thisSetAsList = new ArrayList<>(entryPairSet);
         List<EntryPair> otherSetAsList = new ArrayList<>(other.getEntryPairSet());
 
