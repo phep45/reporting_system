@@ -1,4 +1,4 @@
-package com.luxoft.reportingsystem.words;
+package com.luxoft.wordscounter;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,5 @@
-package com.luxoft.reportingsystem.words;
+package com.luxoft.wordscounter;
 
-import org.junit.Test;
-
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.luxoft.reportingsystem.words;
+package com.luxoft.wordscounter;
 
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Component;

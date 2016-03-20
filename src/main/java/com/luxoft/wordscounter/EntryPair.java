@@ -1,4 +1,4 @@
-package com.luxoft.reportingsystem.words;
+package com.luxoft.wordscounter;
 
 public class EntryPair implements Comparable<EntryPair> {
 
