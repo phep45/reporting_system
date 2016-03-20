@@ -10,32 +10,38 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class OnPoint {
 
     private static final Logger log = LoggerFactory.getLogger(OnPoint.class);
 
-    @Autowired private TextFileReader reader;
-    @Autowired private WordsCollector wordsCollector;
-    @Autowired private UniqueLetters uniqueLetters;
-    @Autowired private ReportPrinter printer;
+    @Autowired
+    private TextFileReader reader;
+    @Autowired
+    private WordsCollector wordsCollector;
+    @Autowired
+    private UniqueLetters uniqueLetters;
+    @Autowired
+    private ReportPrinter printer;
 
     private void process(String path) {
+
         File file = new File(path);
-        List<String> words = null;
         try {
-            words = getReader().readFromFile(file);
+            List<String> words = getReader().readFromFile(file);
+
+            List<String> trimWords = getWordsCollector().collect(words);
+            Map<Set<EntryPair>, Integer> result = getUniqueLetters().countUniques(trimWords);
+            getPrinter().printReport(result);
         } catch (IOException e) {
             log.error("Could not read from file: " + file.getName(), e);
         }
-        List<String> trimWords = getWordsCollector().collect(words);
-        Map result = getUniqueLetters().countUniques(trimWords);
-        getPrinter().printReport(result);
 
     }
 
-    public static void main(String ... args) {
+    public static void main(String... args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(WordsConfig.class);
 
         OnPoint onPoint = context.getBean(OnPoint.class);
