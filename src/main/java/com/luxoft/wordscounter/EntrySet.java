@@ -1,11 +1,9 @@
 package com.luxoft.wordscounter;
 
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ResultMapEntry implements Comparable<ResultMapEntry> {
+public class EntrySet implements Comparable<EntrySet> {
 
     private Set<EntryPair> entryPairSet = new TreeSet<>();
 
@@ -24,7 +22,7 @@ public class ResultMapEntry implements Comparable<ResultMapEntry> {
     }
 
     @Override
-    public int compareTo(ResultMapEntry other) {
+    public int compareTo(EntrySet other) {
         if(this.entryPairSet.equals(other.entryPairSet))
             return 0;
         if(entryPairSet.size() > other.entryPairSet.size())
@@ -49,7 +47,7 @@ public class ResultMapEntry implements Comparable<ResultMapEntry> {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        ResultMapEntry that = (ResultMapEntry) o;
+        EntrySet that = (EntrySet) o;
 
         return entryPairSet != null ? entryPairSet.equals(that.entryPairSet) : that.entryPairSet == null;
 

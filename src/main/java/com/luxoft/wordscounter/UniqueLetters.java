@@ -10,21 +10,21 @@ public class UniqueLetters {
 
     private static final String EMPTY_STR = "";
 
-    private Map<ResultMapEntry, Integer> mapped;
+    private Map<EntrySet, Integer> mapped;
 
-    public Map<ResultMapEntry, Integer> count(List<String> wordsList) {
+    public Map<EntrySet, Integer> count(List<String> wordsList) {
         Preconditions.checkNotNull(wordsList);
         mapped = new TreeMap<>();
         wordsList.forEach(s -> {
             List<String> letters = Arrays.asList(s.split(EMPTY_STR));
-            ResultMapEntry set = new ResultMapEntry();
+            EntrySet set = new EntrySet();
             letters.forEach(set::incrementIfExists
             );
             populateMap(set);
         });
         return mapped;
     }
-    private void populateMap(ResultMapEntry set) {
+    private void populateMap(EntrySet set) {
         if (!mapped.containsKey(set)) {
             mapped.put(set, 1);
         }
