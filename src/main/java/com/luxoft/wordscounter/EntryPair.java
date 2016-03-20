@@ -54,9 +54,7 @@ public class EntryPair implements Comparable<EntryPair> {
 
         EntryPair entryPair = (EntryPair) o;
 
-        if (amount != entryPair.amount)
-            return false;
-        return letter.equals(entryPair.letter);
+        return amount == entryPair.amount && letter.equals(entryPair.letter);
 
     }
 
