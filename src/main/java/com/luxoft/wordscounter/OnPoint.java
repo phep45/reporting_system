@@ -48,7 +48,7 @@ public class OnPoint {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(WordsConfig.class);
 
         OnPoint onPoint = context.getBean(OnPoint.class);
-        onPoint.process("src\\test\\resources\\test.txt");
+        onPoint.process("src\\main\\resources\\words\\test2.txt");
 
         context.close();
     }
