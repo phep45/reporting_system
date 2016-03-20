@@ -26,7 +26,7 @@ public class WordsCollectorTest {
             "te#st", "user", "tes", "test", "test", "u@sre", "eurs", "teeeeeess", "se+rs", "pawel", "pawwlle,", "pwwww");
 
     @Test
-    public void test() throws IOException {
+    public void shouldCollectWords() throws IOException {
         List<String> result = wordsCollector.collect(wordsToProcess);
         assertEquals(expectedListOfWords, result);
     }
