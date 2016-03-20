@@ -30,9 +30,8 @@ public class OnPoint {
         File file = new File(path);
         try {
             List<String> words = reader.readFromFile(file);
-
-            List<String> trimWords = wordsCollector.collect(words);
-            Map<SetOfPairs, Integer> result = uniqueLetters.count(trimWords);
+            List<String> collectedWords = wordsCollector.collect(words);
+            Map<SetOfPairs, Integer> result = uniqueLetters.count(collectedWords);
             printer.printReport(result);
         } catch (IOException e) {
             log.error("Could not read from file: " + file.getName(), e);
