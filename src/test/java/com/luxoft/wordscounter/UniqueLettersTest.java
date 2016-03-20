@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +22,7 @@ public class UniqueLettersTest {
     }
 
     //TODO
-//    @Test
+    @Test
     public void shouldReturnCorrectMap() {
         expectedMap = generateExpectedMap();
 
@@ -44,7 +45,7 @@ public class UniqueLettersTest {
 //        1 => [a:1, e:1, l:2, p:1, w:2]
 //        1 => [a:1, e:1, l:1, p:1, w:1]
 
-        Map<SetOfPairs, Integer> map = new TreeMap<>();
+        Map<SetOfPairs, Integer> map = new HashMap<>();
 
         SetOfPairs setOfPairs = new SetOfPairs();
         setOfPairs.insert("p");

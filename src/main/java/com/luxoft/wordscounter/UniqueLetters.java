@@ -14,7 +14,7 @@ public class UniqueLetters {
 
     public Map<SetOfPairs, Integer> count(List<String> wordsList) {
         Preconditions.checkNotNull(wordsList);
-        mapped = new TreeMap<>();
+        mapped = new HashMap<>();
         wordsList.forEach(s -> {
             List<String> letters = Arrays.asList(s.split(EMPTY_STR));
             SetOfPairs set = new SetOfPairs();
