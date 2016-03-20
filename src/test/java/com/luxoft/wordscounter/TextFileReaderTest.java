@@ -23,11 +23,11 @@ public class TextFileReaderTest {
     private TextFileReader textFileReader;
     private File file;
 
-    private String testFileName = "src/test/resources/test.txt";
-    private List<String> expectedOutputForFileTest = Arrays.asList(
+    private static final String testFileName = "src/test/resources/test.txt";
+    private static final List<String> expectedOutputForFileTest = Arrays.asList(
             "te#st", "user", "tes", "test", "test", "u@sre", "eurs", "teeeeeess", "se+rs", "pawel", "pawwlle,", "pwwww");
 
-    private String invalidFilename = "src/test/resources/test.java";
+    private static final String invalidFilename = "src/test/resources/test.java";
 
     @Test
     public void shouldReadFile() throws IOException {
