@@ -1,5 +1,6 @@
 package com.luxoft.reportingsystem.words;
 
+import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -10,6 +11,7 @@ public class UniqueLetters {
     public static final String EMPTY_STR = "";
 
     public Map<Set<EntryPair>, Integer> countUniques(List<String> wordsList) {
+        Preconditions.checkNotNull(wordsList);
         Map<Set<EntryPair>, Integer> map = new HashMap<>();
         wordsList.forEach(s -> {
             List<String> letters = Arrays.asList(s.split(EMPTY_STR));
