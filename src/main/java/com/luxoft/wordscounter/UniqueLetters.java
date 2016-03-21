@@ -1,6 +1,5 @@
 package com.luxoft.wordscounter;
 
-import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class UniqueLetters {
