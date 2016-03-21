@@ -1,6 +1,7 @@
 package com.luxoft.wordscounter;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -14,12 +15,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class TextFileReader {
 
     private static final String TEXT_FILE_EXTENSION = ".txt";
-    private static final String SPACE = " ";
 
     public List<String> readFromFile(File file) throws IOException {
         checkArgument(file.getName().endsWith(TEXT_FILE_EXTENSION), "Only TXT files supported");
         try {
-            final String[] split = FileUtils.readFileToString(file).split(SPACE);
+            final String[] split = FileUtils.readFileToString(file).split(StringUtils.SPACE);
             return Arrays.asList(split);
         } catch (IOException e) {
            throw new IOException(e);

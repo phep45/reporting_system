@@ -12,7 +12,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public class ReportPrinterTest {
 
     @Autowired
-    ReportPrinter reportPrinter;
+    private ReportPrinter reportPrinter;
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowException() {
