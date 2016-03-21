@@ -53,33 +53,21 @@ public class OnPoint {
         context.close();
     }
 
-    public WordsCollector getWordsCollector() {
-        return wordsCollector;
-    }
 
     public void setWordsCollector(WordsCollector wordsCollector) {
         this.wordsCollector = wordsCollector;
     }
 
-    public TextFileReader getReader() {
-        return reader;
-    }
 
     public void setReader(TextFileReader reader) {
         this.reader = reader;
     }
 
-    public UniqueLetters getUniqueLetters() {
-        return uniqueLetters;
-    }
 
     public void setUniqueLetters(UniqueLetters uniqueLetters) {
         this.uniqueLetters = uniqueLetters;
     }
 
-    public ReportPrinter getPrinter() {
-        return printer;
-    }
 
     public void setPrinter(ReportPrinter printer) {
         this.printer = printer;
