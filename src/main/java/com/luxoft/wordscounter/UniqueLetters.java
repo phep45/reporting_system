@@ -22,14 +22,15 @@ public class UniqueLetters {
         Preconditions.checkNotNull(wordsList);
         map = new TreeMap<>(this::compareSets);
 
-        Map tmp = wordsList.stream().map(word -> {
-            return word.split(StringUtils.EMPTY);
-        }).map(letters -> {
-            TreeSet<MutablePair<String, Integer>> set = new TreeSet<>();
-            for (String letter : letters)
-                insert(letter, set);
-            return set;
-        }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map tmp = wordsList.stream()
+                .map(word -> {
+                    return word.split(StringUtils.EMPTY);
+                }).map(letters -> {
+                    TreeSet<MutablePair<String, Integer>> set = new TreeSet<>();
+                    for (String letter : letters)
+                        insert(letter, set);
+                    return set;
+                }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         map = tmp;
 
