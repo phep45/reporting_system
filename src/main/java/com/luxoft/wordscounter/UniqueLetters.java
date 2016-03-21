@@ -20,7 +20,6 @@ public class UniqueLetters {
 
     public Map<TreeSet<MutablePair<String, Integer>>, Integer> count(List<String> wordsList) {
         Preconditions.checkNotNull(wordsList);
-        map = new TreeMap<>(this::compareSets);
 
         Map tmp = wordsList.stream()
                 .map(word -> {
@@ -49,32 +48,6 @@ public class UniqueLetters {
         }
         log.trace("Creating new pair: {}:1", letter);
         set.add(new MutablePair<>(letter, 1));
-    }
-
-    private int compareSets(SortedSet<MutablePair<String, Integer>> firstSet, SortedSet<MutablePair<String, Integer>> secondSet) {
-        if (firstSet.equals(secondSet))
-            return 0;
-        if (firstSet.size() > secondSet.size())
-            return 1;
-        else if (firstSet.size() < secondSet.size())
-            return -1;
-        else {
-            return compareSameSizeSets(firstSet, secondSet);
-        }
-    }
-
-    private int compareSameSizeSets(SortedSet<MutablePair<String, Integer>> firstSet, SortedSet<MutablePair<String, Integer>> secondSet) {
-        List<MutablePair<String, Integer>> thisSetAsList = new ArrayList<>(firstSet);
-        List<MutablePair<String, Integer>> otherSetAsList = new ArrayList<>(secondSet);
-
-        Collections.sort(thisSetAsList);
-        Collections.sort(otherSetAsList);
-
-        for (int i = 0; i < thisSetAsList.size(); i++) {
-            if (thisSetAsList.get(i).compareTo(otherSetAsList.get(i)) != 0)
-                return thisSetAsList.get(i).compareTo(otherSetAsList.get(i));
-        }
-        return 0;
     }
 
 }
