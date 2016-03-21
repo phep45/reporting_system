@@ -1,5 +1,6 @@
 package com.luxoft.wordscounter;
 
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,21 +8,23 @@ import java.util.*;
 
 public class SetOfPairs implements Comparable<SetOfPairs> {
     private static final Logger log = LoggerFactory.getLogger(SetOfPairs.class);
-    private Set<EntryPair> entryPairSet = new TreeSet<>();
+    private Set<MutablePair<String, Integer>> entryPairSet = new TreeSet<>();
 
     public void insert(String letter) {
-        for (EntryPair oldPair : entryPairSet) {
-            if (oldPair.getLetter().equals(letter)) {
+        for (MutablePair<String, Integer> oldPair : entryPairSet) {
+            if (oldPair.getLeft().equals(letter)) {
                 log.trace("Pair {} exists; incrementing amount", oldPair);
-                oldPair.incrementAmount();
+                Integer right = oldPair.getRight();
+                right++;
+                oldPair.setRight(right);
                 return;
             }
         }
         log.trace("Creating new pair: {}:1", letter);
-        entryPairSet.add(new EntryPair(letter, 1));
+        entryPairSet.add(new MutablePair<String, Integer>(letter, 1));
     }
 
-    public Set<EntryPair> getEntryPairSet() {
+    public Set<MutablePair<String, Integer>> getEntryPairSet() {
         return entryPairSet;
     }
 
@@ -39,8 +42,8 @@ public class SetOfPairs implements Comparable<SetOfPairs> {
     }
 
     private int compareSameSizeSets(SetOfPairs other) {
-        List<EntryPair> thisSetAsList = new ArrayList<>(entryPairSet);
-        List<EntryPair> otherSetAsList = new ArrayList<>(other.getEntryPairSet());
+        List<MutablePair<String, Integer>> thisSetAsList = new ArrayList<>(entryPairSet);
+        List<MutablePair<String, Integer>> otherSetAsList = new ArrayList<>(other.getEntryPairSet());
 
         Collections.sort(thisSetAsList);
         Collections.sort(otherSetAsList);
