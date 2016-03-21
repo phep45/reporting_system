@@ -1,5 +1,7 @@
 package com.luxoft.wordscounter;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ public class UniqueLettersTest {
         uniqueLetters.count(null);
     }
 
-    private Map<SetOfPairs, Integer> generateExpectedMap() {
+    private ImmutableMap<SetOfPairs, Integer> generateExpectedMap() {
 //        1 => [p:1, w:4]
 //        1 => [e:1, r:1, s:2]
 //        1 => [e:1, s:1, t:1]
@@ -45,67 +47,66 @@ public class UniqueLettersTest {
 //        1 => [a:1, e:1, l:2, p:1, w:2]
 //        1 => [a:1, e:1, l:1, p:1, w:1]
 
-        Map<SetOfPairs, Integer> map = new TreeMap<>();
-
         SetOfPairs setOfPairs = new SetOfPairs();
         setOfPairs.insert("p");
         for (int i = 0; i < 4; i++)
             setOfPairs.insert("w");
-        map.put(setOfPairs, 1);
 
-        setOfPairs = new SetOfPairs();
-        setOfPairs.insert("e");
-        setOfPairs.insert("r");
+        SetOfPairs setOfPairs2 = new SetOfPairs();
+        setOfPairs2.insert("e");
+        setOfPairs2.insert("r");
         for (int i = 0; i < 2; i++)
-            setOfPairs.insert("s");
-        map.put(setOfPairs, 1);
+            setOfPairs2.insert("s");
 
-        setOfPairs = new SetOfPairs();
-        setOfPairs.insert("e");
-        setOfPairs.insert("t");
-        setOfPairs.insert("s");
-        map.put(setOfPairs, 1);
+        SetOfPairs setOfPairs3 = new SetOfPairs();
+        setOfPairs3.insert("e");
+        setOfPairs3.insert("t");
+        setOfPairs3.insert("s");
 
-        setOfPairs = new SetOfPairs();
-        setOfPairs.insert("e");
-        setOfPairs.insert("s");
+        SetOfPairs setOfPairs4 = new SetOfPairs();
+        setOfPairs4.insert("e");
+        setOfPairs4.insert("s");
         for (int i = 0; i < 2; i++)
-            setOfPairs.insert("t");
-        map.put(setOfPairs, 3);
+            setOfPairs4.insert("t");
 
-        setOfPairs = new SetOfPairs();
+        SetOfPairs setOfPairs5 = new SetOfPairs();
         for (int i = 0; i < 6; i++)
-            setOfPairs.insert("e");
-        setOfPairs.insert("t");
+            setOfPairs5.insert("e");
+        setOfPairs5.insert("t");
         for (int i = 0; i < 2; i++)
-            setOfPairs.insert("s");
-        map.put(setOfPairs, 1);
+            setOfPairs5.insert("s");
 
-        setOfPairs = new SetOfPairs();
-        setOfPairs.insert("u");
-        setOfPairs.insert("s");
-        setOfPairs.insert("e");
-        setOfPairs.insert("r");
-        map.put(setOfPairs, 3);
+        SetOfPairs setOfPairs6 = new SetOfPairs();
+        setOfPairs6.insert("u");
+        setOfPairs6.insert("s");
+        setOfPairs6.insert("e");
+        setOfPairs6.insert("r");
 
-        setOfPairs = new SetOfPairs();
-        setOfPairs.insert("p");
-        setOfPairs.insert("a");
-        setOfPairs.insert("w");
-        setOfPairs.insert("e");
-        setOfPairs.insert("l");
-        map.put(setOfPairs, 1);
+        SetOfPairs setOfPairs7 = new SetOfPairs();
+        setOfPairs7.insert("p");
+        setOfPairs7.insert("a");
+        setOfPairs7.insert("w");
+        setOfPairs7.insert("e");
+        setOfPairs7.insert("l");
 
-        setOfPairs = new SetOfPairs();
-        setOfPairs.insert("p");
-        setOfPairs.insert("a");
+        SetOfPairs setOfPairs8 = new SetOfPairs();
+        setOfPairs8.insert("p");
+        setOfPairs8.insert("a");
         for (int i = 0; i < 2; i++)
-            setOfPairs.insert("w");
-        setOfPairs.insert("e");
+            setOfPairs8.insert("w");
+        setOfPairs8.insert("e");
         for (int i = 0; i < 2; i++)
-            setOfPairs.insert("l");
-        map.put(setOfPairs, 1);
+            setOfPairs8.insert("l");
 
-        return map;
+        return new ImmutableSortedMap.Builder<SetOfPairs, Integer>(SetOfPairs::compareTo)
+                .put(setOfPairs, 1)
+                .put(setOfPairs2, 1)
+                .put(setOfPairs3, 1)
+                .put(setOfPairs4, 3)
+                .put(setOfPairs5, 1)
+                .put(setOfPairs6, 3)
+                .put(setOfPairs7, 1)
+                .put(setOfPairs8, 1)
+                .build();
     }
 }
