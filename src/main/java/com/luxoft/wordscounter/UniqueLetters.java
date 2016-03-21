@@ -50,32 +50,6 @@ public class UniqueLetters {
         set.add(new MutablePair<>(letter, 1));
     }
 
-    private void populateMap2(Map<TreeSet<MutablePair<String, Integer>>, Integer> map, TreeSet<MutablePair<String, Integer>> set) {
-        if (map.containsKey(set)) {
-            Integer val = map.get(set);
-            val++;
-            log.trace("Incremented to {} insertion of set: {}", val, set);
-            map.put(set, val);
-        } else {
-            log.trace("First insertion of Set: {}", set);
-            map.put(set, 1);
-        }
-
-    }
-
-    private void populateMap(TreeSet<MutablePair<String, Integer>> set) {
-        if (map.containsKey(set)) {
-            Integer val = map.get(set);
-            val++;
-            log.trace("Incremented to {} insertion of set: {}", val, set);
-            map.put(set, val);
-        } else {
-            log.trace("First insertion of Set: {}", set);
-            map.put(set, 1);
-        }
-
-    }
-
     private int compareSets(SortedSet<MutablePair<String, Integer>> firstSet, SortedSet<MutablePair<String, Integer>> secondSet) {
         if (firstSet.equals(secondSet))
             return 0;
