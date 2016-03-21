@@ -1,5 +1,6 @@
 package com.luxoft.wordscounter;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,8 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =WordsConfig.class, loader = AnnotationConfigContextLoader.class)
 public class TextFileReaderTest {
 
-    @Autowired
     private TextFileReader textFileReader;
     private File file;
 
@@ -28,6 +26,11 @@ public class TextFileReaderTest {
             "te#st", "user", "tes", "test", "test", "u@sre", "eurs", "teeeeeess", "se+rs", "pawel", "pawwlle,", "pwwww");
 
     private static final String invalidFilename = "src/test/resources/test.java";
+
+    @Before
+    public void setUp() {
+        textFileReader = new TextFileReader();
+    }
 
     @Test
     public void shouldReadFile() throws IOException {

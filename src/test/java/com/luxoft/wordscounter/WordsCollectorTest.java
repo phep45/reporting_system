@@ -1,5 +1,6 @@
 package com.luxoft.wordscounter;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,19 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =WordsConfig.class, loader = AnnotationConfigContextLoader.class)
 public class WordsCollectorTest {
 
-    @Autowired
     private WordsCollector wordsCollector;
 
     private List<String> expectedListOfWords = Arrays.asList(
             "test", "user", "tes", "test", "test", "usre", "eurs", "teeeeeess", "sers", "pawel", "pawwlle", "pwwww");
     private List<String> wordsToProcess = Arrays.asList(
             "te#st", "user", "tes", "test", "test", "u@sre", "eurs", "teeeeeess", "se+rs", "pawel", "pawwlle,", "pwwww");
+
+    @Before
+    public void setUp() {
+        wordsCollector = new WordsCollector();
+    }
 
     @Test
     public void shouldCollectWords() throws IOException {

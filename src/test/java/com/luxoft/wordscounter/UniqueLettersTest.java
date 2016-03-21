@@ -2,6 +2,8 @@ package com.luxoft.wordscounter;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedMap;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,22 +15,24 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =WordsConfig.class, loader = AnnotationConfigContextLoader.class)
 public class UniqueLettersTest {
 
     private static final List<String> listOfWords = Arrays.asList(
             "test", "user", "tes", "test", "test", "usre", "eurs", "teeeeeess", "sers", "pawel", "pawwlle", "pwwww");
-    private Map<SetOfPairs, Integer> expectedMap;
+    private Map expectedMap;
 
-    @Autowired
     private UniqueLetters uniqueLetters;
+
+    @Before
+    public void setUp() {
+        uniqueLetters = new UniqueLetters();
+    }
 
     @Test
     public void shouldReturnCorrectMap() {
         expectedMap = generateExpectedMap();
 
-        Map<SetOfPairs, Integer> result = uniqueLetters.count(listOfWords);
+        Map<TreeSet<MutablePair<String, Integer>>, Integer> result = uniqueLetters.count(listOfWords);
         assertEquals(expectedMap, result);
     }
 
@@ -37,7 +41,7 @@ public class UniqueLettersTest {
         uniqueLetters.count(null);
     }
 
-    private ImmutableMap<SetOfPairs, Integer> generateExpectedMap() {
+    private ImmutableMap<TreeSet<MutablePair<String, Integer>>, Integer> generateExpectedMap() {
 //        1 => [p:1, w:4]
 //        1 => [e:1, r:1, s:2]
 //        1 => [e:1, s:1, t:1]
@@ -47,58 +51,51 @@ public class UniqueLettersTest {
 //        1 => [a:1, e:1, l:2, p:1, w:2]
 //        1 => [a:1, e:1, l:1, p:1, w:1]
 
-        SetOfPairs setOfPairs = new SetOfPairs();
-        setOfPairs.insert("p");
-        for (int i = 0; i < 4; i++)
-            setOfPairs.insert("w");
+        TreeSet<MutablePair<String, Integer>> setOfPairs = new TreeSet<>();
+        setOfPairs.add(new MutablePair<>("p", 1));
+        setOfPairs.add(new MutablePair<>("w", 4));
 
-        SetOfPairs setOfPairs2 = new SetOfPairs();
-        setOfPairs2.insert("e");
-        setOfPairs2.insert("r");
-        for (int i = 0; i < 2; i++)
-            setOfPairs2.insert("s");
+        TreeSet<MutablePair<String, Integer>> setOfPairs2 = new TreeSet<>();
+        setOfPairs2.add(new MutablePair<>("e", 1));
+        setOfPairs2.add(new MutablePair<>("r", 1));
+        setOfPairs2.add(new MutablePair<>("s", 2));
 
-        SetOfPairs setOfPairs3 = new SetOfPairs();
-        setOfPairs3.insert("e");
-        setOfPairs3.insert("t");
-        setOfPairs3.insert("s");
+        TreeSet<MutablePair<String, Integer>> setOfPairs3 = new TreeSet<>();
+        setOfPairs3.add(new MutablePair<>("e", 1));
+        setOfPairs3.add(new MutablePair<>("s", 1));
+        setOfPairs3.add(new MutablePair<>("t", 1));
 
-        SetOfPairs setOfPairs4 = new SetOfPairs();
-        setOfPairs4.insert("e");
-        setOfPairs4.insert("s");
-        for (int i = 0; i < 2; i++)
-            setOfPairs4.insert("t");
+        TreeSet<MutablePair<String, Integer>> setOfPairs4 = new TreeSet<>();
+        setOfPairs4.add(new MutablePair<>("e", 1));
+        setOfPairs4.add(new MutablePair<>("s", 1));
+        setOfPairs4.add(new MutablePair<>("t", 2));
 
-        SetOfPairs setOfPairs5 = new SetOfPairs();
-        for (int i = 0; i < 6; i++)
-            setOfPairs5.insert("e");
-        setOfPairs5.insert("t");
-        for (int i = 0; i < 2; i++)
-            setOfPairs5.insert("s");
+        TreeSet<MutablePair<String, Integer>> setOfPairs5 = new TreeSet<>();
+        setOfPairs5.add(new MutablePair<>("e", 6));
+        setOfPairs5.add(new MutablePair<>("t", 1));
+        setOfPairs5.add(new MutablePair<>("s", 2));
 
-        SetOfPairs setOfPairs6 = new SetOfPairs();
-        setOfPairs6.insert("u");
-        setOfPairs6.insert("s");
-        setOfPairs6.insert("e");
-        setOfPairs6.insert("r");
+        TreeSet<MutablePair<String, Integer>> setOfPairs6 = new TreeSet<>();
+        setOfPairs6.add(new MutablePair<>("u", 1));
+        setOfPairs6.add(new MutablePair<>("s", 1));
+        setOfPairs6.add(new MutablePair<>("e", 1));
+        setOfPairs6.add(new MutablePair<>("r", 1));
 
-        SetOfPairs setOfPairs7 = new SetOfPairs();
-        setOfPairs7.insert("p");
-        setOfPairs7.insert("a");
-        setOfPairs7.insert("w");
-        setOfPairs7.insert("e");
-        setOfPairs7.insert("l");
+        TreeSet<MutablePair<String, Integer>> setOfPairs7 = new TreeSet<>();
+        setOfPairs7.add(new MutablePair<>("p", 1));
+        setOfPairs7.add(new MutablePair<>("a", 1));
+        setOfPairs7.add(new MutablePair<>("w", 1));
+        setOfPairs7.add(new MutablePair<>("e", 1));
+        setOfPairs7.add(new MutablePair<>("l", 1));
 
-        SetOfPairs setOfPairs8 = new SetOfPairs();
-        setOfPairs8.insert("p");
-        setOfPairs8.insert("a");
-        for (int i = 0; i < 2; i++)
-            setOfPairs8.insert("w");
-        setOfPairs8.insert("e");
-        for (int i = 0; i < 2; i++)
-            setOfPairs8.insert("l");
+        TreeSet<MutablePair<String, Integer>> setOfPairs8 = new TreeSet<>();
+        setOfPairs8.add(new MutablePair<>("p", 1));
+        setOfPairs8.add(new MutablePair<>("a", 1));
+        setOfPairs8.add(new MutablePair<>("w", 2));
+        setOfPairs8.add(new MutablePair<>("e", 1));
+        setOfPairs8.add(new MutablePair<>("l", 2));
 
-        return new ImmutableSortedMap.Builder<SetOfPairs, Integer>(SetOfPairs::compareTo)
+        return new ImmutableSortedMap.Builder<TreeSet<MutablePair<String, Integer>>, Integer>(this::compareSets)
                 .put(setOfPairs, 1)
                 .put(setOfPairs2, 1)
                 .put(setOfPairs3, 1)
@@ -108,5 +105,31 @@ public class UniqueLettersTest {
                 .put(setOfPairs7, 1)
                 .put(setOfPairs8, 1)
                 .build();
+    }
+
+    private int compareSets(SortedSet<MutablePair<String, Integer>> firstSet, SortedSet<MutablePair<String, Integer>> secondSet) {
+        if(firstSet.equals(secondSet))
+            return 0;
+        if(firstSet.size() > secondSet.size())
+            return 1;
+        else if(firstSet.size() < secondSet.size())
+            return -1;
+        else {
+            return compareSameSizeSets(firstSet, secondSet);
+        }
+    }
+
+    private int compareSameSizeSets(SortedSet<MutablePair<String, Integer>> firstSet, SortedSet<MutablePair<String, Integer>> secondSet) {
+        List<MutablePair<String, Integer>> thisSetAsList = new ArrayList<>(firstSet);
+        List<MutablePair<String, Integer>> otherSetAsList = new ArrayList<>(secondSet);
+
+        Collections.sort(thisSetAsList);
+        Collections.sort(otherSetAsList);
+
+        for(int i = 0; i < thisSetAsList.size(); i++) {
+            if(thisSetAsList.get(i).compareTo(otherSetAsList.get(i)) != 0)
+                return thisSetAsList.get(i).compareTo(otherSetAsList.get(i));
+        }
+        return 0;
     }
 }
