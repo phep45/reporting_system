@@ -1,5 +1,6 @@
 package com.luxoft.wordscounter;
 
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 @Component
 public class OnPoint {
@@ -33,7 +35,7 @@ public class OnPoint {
             log.trace("Words read from file");
             List<String> collectedWords = wordsCollector.collect(words);
             log.trace("Words collected");
-            Map<SetOfPairs, Integer> result = uniqueLetters.count(collectedWords);
+            Map<TreeSet<MutablePair<String, Integer>>, Integer> result = uniqueLetters.count(collectedWords);
             log.trace("Unique letters counted");
             printer.printReport(result);
             log.trace("Report printed");
