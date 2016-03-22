@@ -41,7 +41,7 @@ public class OnPointTest {
     private static final List<String> expectedCollectorOutput = Arrays.asList("test", "pest");
     private static final Map<TreeSet<MutablePair<String, Integer>>, Integer> expectedUniqueLetters = generateExpectedUniqueLetters();
 
-
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldInvokeAllMethods() throws IOException {
         onPoint.process(anyString());
