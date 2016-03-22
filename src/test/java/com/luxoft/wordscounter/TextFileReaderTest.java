@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 public class TextFileReaderTest {
 
     private TextFileReader textFileReader;
+    private TextFileReader textFileReaderMock;
     private File file;
 
     private static final String testFileName = "src/test/resources/test.txt";
@@ -47,17 +48,11 @@ public class TextFileReaderTest {
     public void shouldReadFileWithMocks() throws IOException {
         file = new File(testFileName);
 
-        textFileReader = Mockito.mock(TextFileReader.class);
-        when(textFileReader.readFromFile(file)).thenReturn(expectedOutputForFileTest);
+        textFileReaderMock = Mockito.mock(TextFileReader.class);
+        when(textFileReaderMock.readFromFile(file)).thenReturn(expectedOutputForFileTest);
 
-    }
+        assertEquals(textFileReaderMock.readFromFile(file), textFileReader.readFromFile(file));
 
-    @Test
-    public void shouldThrowExceptionWithMocks() throws IOException {
-        file = new File(invalidFilename);
-
-        textFileReader = Mockito.mock(TextFileReader.class);
-        when(textFileReader.readFromFile(file)).thenThrow(IOException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
