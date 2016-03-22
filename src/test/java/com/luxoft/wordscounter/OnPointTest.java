@@ -68,7 +68,7 @@ public class OnPointTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void shouldProcessCorrectlyBaseOnSizes() throws IOException {
+    public void shouldProcessCorrectlyBasedOnSizes() throws IOException {
 
         final int expectedSize = expectedReaderOutput.size();
 
