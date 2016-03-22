@@ -2,13 +2,11 @@ package com.luxoft.wordscounter;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.tuple.MutablePair;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -70,11 +68,15 @@ public class OnPointTest {
     @Test
     public void shouldProcessCorrectlyBasedOnSizes() throws IOException {
 
-        final int expectedSize = expectedReaderOutput.size();
+        final int expectedSize = 100;
 
-        when(textFileReaderMock.readFromFile(file)).thenReturn(expectedReaderOutput);
-        when(wordsCollectorMock.collect(expectedReaderOutput)).thenReturn(expectedCollectorOutput);
-        when(uniqueLettersMock.count(expectedCollectorOutput)).thenReturn(expectedUniqueLetters);
+        List<String> readerOutput = new ArrayList<>(expectedSize);
+        List<String> collectorOutput = new ArrayList<>(expectedSize);
+        Map uniques = new HashMap<>(expectedSize);
+
+        when(textFileReaderMock.readFromFile(any(File.class))).thenReturn(readerOutput);
+        when(wordsCollectorMock.collect(readerOutput)).thenReturn(collectorOutput);
+        when(uniqueLettersMock.count(collectorOutput)).thenReturn(uniques);
 
         onPoint.process(path);
 
@@ -97,6 +99,13 @@ public class OnPointTest {
         set2.add(new MutablePair<>("p", 1));
 
         return ImmutableMap.<TreeSet<MutablePair<String, Integer>>, Integer>builder().put(set1, 1).put(set2 ,1).build();
+    }
+
+    private class IsListOfTwo extends ArgumentMatcher<List> {
+        @Override
+        public boolean matches(Object list) {
+            return ((List) list).size() == 2;
+        }
     }
 
 }
