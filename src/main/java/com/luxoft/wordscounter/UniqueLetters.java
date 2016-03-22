@@ -1,5 +1,6 @@
 package com.luxoft.wordscounter;
 
+import com.google.common.base.Functions;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -10,30 +11,32 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Component
 public class UniqueLetters {
 
     private static final Logger log = LoggerFactory.getLogger(UniqueLetters.class);
 
-    private Map<TreeSet<MutablePair<String, Integer>>, Integer> map;
-
     public Map<TreeSet<MutablePair<String, Integer>>, Integer> count(List<String> wordsList) {
         Preconditions.checkNotNull(wordsList);
 
-        Map tmp = wordsList.stream()
-                .map(word -> {
-                    return word.split(StringUtils.EMPTY);
-                }).map(letters -> {
+        return wordsList.stream()
+                .map(word -> word.split(StringUtils.EMPTY))
+                .map(letters -> {
                     TreeSet<MutablePair<String, Integer>> set = new TreeSet<>();
                     for (String letter : letters)
                         insert(letter, set);
                     return set;
-                }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+                })
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        e -> e.getKey(),
+                        e -> e.getValue().intValue()
+                ));
 
-        map = tmp;
-
-        return map;
     }
 
     private void insert(String letter, TreeSet<MutablePair<String, Integer>> set) {

@@ -3,6 +3,7 @@ package com.luxoft.wordscounter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 public class TextFileReaderTest {
 
@@ -39,6 +41,23 @@ public class TextFileReaderTest {
         file = new File(testFileName);
         List<String> result = textFileReader.readFromFile(file);
         assertEquals(expectedOutputForFileTest, result);
+    }
+
+    @Test
+    public void shouldReadFileWithMocks() throws IOException {
+        file = new File(testFileName);
+
+        textFileReader = Mockito.mock(TextFileReader.class);
+        when(textFileReader.readFromFile(file)).thenReturn(expectedOutputForFileTest);
+
+    }
+
+    @Test
+    public void shouldThrowExceptionWithMocks() throws IOException {
+        file = new File(invalidFilename);
+
+        textFileReader = Mockito.mock(TextFileReader.class);
+        when(textFileReader.readFromFile(file)).thenThrow(IOException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
