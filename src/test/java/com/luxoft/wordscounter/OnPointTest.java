@@ -81,17 +81,7 @@ public class OnPointTest {
         verify(textFileReaderMock).readFromFile(file);
         verify(wordsCollectorMock).collect(argThat(AllOf.allOf(Matchers.hasSize(expectedSize))));
         verify(uniqueLettersMock).count(argThat(AllOf.allOf(Matchers.hasSize(expectedSize))));
-        verify(reportPrinter).printReport(argThat(new BaseMatcher<Map<TreeSet<MutablePair<String, Integer>>, Integer>>() {
-            @Override
-            public void describeTo(Description description) {
-
-            }
-
-            @Override
-            public boolean matches(Object o) {
-                return ((Map<TreeSet<MutablePair<String, Integer>>, Integer>) o).size() == 2;
-            }
-        }));
+        verify(reportPrinter).printReport(argThat(AllOf.allOf(Matchers.aMapWithSize(expectedSize))));
     }
 
     private static ImmutableMap<TreeSet<MutablePair<String, Integer>>, Integer> generateExpectedUniqueLetters() {
