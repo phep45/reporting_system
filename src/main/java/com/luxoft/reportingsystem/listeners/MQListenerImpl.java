@@ -1,4 +1,8 @@
-package listeners;
+package com.luxoft.reportingsystem.listeners;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.jms.*;
 import java.util.ArrayList;
@@ -6,16 +10,18 @@ import java.util.List;
 
 public class MQListenerImpl implements MQListener {
 
+
     private static final int TIMEOUT = 1000;
 
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<Message>();
+
     private Session session;
+
     private String mqName;
 
-    public MQListenerImpl(String mqName) {
+    public MQListenerImpl(String mqName, Session session) {
         this.mqName = mqName;
-        this.messages = new ArrayList<Message>();
-        session = SessionFactory.getSession();
+        this.session = session;
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -59,6 +65,9 @@ public class MQListenerImpl implements MQListener {
         }
     }
 
+    public void setMqName(String mqName) {
+        this.mqName = mqName;
+    }
 
     public List<Message> getMessages() {
         return messages;
