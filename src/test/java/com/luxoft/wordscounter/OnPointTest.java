@@ -36,8 +36,6 @@ public class OnPointTest {
 
     private static final String path = "src/test/resources/simple.txt";
     private static final File file = new File(path );
-    private static final String invalidPath = "src/test/resources/simple.notTxtExtension";
-    private static final File invalidFile = new File(invalidPath);
     private static final List<String> expectedReaderOutput = Arrays.asList("tes$t", "pest");
     private static final List<String> expectedCollectorOutput = Arrays.asList("test", "pest");
     private static final Map<TreeSet<MutablePair<String, Integer>>, Integer> expectedUniqueLetters = generateExpectedUniqueLetters();
@@ -45,7 +43,7 @@ public class OnPointTest {
 
     @Test
     public void shouldInvokeAllMethods() throws IOException {
-        onPoint.process(path);
+        onPoint.process(anyString());
 
         verify(textFileReaderMock).readFromFile(any(File.class));
         verify(wordsCollectorMock).collect(anyListOf(String.class));
