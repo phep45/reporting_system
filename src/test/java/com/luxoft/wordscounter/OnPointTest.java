@@ -35,7 +35,7 @@ public class OnPointTest {
 
 
     private static final String path = "src/test/resources/simple.txt";
-    private static final File file = new File(path );
+    private static final File file = new File(path);
     private static final List<String> expectedReaderOutput = Arrays.asList("tes$t", "pest");
     private static final List<String> expectedCollectorOutput = Arrays.asList("test", "pest");
     private static final Map<TreeSet<MutablePair<String, Integer>>, Integer> expectedUniqueLetters = generateExpectedUniqueLetters();
