@@ -1,6 +1,7 @@
 package com.luxoft.wordscounter;
 
 import org.apache.commons.lang3.tuple.MutablePair;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,12 @@ public class OnPoint {
     public void process(String path) {
 
         File file = new File(path);
+        log.trace("File to read from: {}", file.getAbsolutePath());
         try {
             List<String> words = reader.readFromFile(file);
-            log.trace("Words read from file");
+            log.trace("Words read from file: {}", words);
             List<String> collectedWords = wordsCollector.collect(words);
-            log.trace("Words collected");
+            log.trace("Words collected: {}", collectedWords);
             Map<TreeSet<MutablePair<String, Integer>>, Integer> result = uniqueLetters.count(collectedWords);
             log.trace("Unique letters counted");
             printer.printReport(result);
@@ -53,26 +55,6 @@ public class OnPoint {
         onPoint.process("src\\main\\resources\\words\\test2.txt");
 
         context.close();
-    }
-
-
-    public void setWordsCollector(WordsCollector wordsCollector) {
-        this.wordsCollector = wordsCollector;
-    }
-
-
-    public void setReader(TextFileReader reader) {
-        this.reader = reader;
-    }
-
-
-    public void setUniqueLetters(UniqueLetters uniqueLetters) {
-        this.uniqueLetters = uniqueLetters;
-    }
-
-
-    public void setPrinter(ReportPrinter printer) {
-        this.printer = printer;
     }
 }
 
