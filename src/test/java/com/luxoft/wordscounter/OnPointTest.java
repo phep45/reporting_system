@@ -2,18 +2,14 @@ package com.luxoft.wordscounter;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.tuple.MutablePair;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowire;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.*;
 
 import static org.mockito.Mockito.*;
