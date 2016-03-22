@@ -35,6 +35,7 @@
         <hibernate-core.version>5.1.0.Final</hibernate-core.version>
         <h2db.version>1.4.191</h2db.version>
         <mockito.version>1.10.19</mockito.version>
+        <hc.version>2.0.0.0</hc.version>
     </properties>
 
     <dependencies>
@@ -108,6 +109,12 @@
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-junit</artifactId>
+            <version>${hc.version}</version>
+        </dependency>
+
 
     </dependencies>
 </project>
