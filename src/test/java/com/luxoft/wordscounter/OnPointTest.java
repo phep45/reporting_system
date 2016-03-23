@@ -68,19 +68,24 @@ public class OnPointTest {
     @Test
     public void shouldProcessCorrectlyBasedOnSizes() throws IOException {
 
-        final int expectedSize = 100;
+        final int expectedSize = 999;
 
-        List<String> readerOutput = new ArrayList<>(expectedSize);
-        List<String> collectorOutput = new ArrayList<>(expectedSize);
+        List listOfExpectedSize = new ArrayList<>(expectedSize);
         Map uniques = new HashMap<>(expectedSize);
 
-        when(textFileReaderMock.readFromFile(any(File.class))).thenReturn(readerOutput);
-        when(wordsCollectorMock.collect(readerOutput)).thenReturn(collectorOutput);
-        when(uniqueLettersMock.count(collectorOutput)).thenReturn(uniques);
+        for(int i = 0; i < expectedSize; i++) {
+            listOfExpectedSize.add(new Object());
+            uniques.put(new Object(), new Object());
+        }
 
-        onPoint.process(path);
 
-        verify(textFileReaderMock).readFromFile(file);
+        when(textFileReaderMock.readFromFile(any(File.class))).thenReturn(listOfExpectedSize);
+        when(wordsCollectorMock.collect(listOfExpectedSize)).thenReturn(listOfExpectedSize);
+        when(uniqueLettersMock.count(listOfExpectedSize)).thenReturn(uniques);
+
+        onPoint.process(anyString());
+
+        verify(textFileReaderMock).readFromFile(any(File.class));
         verify(wordsCollectorMock).collect(argThat(AllOf.allOf(Matchers.hasSize(expectedSize))));
         verify(uniqueLettersMock).count(argThat(AllOf.allOf(Matchers.hasSize(expectedSize))));
         verify(reportPrinter).printReport(argThat(AllOf.allOf(Matchers.aMapWithSize(expectedSize))));
