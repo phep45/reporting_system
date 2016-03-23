@@ -32,11 +32,11 @@ public class OnPointTest {
     private ReportPrinter reportPrinterMock;
 
 
-    private static final String path = "src/test/resources/simple.txt";
-    private static final File file = new File(path);
-    private static final List<String> expectedReaderOutput = Arrays.asList("tes$t", "pest");
-    private static final List<String> expectedCollectorOutput = Arrays.asList("test", "pest");
-    private static final Map<TreeSet<MutablePair<String, Integer>>, Integer> expectedUniqueLetters = generateExpectedUniqueLetters();
+    private static final String PATH = "src/test/resources/simple.txt";
+    private static final File FILE = new File(PATH);
+    private static final List<String> EXPECTED_READER_OUTPUT = Arrays.asList("tes$t", "pest");
+    private static final List<String> EXPECTED_COLLECTOR_OUTPUT = Arrays.asList("test", "pest");
+    private static final Map<TreeSet<MutablePair<String, Integer>>, Integer> EXPECTED_UNIQUE_LETTERS = generateExpectedUniqueLetters();
 
     @SuppressWarnings("unchecked")
     @Test
@@ -51,16 +51,16 @@ public class OnPointTest {
 
     @Test
     public void shouldProcessCorrectly() throws IOException{
-        when(textFileReaderMock.readFromFile(file)).thenReturn(expectedReaderOutput);
-        when(wordsCollectorMock.collect(expectedReaderOutput)).thenReturn(expectedCollectorOutput);
-        when(uniqueLettersMock.count(expectedCollectorOutput)).thenReturn(expectedUniqueLetters);
+        when(textFileReaderMock.readFromFile(FILE)).thenReturn(EXPECTED_READER_OUTPUT);
+        when(wordsCollectorMock.collect(EXPECTED_READER_OUTPUT)).thenReturn(EXPECTED_COLLECTOR_OUTPUT);
+        when(uniqueLettersMock.count(EXPECTED_COLLECTOR_OUTPUT)).thenReturn(EXPECTED_UNIQUE_LETTERS);
 
-        onPoint.process(path);
+        onPoint.process(PATH);
 
-        verify(textFileReaderMock).readFromFile(file);
-        verify(wordsCollectorMock).collect(expectedReaderOutput);
-        verify(uniqueLettersMock).count(expectedCollectorOutput);
-        verify(reportPrinterMock).printReport(expectedUniqueLetters);
+        verify(textFileReaderMock).readFromFile(FILE);
+        verify(wordsCollectorMock).collect(EXPECTED_READER_OUTPUT);
+        verify(uniqueLettersMock).count(EXPECTED_COLLECTOR_OUTPUT);
+        verify(reportPrinterMock).printReport(EXPECTED_UNIQUE_LETTERS);
     }
 
     @SuppressWarnings("unchecked")
