@@ -106,11 +106,4 @@ public class OnPointTest {
         return ImmutableMap.<TreeSet<MutablePair<String, Integer>>, Integer>builder().put(set1, 1).put(set2 ,1).build();
     }
 
-    private class IsListOfTwo extends ArgumentMatcher<List> {
-        @Override
-        public boolean matches(Object list) {
-            return ((List) list).size() == 2;
-        }
-    }
-
 }
