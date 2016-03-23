@@ -1,15 +1,14 @@
 package com.luxoft.reportingsystem.listeners;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MQListenerImpl implements MQListener {
-
+    private static final Logger log = LoggerFactory.getLogger(MQListenerImpl.class);
 
     private static final int TIMEOUT = 1000;
 
@@ -27,7 +26,7 @@ public class MQListenerImpl implements MQListener {
     @SuppressWarnings("InfiniteLoopStatement")
     public void listen() {
         if (session == null) {
-            System.err.println("session failed");
+            log.error("Session failed");
             return;
         }
         Message msg;
@@ -41,16 +40,16 @@ public class MQListenerImpl implements MQListener {
                     if (msg == null)
                         continue;
                     messages.add(msg);
-                    System.out.println(mqName + ": " + ((TextMessage) msg).getText());
+                    log.trace("{} : {}", mqName, ((TextMessage) msg).getText());
                 }
                 else break;
             }
         }catch (JMSException e) {
            if(e.getCause() instanceof InterruptedException) {
-               System.out.println(mqName + " stopped");
+               log.trace("{} stopped", mqName);
            }
            else
-               e.printStackTrace();
+              log.error("Something went wrong: ", e);
         }
         finally {
             try {
