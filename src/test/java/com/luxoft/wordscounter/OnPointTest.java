@@ -6,7 +6,6 @@ import org.hamcrest.Matchers;
 import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
