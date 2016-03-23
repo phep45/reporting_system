@@ -29,7 +29,7 @@ public class OnPointTest {
     @Mock
     private UniqueLetters uniqueLettersMock;
     @Mock
-    private ReportPrinter reportPrinter;
+    private ReportPrinter reportPrinterMock;
 
 
     private static final String path = "src/test/resources/simple.txt";
@@ -46,7 +46,7 @@ public class OnPointTest {
         verify(textFileReaderMock).readFromFile(any(File.class));
         verify(wordsCollectorMock).collect(anyListOf(String.class));
         verify(uniqueLettersMock).count(anyListOf(String.class));
-        verify(reportPrinter).printReport(anyMap());
+        verify(reportPrinterMock).printReport(anyMap());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class OnPointTest {
         verify(textFileReaderMock).readFromFile(file);
         verify(wordsCollectorMock).collect(expectedReaderOutput);
         verify(uniqueLettersMock).count(expectedCollectorOutput);
-        verify(reportPrinter).printReport(expectedUniqueLetters);
+        verify(reportPrinterMock).printReport(expectedUniqueLetters);
     }
 
     @SuppressWarnings("unchecked")
@@ -87,7 +87,7 @@ public class OnPointTest {
         verify(textFileReaderMock).readFromFile(any(File.class));
         verify(wordsCollectorMock).collect(argThat(AllOf.allOf(Matchers.hasSize(expectedSize))));
         verify(uniqueLettersMock).count(argThat(AllOf.allOf(Matchers.hasSize(expectedSize))));
-        verify(reportPrinter).printReport(argThat(AllOf.allOf(Matchers.aMapWithSize(expectedSize))));
+        verify(reportPrinterMock).printReport(argThat(AllOf.allOf(Matchers.aMapWithSize(expectedSize))));
     }
 
     private static ImmutableMap<TreeSet<MutablePair<String, Integer>>, Integer> generateExpectedUniqueLetters() {
