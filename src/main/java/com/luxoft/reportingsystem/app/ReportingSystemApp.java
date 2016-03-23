@@ -2,6 +2,8 @@ package com.luxoft.reportingsystem.app;
 
 import com.luxoft.reportingsystem.conf.Config;
 import com.luxoft.reportingsystem.listeners.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -16,6 +18,7 @@ import java.util.concurrent.Executors;
 
 @Component
 public class ReportingSystemApp {
+    private static final Logger log = LoggerFactory.getLogger(ReportingSystemApp.class);
 
     @Autowired
     @Qualifier("sessionSlis")
@@ -27,9 +30,6 @@ public class ReportingSystemApp {
     private Connection connection;
 
     public void run() {
-
-        System.out.println(slisListenerThread);
-        System.out.println(xlisListenerThread);
 
         ExecutorService pool = Executors.newFixedThreadPool(2);
         pool.execute(() -> slisListenerThread.listen());
@@ -52,7 +52,9 @@ public class ReportingSystemApp {
     }
 
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         context.getBean(ReportingSystemApp.class).run();
+
+        context.close();
     }
 }

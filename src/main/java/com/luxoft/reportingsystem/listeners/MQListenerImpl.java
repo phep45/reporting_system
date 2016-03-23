@@ -4,17 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Queue;
 
 public class MQListenerImpl implements MQListener {
     private static final Logger log = LoggerFactory.getLogger(MQListenerImpl.class);
 
     private static final int TIMEOUT = 1000;
 
-    private List<Message> messages = new ArrayList<Message>();
-
     private Session session;
+
+    private Queue<Message> messageQueue;
 
     private String mqName;
 
@@ -39,7 +39,7 @@ public class MQListenerImpl implements MQListener {
                     msg = consumer.receive(TIMEOUT);
                     if (msg == null)
                         continue;
-                    messages.add(msg);
+                    messageQueue.add(msg);
                     log.trace("{} : {}", mqName, ((TextMessage) msg).getText());
                 }
                 else break;
@@ -68,7 +68,7 @@ public class MQListenerImpl implements MQListener {
         this.mqName = mqName;
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    public void setMessageQueue(Queue<Message> messageQueue) {
+        this.messageQueue = messageQueue;
     }
 }

@@ -1,5 +1,6 @@
 package com.luxoft.reportingsystem.conf;
 
+import com.luxoft.reportingsystem.collector.XLISCollector;
 import com.luxoft.reportingsystem.listeners.MQListener;
 import com.luxoft.reportingsystem.listeners.MQListenerImpl;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -10,12 +11,19 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.jms.*;
 
+import java.util.*;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 
 @Configuration
 @ComponentScan("com.luxoft.reportingsystem.*")
 public class Config {
     private static String URL = "tcp://localhost:61616";
+
+    private static Queue<Message> xlisQueue = new LinkedBlockingQueue<>();
+    private static Queue<Message> slisQueue = new LinkedBlockingQueue<>();
 
     @Autowired
     private Connection connection;
@@ -27,7 +35,9 @@ public class Config {
 
     @Bean
     public MQListener sessionXlis() {
-        return new MQListenerImpl("XLIS", getSession());
+        MQListenerImpl xlis = new MQListenerImpl("XLIS", getSession());
+        xlis.setMessageQueue(xlisQueue);
+        return xlis;
     }
 
     private Session getSession() {
@@ -52,5 +62,11 @@ public class Config {
         } catch (JMSException e) {
             throw new java.lang.IllegalStateException(e);
         }
+    }
+
+    @Bean
+    public XLISCollector xlisCollector() {
+        XLISCollector xlisCollector = new XLISCollector();
+        return  xlisCollector;
     }
 }
