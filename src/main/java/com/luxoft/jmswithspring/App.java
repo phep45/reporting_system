@@ -46,8 +46,7 @@ public class App {
         log.trace("Sending a new message.");
 
         jmsTemplate.send("slis", messageCreator);
-        jmsTemplate.send("slis", messageCreator);
-//        jmsTemplate.send("xlis", messageCreatorForXlis);
+        jmsTemplate.send("xlis", messageCreatorForXlis);
 
         context.close();
     }

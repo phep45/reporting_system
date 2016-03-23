@@ -21,7 +21,8 @@ public class SLISReceiver {
     @JmsListener(destination = "slis", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
         log.trace("SLIS: Received < {} >", message);
-        context.close();
+        System.out.println("SLIS: " + message);
+//        context.close();
         FileSystemUtils.deleteRecursively(new File("activemq-data"));
     }
 
