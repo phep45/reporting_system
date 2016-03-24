@@ -32,7 +32,7 @@ public class OperationsParser {
 
     public OperationsParser() {}
 
-    public OperationsParser(List<String> list, int validLineLength) {
+    public OperationsParser(List<String> list, String validLineLength) {
         this.list = list;
         this.validator = new LineValidator(validLineLength);
     }
@@ -78,9 +78,9 @@ public class OperationsParser {
         list.forEach(line -> {
             try {
                 validator.validate(line);
-                String securityStr = extractor.extractSecurity(line);
-                Security security = securityMapper.map(securityStr);
-                securities.add(security);
+//                String securityStr = extractor.extractSecurities(line);
+//                securityMapper.map(securityStr);
+//                securities.add(security);
             } catch (CorruptedDataException e) {
                 log.info("While parsing securities - " + DATA_CORRUPTED, e.getMessage());
             }

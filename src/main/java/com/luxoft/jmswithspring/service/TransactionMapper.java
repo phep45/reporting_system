@@ -29,10 +29,10 @@ public class TransactionMapper {
         Transaction transaction = null;
 
         try {
-            BigDecimal id = new BigDecimal(transactionAsString.substring(ID_BEGIN, ID_END).trim());
+            int id = Integer.parseInt(transactionAsString.substring(ID_BEGIN, ID_END).trim());
             String operation = transactionAsString.substring(OPERATION_BEGIN, OPERATION_END).trim();
             String code = transactionAsString.substring(CODE_BEGIN, CODE_END).trim();
-            BigDecimal branchId = new BigDecimal(transactionAsString.substring(BRANCH_ID_BEGIN));
+            int branchId = Integer.parseInt(transactionAsString.substring(BRANCH_ID_BEGIN));
 
             transaction = new Transaction(id, OperationType.valueOf(operation), code, branchId);
 

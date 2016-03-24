@@ -12,7 +12,7 @@ public class Extractor {
     private static final int TRANSACTION_DATA_BEGIN = 35;
     private static final int TRANSACTION_DATA_END = 52;
     private static final int SECURITY_DATA_BEGIN = 52;
-    private static final int SECURITY_DATA_END = 96;
+//    private static final int SECURITY_DATA_END = 96;
 
     public String extractUser(String input) {
         return input.substring(USER_DATA_BEGIN, USER_DATA_END);
@@ -22,8 +22,8 @@ public class Extractor {
         return input.substring(TRANSACTION_ID_BEGIN, TRANSACTION_ID_END) + input.substring(TRANSACTION_DATA_BEGIN, TRANSACTION_DATA_END);
     }
 
-    public String extractSecurity(String input) {
-        return input.substring(SECURITY_DATA_BEGIN, SECURITY_DATA_END);
+    public String extractSecurities(String input) {
+        return input.substring(SECURITY_DATA_BEGIN);
     }
 
 }

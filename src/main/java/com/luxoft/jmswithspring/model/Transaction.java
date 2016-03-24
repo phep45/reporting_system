@@ -1,23 +1,37 @@
 package com.luxoft.jmswithspring.model;
 
-import java.math.BigDecimal;
+
+import com.google.common.collect.ImmutableList;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Transaction {
 
-    private BigDecimal id;
+    private int id;
     private OperationType operationType;
     private String countryCode;
-    private BigDecimal branchId;
+    private int branchId;
+
+    private List<Security> securities = new LinkedList<>();
 
     public Transaction() {
-        this(BigDecimal.ZERO,OperationType.DUMMY,"",BigDecimal.ZERO);
+        this(0,OperationType.DUMMY, "",0);
     }
 
-    public Transaction(BigDecimal id, OperationType operationType, String countryCode, BigDecimal branchId) {
+    public Transaction(int id, OperationType operationType, String countryCode, int branchId) {
         this.id = id;
         this.operationType = operationType;
         this.countryCode = countryCode;
         this.branchId = branchId;
+    }
+
+    public void addSecurity(Security security) {
+        securities.add(security);
+    }
+
+    public ImmutableList<Security> getSecurities() {
+        return ImmutableList.copyOf(securities);
     }
 
     public OperationType getOperationType() {
@@ -36,11 +50,11 @@ public class Transaction {
         this.countryCode = countryCode;
     }
 
-    public BigDecimal getBranchId() {
+    public int getBranchId() {
         return branchId;
     }
 
-    public void setBranchId(BigDecimal branchId) {
+    public void setBranchId(int branchId) {
         this.branchId = branchId;
     }
 
@@ -54,27 +68,4 @@ public class Transaction {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Transaction)) return false;
-
-        Transaction that = (Transaction) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (operationType != null ? !operationType.equals(that.operationType) : that.operationType != null)
-            return false;
-        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
-        return branchId != null ? branchId.equals(that.branchId) : that.branchId == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (operationType != null ? operationType.hashCode() : 0);
-        result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
-        result = 31 * result + (branchId != null ? branchId.hashCode() : 0);
-        return result;
-    }
 }

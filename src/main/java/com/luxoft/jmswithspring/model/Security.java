@@ -5,17 +5,17 @@ import java.util.Calendar;
 
 public class Security {
 
-    private BigDecimal lotId;
+    private int lotId;
     private BigDecimal price;
-    private BigDecimal amount;
+    private int amount;
     private String date;
-    private BigDecimal productId;
+    private int productId;
 
     public Security() {
-        this(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, null, BigDecimal.ZERO);
+        this(0, BigDecimal.ZERO, 0, "00/00/00", 0);
     }
 
-    public Security(BigDecimal lotId, BigDecimal price, BigDecimal amount, String date, BigDecimal productId) {
+    public Security(int lotId, BigDecimal price, int amount, String date, int productId) {
         this.lotId = lotId;
         this.price = price;
         this.amount = amount;
@@ -23,11 +23,11 @@ public class Security {
         this.productId = productId;
     }
 
-    public BigDecimal getLotId() {
+    public int getLotId() {
         return lotId;
     }
 
-    public void setLotId(BigDecimal lotId) {
+    public void setLotId(int lotId) {
         this.lotId = lotId;
     }
 
@@ -39,11 +39,11 @@ public class Security {
         this.price = price;
     }
 
-    public BigDecimal getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -55,11 +55,11 @@ public class Security {
         this.date = date;
     }
 
-    public BigDecimal getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(BigDecimal productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -74,28 +74,4 @@ public class Security {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Security)) return false;
-
-        Security security = (Security) o;
-
-        if (lotId != null ? !lotId.equals(security.lotId) : security.lotId != null) return false;
-        if (price != null ? !price.equals(security.price) : security.price != null) return false;
-        if (amount != null ? !amount.equals(security.amount) : security.amount != null) return false;
-        if (date != null ? !date.equals(security.date) : security.date != null) return false;
-        return productId != null ? productId.equals(security.productId) : security.productId == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = lotId != null ? lotId.hashCode() : 0;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (productId != null ? productId.hashCode() : 0);
-        return result;
-    }
 }

@@ -11,8 +11,8 @@ public class OperationsConfig {
 
     private static final int VALID_LINE_LENGTH = 97;
 
-    @Bean
-    public LineValidator lineValidator() {
-        return new LineValidator(VALID_LINE_LENGTH);
-    }
+//    @Bean
+//    public LineValidator lineValidator() {
+//        return new LineValidator(VALID_LINE_LENGTH);
+//    }
 }
