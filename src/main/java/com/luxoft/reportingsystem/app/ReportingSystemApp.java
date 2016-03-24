@@ -46,15 +46,16 @@ public class ReportingSystemApp {
         try {
             connection.close();
         } catch (JMSException e) {
-            e.printStackTrace();
+            log.error("Unable to close connection", e);
         }
 
     }
 
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-        context.getBean(ReportingSystemApp.class).run();
 
-        context.close();
-    }
+//    public static void main(String[] args) {
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+//        context.getBean(ReportingSystemApp.class).run();
+//
+//        context.close();
+//    }
 }

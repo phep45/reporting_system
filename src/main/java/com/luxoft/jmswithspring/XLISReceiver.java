@@ -18,11 +18,11 @@ public class XLISReceiver {
     @Autowired
     ConfigurableApplicationContext context;
 
-    @JmsListener(destination = "xlis", containerFactory = "dataJmsContainerFactory")
+    @JmsListener(destination = "XLIS", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
-        log.trace("XLIS: Received: {}", message);
-        System.out.println("XLIS: " + message);
+        log.info("XLIS: Received: {}", message);
+//        System.out.println("XLIS: " + message);
 //        context.close();
-        FileSystemUtils.deleteRecursively(new File("activemq-data"));
+//        FileSystemUtils.deleteRecursively(new File("activemq-data"));
     }
 }

@@ -15,8 +15,8 @@
         </encoder>
     </appender>
 
-    <root level="ALL">
+    <root level="INFO">
         <appender-ref ref="fileAppender" />
-        <!--<appender-ref ref="consoleAppender" />-->
+        <appender-ref ref="consoleAppender" />
     </root>
 </configuration>
