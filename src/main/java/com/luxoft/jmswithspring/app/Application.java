@@ -25,12 +25,12 @@ public class Application {
         OperationsParser operationsParser = (OperationsParser) context.getBean("operationsParser");
         TextCollector textCollector = (TextCollector) context.getBean("textCollector");
 
-        List<String> collected = textCollector.collect(file);
-        operationsParser.setList(collected);
-
-        List<User> users = operationsParser.parseUsers();
-        List<Transaction> transactions = operationsParser.parseTransactions();
-        List<Security> securities = operationsParser.parseSecurities();
+//        List<String> collected = textCollector.collect(file);
+//        operationsParser.setList(collected);
+//
+//        List<User> users = operationsParser.parseUsers();
+//        List<Transaction> transactions = operationsParser.parseTransactions();
+//        List<Security> securities = operationsParser.parseSecurities();
 
         context.close();
     }
