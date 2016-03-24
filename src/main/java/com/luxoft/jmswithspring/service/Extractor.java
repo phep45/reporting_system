@@ -1,5 +1,8 @@
 package com.luxoft.jmswithspring.service;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Extractor {
 
     private static final int USER_DATA_BEGIN = 10;
@@ -21,16 +24,6 @@ public class Extractor {
 
     public String extractSecurity(String input) {
         return input.substring(SECURITY_DATA_BEGIN, SECURITY_DATA_END);
-    }
-
-
-    public static void main(String[] args) {
-        Extractor extractor = new Extractor();//39
-        String str = "000000000500001     Stiven MeckalovMOVE_OUS0001122220000001010000000020.00000000202/13/201500123";
-        System.out.println(str.length());
-        System.out.println(extractor.extractUser(str));
-        System.out.println(extractor.extractTransaction(str));
-        System.out.println(extractor.extractSecurity(str));
     }
 
 }
