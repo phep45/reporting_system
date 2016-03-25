@@ -2,7 +2,6 @@ package com.luxoft.jmswithspring.database.transaction;
 
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Transaction;
-import com.luxoft.jmswithspring.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
