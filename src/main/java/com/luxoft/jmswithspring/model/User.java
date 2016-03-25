@@ -1,17 +1,11 @@
 package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableList;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class User {
 
     private int userId;
     private String userName;
-
-    private List<Transaction> transactions = new LinkedList<>();
 
     public User() {
         this(0,"");
@@ -21,14 +15,6 @@ public class User {
         this.userId = userId;
         this.userName = userName;
 
-    }
-
-    public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
-    }
-
-    public ImmutableList<Transaction> getTransactions() {
-        return ImmutableList.copyOf(transactions);
     }
 
     public int getUserId() {
@@ -52,7 +38,6 @@ public class User {
         return MoreObjects.toStringHelper(this)
                 .add("userId", userId)
                 .add("userName", userName)
-                .add("transactions", transactions)
                 .toString();
     }
 
@@ -64,8 +49,7 @@ public class User {
         User user = (User) o;
 
         if (userId != user.userId) return false;
-        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
-        return transactions != null ? transactions.equals(user.transactions) : user.transactions == null;
+        return userName != null ? userName.equals(user.userName) : user.userName == null;
 
     }
 
@@ -73,7 +57,6 @@ public class User {
     public int hashCode() {
         int result = userId;
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (transactions != null ? transactions.hashCode() : 0);
         return result;
     }
 }
