@@ -36,8 +36,8 @@ public class OperationsParserTest {
 
     private Operation expectedOperation;
     private List<Security> expectedSecurities = Arrays.asList(
-            new Security(130, BigDecimal.valueOf(1233.002).setScale(5), 2, "02/12/2015", 122),
-            new Security(140, BigDecimal.valueOf(1033.002).setScale(5), 15, "02/12/2015", 9500)
+            new Security(130, BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP), 2, "02/12/2015", 122),
+            new Security(140, BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP), 15, "02/12/2015", 9500)
     );
 
     private static final String USER_AS_STRING = "00001     Stiven Meckalov";
