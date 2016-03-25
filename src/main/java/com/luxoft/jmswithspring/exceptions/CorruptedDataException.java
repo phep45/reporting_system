@@ -2,6 +2,8 @@ package com.luxoft.jmswithspring.exceptions;
 
 public class CorruptedDataException extends Exception {
 
+    private String corruptedLine;
+
     public CorruptedDataException() {
         super();
     }
@@ -18,5 +20,12 @@ public class CorruptedDataException extends Exception {
         super(msg,t);
     }
 
+    public CorruptedDataException(String msg, String corruptedLine) {
+        this(msg);
+        this.corruptedLine = corruptedLine;
+    }
 
+    public String getCorruptedLine() {
+        return corruptedLine;
+    }
 }

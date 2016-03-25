@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class UserMapperTest {
 
     private UserMapper userMapper;
-    private User expectedUser;
+    private User expectedUser = new User(USER_ID, USER_NAME);
 
     private static final String INPUT = "00001     Stiven Meckalov";
     private static final int USER_ID = 1;
@@ -22,14 +22,10 @@ public class UserMapperTest {
     @Before
     public void setUp() {
         userMapper = new UserMapper();
-        expectedUser = new User();
     }
 
     @Test
     public void shouldReturnUser() throws CorruptedDataException {
-        expectedUser.setUserId(USER_ID);
-        expectedUser.setUserName(USER_NAME);
-
         User result = userMapper.map(INPUT);
 
         assertEquals(expectedUser, result);

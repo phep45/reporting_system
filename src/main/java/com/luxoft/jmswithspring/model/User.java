@@ -1,20 +1,16 @@
 package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
+import org.apache.commons.lang3.StringUtils;
 
 public class User {
 
     private int userId;
     private String userName;
 
-    public User() {
-        this(0,"");
-    }
-
     public User(int userId, String userName) {
         this.userId = userId;
         this.userName = userName;
-
     }
 
     public int getUserId() {

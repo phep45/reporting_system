@@ -12,57 +12,70 @@ public class Security {
     private String date;
     private int productId;
 
-    public Security() {
-        this(0, BigDecimal.ZERO, 0, "00/00/00", 0);
+    private Security() {
     }
 
-    public Security(int lotId, BigDecimal price, int amount, String date, int productId) {
-        this.lotId = lotId;
-        this.price = price;
-        this.amount = amount;
-        this.date = date;
-        this.productId = productId;
+    public class Builder {
+
+        private Builder() {
+        }
+
+        public Builder withLotId(int lotId) {
+            Security.this.lotId = lotId;
+            return this;
+        }
+
+        public Builder withPrice(BigDecimal price) {
+            Security.this.price = price;
+            return this;
+        }
+
+        public Builder withAmount(int amount) {
+            Security.this.amount = amount;
+            return this;
+        }
+
+        public Builder withDate(String date) {
+            Security.this.date = date;
+            return this;
+        }
+
+        public Builder withProductId(int productId) {
+            Security.this.productId = productId;
+            return this;
+        }
+
+        public Security build() {
+            return Security.this;
+        }
+
     }
+
+    public static Builder builder() {
+        return new Security().new Builder();
+    }
+
 
     public int getLotId() {
         return lotId;
-    }
-
-    public void setLotId(int lotId) {
-        this.lotId = lotId;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public int getAmount() {
         return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
     @Override
     public String toString() {

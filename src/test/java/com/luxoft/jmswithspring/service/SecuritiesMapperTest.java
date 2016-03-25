@@ -15,8 +15,8 @@ public class SecuritiesMapperTest {
 
     private SecurityMapper securityMapper;
     private List<Security> expectedSecurities = Arrays.asList(
-            new Security(130, BigDecimal.valueOf(1233.002).setScale(5), 2, "02/12/2015", 122),
-            new Security(140, BigDecimal.valueOf(1033.002).setScale(5), 15, "02/12/2015", 9500)
+            Security.builder().withLotId(130).withPrice(BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(2).withDate("02/12/2015").withProductId(122).build(),
+            Security.builder().withLotId(140).withPrice(BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(15).withDate("02/12/2015").withProductId(9500).build()
     );
 
     private static final String INPUT = "0000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500";

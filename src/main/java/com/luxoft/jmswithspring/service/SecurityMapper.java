@@ -30,21 +30,10 @@ public class SecurityMapper {
     public List<Security> map(String securitiesAsString) throws CorruptedDataException {
         Preconditions.checkArgument(securitiesAsString.length() >= VALID_LENGTH, "Invalid input. String should not be shorter then " + VALID_LENGTH + " characters.");
         List<Security> securities = new LinkedList<>();
-        List<String> list = new LinkedList<>();
 
-        String tempString = securitiesAsString;
+        List<String> list = splitInput(securitiesAsString);
 
-        while (tempString.length() >= VALID_LENGTH) {
-            String str = tempString.substring(0, VALID_LENGTH);
-            list.add(str);
-            tempString = tempString.replaceAll("("+str+")","");
-        }
-
-
-        for(String str : list) {
-
-            Security sec = null;
-
+        for (String str : list) {
             try {
                 int lotId = Integer.parseInt(str.substring(LOT_ID_BEGIN, LOT_ID_END).trim());
                 BigDecimal price = new BigDecimal(str.substring(PRICE_BEGIN, PRICE_END).trim());
@@ -52,9 +41,16 @@ public class SecurityMapper {
                 String date = str.substring(DATE_BEGIN, DATE_END).trim();
                 int productId = Integer.parseInt(str.substring(PRODUCT_ID_BEGIN).trim());
 
+                Security security = Security.builder()
+                        .withLotId(lotId)
+                        .withPrice(price)
+                        .withAmount(amount)
+                        .withDate(date)
+                        .withProductId(productId)
+                        .build();
 
+                securities.add(security);
 
-                securities.add(new Security(lotId, price, amount, date, productId));
             } catch (NumberFormatException e) {
                 log.info("Data < {} > corrupted.", str);
                 throw new CorruptedDataException("Corrupted data: " + str, e);
@@ -63,7 +59,25 @@ public class SecurityMapper {
 
         }
 
+        if(securities.isEmpty())
+            throw new CorruptedDataException("No securities found.");
+
         return securities;
+    }
+
+    private List<String> splitInput(String securitiesAsString) throws CorruptedDataException {
+        List<String> list = new LinkedList<>();
+        String tempString = securitiesAsString;
+
+        while (tempString.length() >= VALID_LENGTH) {
+            String str = tempString.substring(0, VALID_LENGTH);
+            list.add(str);
+            tempString = tempString.replaceAll("(" + str + ")", "");
+        }
+
+        if (tempString.length() != 0)
+            throw new CorruptedDataException("Corrupted line.", securitiesAsString);
+        return list;
     }
 
 }

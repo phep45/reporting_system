@@ -36,8 +36,8 @@ public class OperationsParserTest {
 
     private Operation expectedOperation;
     private List<Security> expectedSecurities = Arrays.asList(
-            new Security(130, BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP), 2, "02/12/2015", 122),
-            new Security(140, BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP), 15, "02/12/2015", 9500)
+            Security.builder().withLotId(130).withPrice(BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(2).withDate("02/12/2015").withProductId(122).build(),
+            Security.builder().withLotId(140).withPrice(BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(15).withDate("02/12/2015").withProductId(9500).build()
     );
 
     private static final String USER_AS_STRING = "00001     Stiven Meckalov";
@@ -80,9 +80,7 @@ public class OperationsParserTest {
     }
 
     private void createExpectedOperation() {
-        expectedUser = new User();
-        expectedUser.setUserName(USER_NAME);
-        expectedUser.setUserId(USER_ID);
+        expectedUser = new User(USER_ID, USER_NAME);
 
         expectedTransaction = new Transaction();
         expectedTransaction.setId(ID);

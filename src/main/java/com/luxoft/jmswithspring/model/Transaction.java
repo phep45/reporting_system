@@ -5,7 +5,7 @@ import com.google.common.base.MoreObjects;
 
 public class Transaction {
 
-    private int id;
+    private int id = 0;
 
     private OperationType operationType;
     private String countryCode;

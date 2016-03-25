@@ -24,15 +24,14 @@ public class TransactionMapper {
     public Transaction map(String transactionAsString) throws CorruptedDataException {
         Preconditions.checkArgument(transactionAsString.length() == VALID_LENGTH, "Invalid input. String should be " + VALID_LENGTH + " characters long.");
 
-        Transaction transaction = null;
+        Transaction transaction = new Transaction();
 
         try {
-            int id = Integer.parseInt(transactionAsString.substring(ID_BEGIN, ID_END).trim());
+            transaction.setId(Integer.parseInt(transactionAsString.substring(ID_BEGIN, ID_END).trim()));
             String operation = transactionAsString.substring(OPERATION_BEGIN, OPERATION_END).trim();
-            String code = transactionAsString.substring(CODE_BEGIN, CODE_END).trim();
-            int branchId = Integer.parseInt(transactionAsString.substring(BRANCH_ID_BEGIN));
-
-            transaction = new Transaction(id, OperationType.valueOf(operation), code, branchId);
+            transaction.setOperationType(OperationType.valueOf(operation));
+            transaction.setCountryCode(transactionAsString.substring(CODE_BEGIN, CODE_END).trim());
+            transaction.setBranchId(Integer.parseInt(transactionAsString.substring(BRANCH_ID_BEGIN)));
 
         } catch (IllegalArgumentException e) {
             log.info("Data < {} > corrupted.", transactionAsString);
