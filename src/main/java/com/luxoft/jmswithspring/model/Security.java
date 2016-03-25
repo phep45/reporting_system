@@ -1,5 +1,7 @@
 package com.luxoft.jmswithspring.model;
 
+import com.google.common.base.MoreObjects;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
 
@@ -65,13 +67,37 @@ public class Security {
 
     @Override
     public String toString() {
-        return "Security{" +
-                "lotId=" + lotId +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", date=" + date +
-                ", productId=" + productId +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("lotId", lotId)
+                .add("price", price)
+                .add("amount", amount)
+                .add("date", date)
+                .add("productId", productId)
+                .toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Security)) return false;
+
+        Security security = (Security) o;
+
+        if (lotId != security.lotId) return false;
+        if (amount != security.amount) return false;
+        if (productId != security.productId) return false;
+        if (price != null ? !price.equals(security.price) : security.price != null) return false;
+        return date != null ? date.equals(security.date) : security.date == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lotId;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + amount;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + productId;
+        return result;
+    }
 }

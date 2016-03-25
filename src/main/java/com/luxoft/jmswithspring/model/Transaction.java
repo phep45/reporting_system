@@ -1,6 +1,7 @@
 package com.luxoft.jmswithspring.model;
 
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
 import java.util.LinkedList;
@@ -9,11 +10,10 @@ import java.util.List;
 public class Transaction {
 
     private int id;
+
     private OperationType operationType;
     private String countryCode;
     private int branchId;
-
-    private List<Security> securities = new LinkedList<>();
 
     public Transaction() {
         this(0,OperationType.DUMMY, "",0);
@@ -26,12 +26,8 @@ public class Transaction {
         this.branchId = branchId;
     }
 
-    public void addSecurity(Security security) {
-        securities.add(security);
-    }
-
-    public ImmutableList<Security> getSecurities() {
-        return ImmutableList.copyOf(securities);
+    public void setId(int id) {
+        this.id = id;
     }
 
     public OperationType getOperationType() {
@@ -60,12 +56,34 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "id=" + id +
-                ", operationType='" + operationType + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                ", branchId=" + branchId +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("operationType", operationType)
+                .add("countryCode", countryCode)
+                .add("branchId", branchId)
+                .toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transaction)) return false;
+
+        Transaction that = (Transaction) o;
+
+        if (id != that.id) return false;
+        if (branchId != that.branchId) return false;
+        if (operationType != that.operationType) return false;
+        return countryCode != null ? countryCode.equals(that.countryCode) : that.countryCode == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (operationType != null ? operationType.hashCode() : 0);
+        result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
+        result = 31 * result + branchId;
+        return result;
+    }
 }

@@ -26,7 +26,7 @@ public class UserMapper {
 
         User user;
         try {
-            BigDecimal userId = new BigDecimal(userAsString.substring(ID_BEGIN, ID_END).trim());
+            int userId = Integer.parseInt(userAsString.substring(ID_BEGIN, ID_END).trim());
             String userName = userAsString.substring(NAME_BEGIN, NAME_END).trim().replaceAll(TWO_OR_MORE_SPACES, StringUtils.SPACE);
             user = new User(userId, userName);
         } catch (IllegalArgumentException e) {

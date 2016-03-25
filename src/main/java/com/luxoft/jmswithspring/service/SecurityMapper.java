@@ -28,15 +28,16 @@ public class SecurityMapper {
     private static final int VALID_LENGTH = 44;
 
     public List<Security> map(String securitiesAsString) throws CorruptedDataException {
-//        Preconditions.checkArgument(securitiesAsString.length() == VALID_LENGTH, "Invalid input. String should be " + VALID_LENGTH + " characters long.");
+        Preconditions.checkArgument(securitiesAsString.length() >= VALID_LENGTH, "Invalid input. String should not be shorter then " + VALID_LENGTH + " characters.");
         List<Security> securities = new LinkedList<>();
-
         List<String> list = new LinkedList<>();
 
-        while (securitiesAsString.length() >= VALID_LENGTH) {
-            String str = securitiesAsString.substring(0, VALID_LENGTH);
+        String tempString = securitiesAsString;
+
+        while (tempString.length() >= VALID_LENGTH) {
+            String str = tempString.substring(0, VALID_LENGTH);
             list.add(str);
-            securitiesAsString = securitiesAsString.replaceAll("("+str+")","");
+            tempString = tempString.replaceAll("("+str+")","");
         }
 
 
@@ -50,6 +51,8 @@ public class SecurityMapper {
                 int amount = Integer.parseInt(str.substring(AMOUNT_BEGIN, AMOUNT_END).trim());
                 String date = str.substring(DATE_BEGIN, DATE_END).trim();
                 int productId = Integer.parseInt(str.substring(PRODUCT_ID_BEGIN).trim());
+
+
 
                 securities.add(new Security(lotId, price, amount, date, productId));
             } catch (NumberFormatException e) {

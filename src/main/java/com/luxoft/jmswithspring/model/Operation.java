@@ -1,5 +1,7 @@
 package com.luxoft.jmswithspring.model;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.List;
 
 public class Operation {
@@ -38,5 +40,36 @@ public class Operation {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("user", user)
+                .add("transaction", transaction)
+                .add("securities", securities)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Operation)) return false;
+
+        Operation operation = (Operation) o;
+
+        if (user != null ? !user.equals(operation.user) : operation.user != null) return false;
+        if (transaction != null ? !transaction.equals(operation.transaction) : operation.transaction != null)
+            return false;
+        return securities != null ? securities.equals(operation.securities) : operation.securities == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (transaction != null ? transaction.hashCode() : 0);
+        result = 31 * result + (securities != null ? securities.hashCode() : 0);
+        return result;
     }
 }
