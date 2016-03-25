@@ -1,7 +1,6 @@
 package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
-import org.apache.commons.lang3.StringUtils;
 
 public class User {
 

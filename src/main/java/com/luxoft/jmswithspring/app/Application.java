@@ -1,6 +1,7 @@
 package com.luxoft.jmswithspring.app;
 
 import com.luxoft.jmswithspring.config.OperationsConfig;
+import com.luxoft.jmswithspring.database.TablesDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.service.OperationsParser;
@@ -20,35 +21,50 @@ public class Application {
 
     public static void main(String[] args) {
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
 
-        File file = new File("C:\\Users\\Prosner\\IdeaProjects\\reporting_system\\src\\main\\resources\\SINPUT.txt");
+        File file = new File("src/resources/jmswithspring/database.properties");
 
-        OperationsParser operationsParser = (OperationsParser) context.getBean("operationsParser");
-        LineCollector lineCollector = (LineCollector) context.getBean("lineCollector");
-
-        List<String> listOfLines = new LinkedList<>();
+        System.out.println(file.getAbsolutePath());
 
         try {
-            listOfLines = lineCollector.collect(FileUtils.readFileToString(file));
-
+            System.out.println(FileUtils.readFileToString(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        List<Operation> allOperations = new LinkedList<>();
+//        TablesDAO tablesDAO = (TablesDAO) context.getBean("tablesDAO");
+//        tablesDAO.createTableUser();
+//        tablesDAO.createTableTransaction();
+//        tablesDAO.createTableSecurity();
 
-        listOfLines.forEach(line -> {
-            try {
-                allOperations.add(operationsParser.parse(line));
-            } catch (CorruptedDataException e) {
-                log.info("Data corrupted in line < {} >", line);
-            }
-        });
+//        File file = new File("C:\\Users\\Prosner\\IdeaProjects\\reporting_system\\src\\main\\resources\\SINPUT.txt");
+//
+//        OperationsParser operationsParser = (OperationsParser) context.getBean("operationsParser");
+//        LineCollector lineCollector = (LineCollector) context.getBean("lineCollector");
+//
+//        List<String> listOfLines = new LinkedList<>();
+//
+//        try {
+//            listOfLines = lineCollector.collect(FileUtils.readFileToString(file));
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        List<Operation> allOperations = new LinkedList<>();
+//
+//        listOfLines.forEach(line -> {
+//            try {
+//                allOperations.add(operationsParser.parse(line));
+//            } catch (CorruptedDataException e) {
+//                log.info("Data corrupted in line < {} >", line);
+//            }
+//        });
+//
+//        allOperations.forEach(System.out::println);
 
-        allOperations.forEach(System.out::println);
-
-        context.close();
+//        context.close();
     }
 
 }
