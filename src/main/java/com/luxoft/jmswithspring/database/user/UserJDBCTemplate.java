@@ -20,14 +20,12 @@ public class UserJDBCTemplate implements UserDAO {
     private static final String DELETE_USER = "delete from User where id = ?";
     private static final String UPDATE_USER = "update User set name = ? where id = ?";
 
-    @Autowired
-    private DataSource dataSource;
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

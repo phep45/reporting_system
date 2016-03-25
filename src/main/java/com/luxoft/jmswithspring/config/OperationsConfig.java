@@ -6,19 +6,23 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
-@PropertySource( value = {"classpath:\\src\\main\\resources\\jmswithspring\\db.properties"})
+@PropertySource( value = {"classpath:jmswithspring/db.properties"})
 public class OperationsConfig {
 
     @Autowired
     private Environment env;
 
-    @Bean(name = "datasource")
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
@@ -27,6 +31,11 @@ public class OperationsConfig {
         dataSource.setPassword(env.getProperty("jdbc.password"));
 
         return dataSource;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource);
     }
 
 }

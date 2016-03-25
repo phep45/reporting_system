@@ -2,6 +2,8 @@ package com.luxoft.jmswithspring.app;
 
 import com.luxoft.jmswithspring.config.OperationsConfig;
 import com.luxoft.jmswithspring.database.TablesDAO;
+import com.luxoft.jmswithspring.database.user.UserDAO;
+import com.luxoft.jmswithspring.database.user.UserJDBCTemplate;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.service.OperationsParser;
@@ -21,15 +23,18 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println(FileUtils.readFileToString(new File("src\\main\\resources\\jmswithspring\\db.properties")));
-
-
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
 
         TablesDAO tablesDAO = (TablesDAO) context.getBean("tablesDAO");
         tablesDAO.createTableUser();
         tablesDAO.createTableTransaction();
         tablesDAO.createTableSecurity();
+
+        UserDAO userDAO = (UserJDBCTemplate) context.getBean("userJDBCTemplate");
+
+        userDAO.create(1,"Bill");
+
+        System.out.println(userDAO.getUser(1));
 
 //        File file = new File("C:\\Users\\Prosner\\IdeaProjects\\reporting_system\\src\\main\\resources\\SINPUT.txt");
 //
