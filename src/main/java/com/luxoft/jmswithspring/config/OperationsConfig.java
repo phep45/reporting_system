@@ -1,54 +1,39 @@
 package com.luxoft.jmswithspring.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
+@PropertySource( value = {"classpath:\\src\\main\\resources\\jmswithspring\\db.properties"})
 public class OperationsConfig {
-    @Value("${jdbc.driverClassName")
-    private String driverClassname;
 
-    @Value("${jdbc.url}")
-    private String url;
-
-    @Value("${jdbc.username")
-    private String userName;
-
-    @Value("${jdbc.password}")
-    private String password;
-
-    @Bean
-    public static PropertyPlaceholderConfigurer properties() {
-        PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
-        ClassPathResource[] resources = new ClassPathResource[] {
-                new ClassPathResource("/src/resources/jmswithspring/database.properties")
-        };
-
-        ppc.setLocations(resources);
-        ppc.setIgnoreUnresolvablePlaceholders(true);
-
-        return ppc;
-    }
-
+    @Autowired
+    private Environment env;
 
     @Bean(name = "datasource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClassname);
-        dataSource.setUrl(url);
-        dataSource.setUsername(userName);
-        dataSource.setPassword(password);
+        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(env.getProperty("jdbc.url"));
+        dataSource.setUsername(env.getProperty("jdbc.username"));
+        dataSource.setPassword(env.getProperty("jdbc.password"));
 
         return dataSource;
     }
 
+    public Environment getEnv() {
+        return env;
+    }
+
+    public void setEnv(Environment env) {
+        this.env = env;
+    }
 }

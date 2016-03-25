@@ -19,24 +19,17 @@ import java.util.List;
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
+        System.out.println(FileUtils.readFileToString(new File("src\\main\\resources\\jmswithspring\\db.properties")));
 
-        File file = new File("src/resources/jmswithspring/database.properties");
 
-        System.out.println(file.getAbsolutePath());
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
 
-        try {
-            System.out.println(FileUtils.readFileToString(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        TablesDAO tablesDAO = (TablesDAO) context.getBean("tablesDAO");
-//        tablesDAO.createTableUser();
-//        tablesDAO.createTableTransaction();
-//        tablesDAO.createTableSecurity();
+        TablesDAO tablesDAO = (TablesDAO) context.getBean("tablesDAO");
+        tablesDAO.createTableUser();
+        tablesDAO.createTableTransaction();
+        tablesDAO.createTableSecurity();
 
 //        File file = new File("C:\\Users\\Prosner\\IdeaProjects\\reporting_system\\src\\main\\resources\\SINPUT.txt");
 //
@@ -64,7 +57,7 @@ public class Application {
 //
 //        allOperations.forEach(System.out::println);
 
-//        context.close();
+        context.close();
     }
 
 }
