@@ -29,11 +29,4 @@ public class OperationsConfig {
         return dataSource;
     }
 
-    public Environment getEnv() {
-        return env;
-    }
-
-    public void setEnv(Environment env) {
-        this.env = env;
-    }
 }
