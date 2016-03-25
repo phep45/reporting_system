@@ -3,7 +3,6 @@ package com.luxoft.jmswithspring.model;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 

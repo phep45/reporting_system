@@ -3,7 +3,6 @@ package com.luxoft.jmswithspring.service;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Transaction;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

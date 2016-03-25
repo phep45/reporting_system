@@ -2,7 +2,6 @@ package com.luxoft.jmswithspring.service;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Security;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

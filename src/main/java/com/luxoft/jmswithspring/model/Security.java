@@ -3,7 +3,6 @@ package com.luxoft.jmswithspring.model;
 import com.google.common.base.MoreObjects;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 
 public class Security {
 

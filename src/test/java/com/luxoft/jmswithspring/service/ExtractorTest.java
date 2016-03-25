@@ -1,7 +1,5 @@
 package com.luxoft.jmswithspring.service;
 
-import com.luxoft.jmswithspring.service.Extractor;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
