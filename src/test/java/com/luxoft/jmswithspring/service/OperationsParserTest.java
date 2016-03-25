@@ -33,8 +33,8 @@ public class OperationsParserTest {
     @Mock
     private SecurityMapper securityMapperMock;
 
-
     private static final String INPUT = "000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500";
+
     private Operation expectedOperation;
     private List<Security> expectedSecurities = Arrays.asList(
             new Security(130, BigDecimal.valueOf(1233.002).setScale(5), 2, "02/12/2015", 122),

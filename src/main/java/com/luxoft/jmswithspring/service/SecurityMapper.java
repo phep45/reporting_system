@@ -66,15 +66,4 @@ public class SecurityMapper {
         return securities;
     }
 
-    public static void main(String[] args) throws CorruptedDataException {
-        String str = "000000000400021            Lu Cheng  SELLGB0001122220000000170000000887.01200000402/13/2015002560000000180000001033.00200001502/13/2015094400000000190000001033.00200001502/11/201509500";
-
-        Extractor extractor = new Extractor();
-        str = extractor.extractSecurities(str);
-
-        SecurityMapper securityMapper = new SecurityMapper();
-        List<Security> list = securityMapper.map(str);
-        System.out.println(list);
-    }
-
 }
