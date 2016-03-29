@@ -22,9 +22,6 @@ public class TransactionJDBCTemplate extends GenericDAO<Transaction> {
     private static final String DELETE_TRANSACTION = "delete from Transaction where id = ?";
     private static final String UPDATE_TRANSACTION = "update Transaction set operation = ?, code = ?, branch_id =?, where id = ?";
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     public void create(int id, OperationType operationType, String code, int branchId, int userId) {
         String sql = INSERT_TRANSACTION;
         jdbcTemplate.update(sql, id, operationType.toString(), code, branchId, userId);

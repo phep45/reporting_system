@@ -21,10 +21,6 @@ public class UserJDBCTemplate extends GenericDAO<User> {
     private static final String SELECT_ALL = "select * from User";
     private static final String UPDATE_USER = "update User set name = ? where id = ?";
 
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }

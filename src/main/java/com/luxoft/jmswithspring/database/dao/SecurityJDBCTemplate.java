@@ -24,9 +24,6 @@ public class SecurityJDBCTemplate extends GenericDAO<Security> {
     private static final String DELETE_SECURITY = "delete from Security where id = ?";
     private static final String UPDATE_SECURITY = "update Security set price = ?, amount = ?, date =?, product_id, where id = ?";
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     public void setDataSource(DataSource dataSource) {
 
     }
