@@ -45,21 +45,21 @@ public class App {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        FileSystemUtils.deleteRecursively(new File("activemq-data"));
-        ConfigurableApplicationContext context = SpringApplication.run(App.class);
-
-        MessageCreator messageCreator = session -> session.createTextMessage("ping");
-        MessageCreator messageCreatorForXlis = session -> session.createTextMessage("<tag> ping </tag>");
-
-        JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-        log.info("Sending a new message.");
-
-        jmsTemplate.send("slis", messageCreator);
-        jmsTemplate.send("xlis", messageCreatorForXlis);
-
-        context.close();
-    }
+//    public static void main(String[] args) throws IOException {
+//        FileSystemUtils.deleteRecursively(new File("activemq-data"));
+//        ConfigurableApplicationContext context = SpringApplication.run(App.class);
+//
+//        MessageCreator messageCreator = session -> session.createTextMessage("ping");
+//        MessageCreator messageCreatorForXlis = session -> session.createTextMessage("<tag> ping </tag>");
+//
+//        JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
+//        log.info("Sending a new message.");
+//
+//        jmsTemplate.send("slis", messageCreator);
+//        jmsTemplate.send("xlis", messageCreatorForXlis);
+//
+//        context.close();
+//    }
 
 //    @Bean
 //    public ConfigurableApplicationContext slisConfigurableApplicationContext
