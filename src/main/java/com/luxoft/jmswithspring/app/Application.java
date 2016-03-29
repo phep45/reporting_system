@@ -7,7 +7,6 @@ import com.luxoft.jmswithspring.database.operation.TablesDAO;
 import com.luxoft.jmswithspring.database.user.UserJDBCTemplate;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
-import com.luxoft.jmswithspring.model.TableName;
 import com.luxoft.jmswithspring.model.User;
 import com.luxoft.jmswithspring.service.LineCollector;
 import com.luxoft.jmswithspring.service.OperationsParser;
@@ -32,47 +31,26 @@ public class Application {
         tablesDAO.createTableTransaction();
         tablesDAO.createTableSecurity();
 
-        GenericDAO<User> userDAO = (UserJDBCTemplate) context.getBean("userJDBCTemplate");
-
-
-        userDAO.create(new User(12,"eee"), 12);
-        userDAO.create(new User(13, "ppp"), 13);
-
-        GenericDAO<User> dao = (UserJDBCTemplate) context.getBean("userJDBCTemplate");
-
-        dao.delete(12, User.class);
-
-
-
-
-        File file = new File("C:\\Users\\Prosner\\IdeaProjects\\reporting_system\\src\\main\\resources\\SINPUT.txt");
-
         OperationsParser operationsParser = (OperationsParser) context.getBean("operationsParser");
         LineCollector lineCollector = (LineCollector) context.getBean("lineCollector");
 
-        List<String> listOfLines = new LinkedList<>();
-
-
-            listOfLines = lineCollector.collect("000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500");
+        List<String> listOfLines = lineCollector.collect("000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500");
 
         List<Operation> allOperations = new LinkedList<>();
-
 
         listOfLines.forEach(line -> {
             try {
                 allOperations.add(operationsParser.parse(line));
             } catch (CorruptedDataException e) {
                 log.info("Data corrupted in line < {} >", line);
-                e.printStackTrace();
+                log.info("CorruptedDataException", e);
             }
         });
 
         GenericDAO<Operation> operationDAO = (OperationJDBCTemplate) context.getBean("operationJDBCTemplate");
 
         allOperations.forEach(operation -> {
-
-                operationDAO.create(operation, 0);
-
+            operationDAO.create(operation, 0);
         });
 
         context.close();
