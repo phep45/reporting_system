@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
+import java.util.Queue;
 
 @Component
 @Repository
@@ -22,12 +23,15 @@ public class SLISReceiver {
     @Autowired
     private ConfigurableApplicationContext context;
 
+    @Autowired
+    private Queue<String> slisQueue;
+
     @JmsListener(destination = "SLIS", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
         log.info("SLIS: Received < {} >", message);
-//        System.out.println("SLIS: " + message);
-//        context.close();
-//        FileSystemUtils.deleteRecursively(new File("activemq-data"));
+
+        slisQueue.add(message);
+
     }
 
 

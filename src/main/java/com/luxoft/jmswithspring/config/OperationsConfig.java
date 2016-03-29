@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
@@ -36,6 +38,11 @@ public class OperationsConfig {
     @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    Queue queue() {
+        return new LinkedBlockingQueue<>();
     }
 
 }

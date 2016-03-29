@@ -35,6 +35,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
         if (existsInDatabase(user)) {
             addOperationToUser(user, transaction, securities);
             log.info("Operation added to user with id: {}", user.getUserId());
+            return;
         }
 
         log.info("Creating new user");
