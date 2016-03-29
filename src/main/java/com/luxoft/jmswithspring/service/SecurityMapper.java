@@ -74,7 +74,6 @@ public class SecurityMapper {
             list.add(str);
             tempString = tempString.replaceAll("(" + str + ")", "");
         }
-
         if (tempString.length() != 0)
             throw new CorruptedDataException("Corrupted line.", securitiesAsString);
         return list;

@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 
 import java.math.BigDecimal;
 
+@TableName("Security")
 public class Security {
 
     private int lotId;

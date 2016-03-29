@@ -3,6 +3,7 @@ package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
 
+@TableName("Transaction")
 public class Transaction {
 
     private int id = 0;
@@ -12,7 +13,7 @@ public class Transaction {
     private int branchId;
 
     public Transaction() {
-        this(0,OperationType.DUMMY, "",0);
+        this(0, OperationType.DUMMY, "", 0);
     }
 
     public Transaction(int id, OperationType operationType, String countryCode, int branchId) {
@@ -24,6 +25,10 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public OperationType getOperationType() {

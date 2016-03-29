@@ -1,16 +1,19 @@
 package com.luxoft.jmswithspring.database.transaction;
 
+import com.luxoft.jmswithspring.database.generic.GenericDAO;
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.util.List;
 
-public class TransactionJDBCTemplate implements TransactionDAO {
+@Component
+public class TransactionJDBCTemplate extends GenericDAO<Transaction> {
     private static final Logger log = LoggerFactory.getLogger(TransactionJDBCTemplate.class);
 
     private static final String INSERT_TRANSACTION = "insert into Transaction (id, operation, code, branch_id, user_id) values (?, ?, ?, ?, ?)";
@@ -22,42 +25,43 @@ public class TransactionJDBCTemplate implements TransactionDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public void setDataSource(DataSource dataSource) {
-
-    }
-
-    @Override
     public void create(int id, OperationType operationType, String code, int branchId, int userId) {
         String sql = INSERT_TRANSACTION;
-        jdbcTemplate.update(sql, id, operationType, code, branchId, userId);
+        jdbcTemplate.update(sql, id, operationType.toString(), code, branchId, userId);
         log.info("Create: {}", sql);
     }
 
     @Override
-    public Transaction getTransaction(int id) {
+    public void create(Transaction transaction, int userId) {
+        create(transaction.getId(), transaction.getOperationType(), transaction.getCountryCode(), transaction.getBranchId(), userId);
+    }
+
+    @Override
+    public void update(Transaction transaction, int foreignKeyId) {
+        update(transaction.getId(), transaction.getOperationType(), transaction.getCountryCode(), transaction.getBranchId(), foreignKeyId);
+    }
+
+    @Override
+    public Transaction get(int id) {
         String sql = SELECT_TRANSACTION;
-        Transaction transaction = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBTransactionMapper());
-        log.info("Get: {}", sql);
+        Transaction transaction;
+        try {
+            transaction = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBTransactionMapper());
+            log.info("Get: {}", sql);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
         return transaction;
     }
 
     @Override
-    public List<Transaction> listTransactions() {
+    public List<Transaction> list() {
         String sql = SELECT_ALL;
         List<Transaction> transactions = jdbcTemplate.query(sql, new DBTransactionMapper());
         log.info("List: {}", sql);
         return transactions;
     }
 
-    @Override
-    public void delete(int id) {
-        String sql = DELETE_TRANSACTION;
-        jdbcTemplate.update(sql, id);
-        log.info("Delete: {}", sql);
-    }
-
-    @Override
     public void update(int id, OperationType operationType, String code, int branchId, int userId) {
         String sql = UPDATE_TRANSACTION;
         jdbcTemplate.update(sql, operationType, code, branchId, userId, id);

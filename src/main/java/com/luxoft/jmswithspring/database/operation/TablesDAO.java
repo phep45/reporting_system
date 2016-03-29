@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.database;
+package com.luxoft.jmswithspring.database.operation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class TablesDAO {
     private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE Transaction (id INT NOT NULL, operation VARCHAR(6), code VARCHAR(2), branch_id int, user_id int, UNIQUE KEY(id), FOREIGN KEY(user_id) REFERENCES User(id));";
     private static final String DROP_TRANSACTION = "DROP TABLE IF EXISTS Transaction;";
     private static final String DROP_SECURITY = "DROP TABLE IF EXISTS Security;";
-    private static final String CREATE_TABLE_SECURITY = "CREATE TABLE Security (lot_id INT, price FLOAT, amount INT, date VARCHAR(10), product_id int, transaction_id int, FOREIGN KEY(transaction_id) REFERENCES Transaction(id));";
+    private static final String CREATE_TABLE_SECURITY = "CREATE TABLE Security (id INT, price FLOAT, amount INT, date VARCHAR(10), product_id int, transaction_id int, FOREIGN KEY(transaction_id) REFERENCES Transaction(id));";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

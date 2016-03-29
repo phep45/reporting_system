@@ -2,6 +2,7 @@ package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
 
+@TableName("User")
 public class User {
 
     private int userId;
