@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.database.operation;
+package com.luxoft.jmswithspring.database.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

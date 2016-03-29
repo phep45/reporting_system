@@ -1,8 +1,8 @@
 package com.luxoft.jmswithspring.app;
 
 import com.luxoft.jmswithspring.config.OperationsConfig;
-import com.luxoft.jmswithspring.database.generic.GenericDAO;
-import com.luxoft.jmswithspring.database.operation.TablesDAO;
+import com.luxoft.jmswithspring.database.dao.GenericDAO;
+import com.luxoft.jmswithspring.database.dao.TablesDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.service.LineCollector;

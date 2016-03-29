@@ -1,6 +1,6 @@
-package com.luxoft.jmswithspring.database.security;
+package com.luxoft.jmswithspring.database.dao;
 
-import com.luxoft.jmswithspring.database.generic.GenericDAO;
+import com.luxoft.jmswithspring.database.mapper.DBSecurityMapper;
 import com.luxoft.jmswithspring.model.Security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

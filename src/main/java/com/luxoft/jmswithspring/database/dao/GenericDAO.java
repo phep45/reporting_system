@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.database.generic;
+package com.luxoft.jmswithspring.database.dao;
 
 
 import com.luxoft.jmswithspring.model.TableName;

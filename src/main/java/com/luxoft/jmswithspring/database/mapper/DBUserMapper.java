@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.database.user;
+package com.luxoft.jmswithspring.database.mapper;
 
 import com.luxoft.jmswithspring.model.User;
 import org.springframework.jdbc.core.RowMapper;

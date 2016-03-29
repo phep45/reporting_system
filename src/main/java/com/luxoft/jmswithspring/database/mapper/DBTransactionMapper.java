@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.database.transaction;
+package com.luxoft.jmswithspring.database.mapper;
 
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Transaction;

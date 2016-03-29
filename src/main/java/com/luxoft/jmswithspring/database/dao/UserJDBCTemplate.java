@@ -1,6 +1,6 @@
-package com.luxoft.jmswithspring.database.user;
+package com.luxoft.jmswithspring.database.dao;
 
-import com.luxoft.jmswithspring.database.generic.GenericDAO;
+import com.luxoft.jmswithspring.database.mapper.DBUserMapper;
 import com.luxoft.jmswithspring.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

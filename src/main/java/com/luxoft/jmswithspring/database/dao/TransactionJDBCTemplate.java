@@ -1,6 +1,6 @@
-package com.luxoft.jmswithspring.database.transaction;
+package com.luxoft.jmswithspring.database.dao;
 
-import com.luxoft.jmswithspring.database.generic.GenericDAO;
+import com.luxoft.jmswithspring.database.mapper.DBTransactionMapper;
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Transaction;
 import org.slf4j.Logger;

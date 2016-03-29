@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.database.security;
+package com.luxoft.jmswithspring.database.mapper;
 
 import com.luxoft.jmswithspring.model.Security;
 import org.springframework.jdbc.core.RowMapper;

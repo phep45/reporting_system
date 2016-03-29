@@ -1,6 +1,5 @@
-package com.luxoft.jmswithspring.database.operation;
+package com.luxoft.jmswithspring.database.dao;
 
-import com.luxoft.jmswithspring.database.generic.GenericDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.model.Security;
