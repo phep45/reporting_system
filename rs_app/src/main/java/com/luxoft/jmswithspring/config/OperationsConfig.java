@@ -1,6 +1,8 @@
 package com.luxoft.jmswithspring.config;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +10,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
+import javax.jms.JMSException;
 import javax.sql.DataSource;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -40,9 +46,21 @@ public class OperationsConfig {
         return new JdbcTemplate(dataSource);
     }
 
+//    @Bean
+//    Queue<String> queue() {
+//        return new LinkedBlockingQueue<>();
+//    }
+
     @Bean
-    Queue queue() {
-        return new LinkedBlockingQueue<>();
+    public JmsListenerContainerFactory<?> dataJmsContainerFactory() throws JMSException {
+        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+
+        return factory;
+    }
+
+    private ActiveMQConnectionFactory connectionFactory() {
+        return new ActiveMQConnectionFactory("tcp://localhost:61616");
     }
 
 }

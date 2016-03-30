@@ -15,7 +15,6 @@ public class LineCollector {
 
     public List<String> collect(String string) {
         List<String> lines;
-
         lines = Arrays.asList(string.split(NEW_LINE));
 
         log.info("Collected {} lines.", lines.size());
