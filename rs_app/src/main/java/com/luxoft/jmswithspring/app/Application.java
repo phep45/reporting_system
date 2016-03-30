@@ -58,6 +58,12 @@ public class Application {
         allOperations.forEach(operation -> {
             operationDAO.create(operation, 0);
         });
+
+        operationDAO.list().forEach(
+          operation -> {
+              System.out.println(operation);
+          }
+        );
     }
 
     public static void main(String[] args) throws IOException, CorruptedDataException {

@@ -28,7 +28,7 @@ public class SecurityJDBCTemplate extends GenericDAO<Security> {
 
     public void create(int lotId, BigDecimal price, int amount, String date, int productId, int transactionId) {
         String sql = INSERT_SECURITY;
-        jdbcTemplate.update(sql, lotId, price.toString(), amount, date, productId, transactionId);
+        jdbcTemplate.update(sql, lotId, price.doubleValue(), amount, date, productId, transactionId);
         log.info("Create: {}", sql);
     }
 
@@ -62,7 +62,7 @@ public class SecurityJDBCTemplate extends GenericDAO<Security> {
 
     public void update(int lotId, BigDecimal price, int amount, String date, int productId, int transactionId) {
         String sql = UPDATE_SECURITY;
-        jdbcTemplate.update(sql, lotId, price.toString(), amount, date, productId, transactionId);
+        jdbcTemplate.update(sql, lotId, price.doubleValue(), amount, date, productId, transactionId);
         log.info("Update: {}", sql);
     }
 

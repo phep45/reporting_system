@@ -20,7 +20,7 @@ public class DBSecurityMapper implements RowMapper<Security> {
     public Security mapRow(ResultSet resultSet, int i) throws SQLException {
 
         int lotId = resultSet.getInt(COLUMN_LOT_ID);
-        BigDecimal price = new BigDecimal(resultSet.getString(COLUMN_PRICE)).setScale(SCALE, BigDecimal.ROUND_HALF_UP);
+        BigDecimal price = new BigDecimal(resultSet.getDouble(COLUMN_PRICE)).setScale(SCALE, BigDecimal.ROUND_HALF_UP);
         int amount = resultSet.getInt(COLUMN_AMOUNT);
         String date = resultSet.getString(COLUMN_DATE);
         int productId = resultSet.getInt(COLUMN_PRODUCT_ID);

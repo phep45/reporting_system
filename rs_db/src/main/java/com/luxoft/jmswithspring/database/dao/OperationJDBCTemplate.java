@@ -1,5 +1,8 @@
 package com.luxoft.jmswithspring.database.dao;
 
+import com.luxoft.jmswithspring.database.mapper.DBOperationMapper;
+import com.luxoft.jmswithspring.database.mapper.DBSecurityMapper;
+import com.luxoft.jmswithspring.database.mapper.DBUserMapper;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.model.Security;
@@ -10,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -43,7 +47,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
     }
 
     private void addOperationToUser(User user, Transaction transaction, List<Security> securities) throws CorruptedDataException {
-        if(isCorrect(user)) {
+        if (isCorrect(user)) {
             log.info("User with id: {} exists in database", user.getUserId());
             addToDatabase(user.getUserId(), transaction, securities);
             return;
@@ -57,7 +61,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
     }
 
     private void addToDatabase(int userId, Transaction transaction, List<Security> securities) {
-        if(existsInDatabase(transaction)) {
+        if (existsInDatabase(transaction)) {
             log.info("Transaction with id: {} exists in database");
             return;
         }
@@ -84,7 +88,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
         try {
             create(operation);
         } catch (CorruptedDataException e) {
-            log.info("",e);
+            log.info("", e);
         }
     }
 
@@ -100,6 +104,24 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
 
     @Override
     public List<Operation> list() {
-        return null;
+        List<Operation> operations = new LinkedList<>();
+
+        List<Transaction> transactions = transactionDAO.list();
+        for (Transaction transaction : transactions) {
+            Operation operation = new Operation();
+            operation.setTransaction(transaction);
+            int transactionId = transaction.getId();
+            String sql = "SELECT * FROM SECURITY WHERE TRANSACTION_ID=?";
+            List<Security> securities = jdbcTemplate.query(sql, new Object[]{transactionId}, new DBSecurityMapper());
+            operation.setSecurities(securities);
+
+            sql = "SELECT ID,NAME FROM (select USER.ID, USER.NAME, TRANSACTION.ID AS TR_ID FROM USER LEFT JOIN TRANSACTION ON TRANSACTION.USER_ID=USER.ID) WHERE TR_ID=?";
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{transactionId}, new DBUserMapper());
+            operation.setUser(user);
+
+            operations.add(operation);
+        }
+
+        return operations;
     }
 }
