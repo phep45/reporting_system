@@ -1,9 +1,9 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Transaction;
-import com.luxoft.jmswithspring.service.TransactionMapper;
+import com.luxoft.jmswithspring.service.slis.TransactionMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class TransactionMapperTest {
     public void shouldReturnTransaction() throws CorruptedDataException {
         expectedTransaction.setBranchId(BRANCH_ID);
         expectedTransaction.setCountryCode(COUNTRY_CODE);
-        expectedTransaction.setOperationType(OPERATION_TYPE);
+        expectedTransaction.setType(OPERATION_TYPE);
         expectedTransaction.setId(ID);
 
         Transaction result = transactionMapper.map(INPUT);

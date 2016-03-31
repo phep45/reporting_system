@@ -4,8 +4,8 @@ import com.luxoft.jmswithspring.database.dao.GenericDAO;
 import com.luxoft.jmswithspring.database.dao.TablesDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
-import com.luxoft.jmswithspring.service.LineCollector;
-import com.luxoft.jmswithspring.service.OperationsParser;
+import com.luxoft.jmswithspring.service.slis.LineCollector;
+import com.luxoft.jmswithspring.service.slis.OperationsParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class DataManager {
         tablesDAO.createTableUser();
         tablesDAO.createTableTransaction();
         tablesDAO.createTableSecurity();
+        tablesDAO.createTableBranch();
+        tablesDAO.createTableSecIds();
     }
 
     public void processSLIS(String slis) {

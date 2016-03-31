@@ -19,6 +19,7 @@ public class DBOperationMapper implements RowMapper<Operation> {
     private static final String COLUMN_OPERATION = "operation";
     private static final String COLUMN_CODE = "code";
     private static final String COLUMN_BRANCH_ID = "branch_id";
+    private static final String COLUMN_BRANCH_ADDRESS = "branch_address";
 
     private static final String COLUMN_USER_ID = "id";
     private static final String COLUMN_USER_NAME = "name";
@@ -46,8 +47,15 @@ public class DBOperationMapper implements RowMapper<Operation> {
         OperationType operationType = OperationType.valueOf(resultSet.getString(COLUMN_OPERATION));
         String code = resultSet.getString(COLUMN_CODE);
         int branchId = resultSet.getInt(COLUMN_BRANCH_ID);
+        String branchAddress = resultSet.getString(COLUMN_BRANCH_ADDRESS);
 
-        Transaction transaction = new Transaction(id, operationType, code, branchId);
+        Transaction transaction = Transaction.builder()
+                .withId(id)
+                .withOperationType(operationType)
+                .withCountryCode(code)
+                .withBranchId(branchId)
+                .withBranchAddress(branchAddress)
+                .build();
 
         int userId = resultSet.getInt(COLUMN_USER_ID);
         String name = resultSet.getString(COLUMN_USER_NAME);

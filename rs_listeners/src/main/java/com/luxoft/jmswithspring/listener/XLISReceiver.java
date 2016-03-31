@@ -7,19 +7,24 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+import java.util.Queue;
+
 @Component
 public class XLISReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(XLISReceiver.class);
 
     @Autowired
-    ConfigurableApplicationContext context;
+    private ConfigurableApplicationContext context;
+
+    @Autowired
+    @Resource(name = "xlisQueue")
+    private Queue<String> queue;
 
     @JmsListener(destination = "XLIS", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
-        log.info("XLIS: Received: {}", message);
-//        System.out.println("XLIS: " + message);
-//        context.close();
-//        FileSystemUtils.deleteRecursively(new File("activemq-data"));
+        log.info("XLIS: Received: < {} >", message);
+        queue.add(message);
     }
 }

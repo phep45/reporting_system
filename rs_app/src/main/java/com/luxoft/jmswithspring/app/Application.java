@@ -2,14 +2,12 @@ package com.luxoft.jmswithspring.app;
 
 import com.luxoft.jmswithspring.config.OperationsConfig;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
-import com.luxoft.jmswithspring.listener.ListenersBoot;
 import com.luxoft.jmswithspring.manager.DataManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileSystemUtils;
 
@@ -25,9 +23,13 @@ public class Application {
     @Autowired
     private DataManager dataManager;
 
-//    @Autowired
-//    @Resource(name = "slisQueue")
-    private Queue<String> queue;
+    @Autowired
+    @Resource(name = "slisQueue")
+    private Queue<String> slisQueue;
+
+    @Autowired
+    @Resource(name = "xlisQueue")
+    private Queue<String> xlisQueue;
 
     public void run() throws InterruptedException {
 //        String slis = "000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500\n" +
@@ -38,11 +40,9 @@ public class Application {
 
         dataManager.createDatabase();
         log.info("Tables created");
-//        dataManager.processSLIS(slis);
-//        dataManager.showDataFromDatabase();
 
         while(true) {
-            String slis = queue.poll();
+            String slis = slisQueue.poll();
             if(slis!=null) {
                 log.info("SLIS: {}", slis);
                 dataManager.processSLIS(slis);
@@ -50,18 +50,14 @@ public class Application {
         }
     }
 
-    public void setQueue(Queue<String> queue) {
-        this.queue = queue;
-    }
-
     public static void main(String[] args) throws IOException, CorruptedDataException, InterruptedException {
         FileSystemUtils.deleteRecursively(new File("activemq-data"));
-        ConfigurableApplicationContext context = SpringApplication.run(ListenersBoot.class);
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(OperationsConfig.class);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(OperationsConfig.class);
 
         Application application = (Application) applicationContext.getBean("application");
-        application.setQueue((Queue<String>) context.getBean("slisQueue"));
         application.run();
+
+        applicationContext.close();
     }
 
 }

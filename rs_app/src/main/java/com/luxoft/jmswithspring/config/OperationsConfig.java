@@ -22,6 +22,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
 @PropertySource( value = {"classpath:jmswithspring/db.properties"})
+@SpringBootApplication
+@EnableJms
 public class OperationsConfig {
 
     @Autowired
@@ -46,10 +48,16 @@ public class OperationsConfig {
         return new JdbcTemplate(dataSource);
     }
 
-//    @Bean
-//    Queue<String> queue() {
-//        return new LinkedBlockingQueue<>();
-//    }
+    @Bean
+    Queue<String> slisQueue() {
+        return new LinkedBlockingQueue<>();
+    }
+
+    @Bean
+    Queue<String> xlisQueue() {
+        return new LinkedBlockingQueue<>();
+    }
+
 
     @Bean
     public JmsListenerContainerFactory<?> dataJmsContainerFactory() throws JMSException {

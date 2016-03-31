@@ -15,27 +15,27 @@ import java.util.List;
 public class UserJDBCTemplate extends GenericDAO<User> {
     private static final Logger log = LoggerFactory.getLogger(UserJDBCTemplate.class);
     
-    private static final String INSERT_USER = "insert into User (id, name) values (?, ?)";
+    private static final String INSERT_USER = "insert into User (id, name, birth_date) values (?, ?, ?)";
     private static final String SELECT_USER = "select * from User where id = ?";
     private static final String SELECT_ALL = "select * from User";
-    private static final String UPDATE_USER = "update User set name = ? where id = ?";
+    private static final String UPDATE_USER = "update User set name = ?, set birth_date = ? where id = ?";
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void create(int id, String userName) {
+    public void create(int id, String userName, String birthDate) {
         String sql = INSERT_USER;
-        jdbcTemplate.update(sql, id, userName);
+        jdbcTemplate.update(sql, id, userName, birthDate);
         log.info("Create: {}", sql);
     }
 
     public void create(User user, int id) {
-        create(user.getUserId(), user.getUserName());
+        create(user.getUserId(), user.getUserName() + " " + user.getSurname(), user.getBirthDate());
     }
 
     public void update(User user, int id) {
-        update(user.getUserId(), user.getUserName());
+        update(user.getUserId(), user.getUserName(), user.getBirthDate());
     }
 
     public User get(int id) {
@@ -59,9 +59,10 @@ public class UserJDBCTemplate extends GenericDAO<User> {
     }
 
 
-    public void update(int id, String userName) {
+    public void update(int id, String userName, String birthDate) {
         String sql = UPDATE_USER;
-        jdbcTemplate.update(sql, userName, id);
+        jdbcTemplate.update(sql, userName, birthDate, id);
         log.info("Update: {}", sql);
     }
+
 }

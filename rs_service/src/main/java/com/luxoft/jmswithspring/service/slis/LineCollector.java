@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

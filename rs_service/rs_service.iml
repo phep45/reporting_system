@@ -30,5 +30,6 @@
     <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-junit:2.0.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.hamcrest:java-hamcrest:2.0.0.0" level="project" />
     <orderEntry type="module" module-name="rs_core" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.12" level="project" />
   </component>
 </module>

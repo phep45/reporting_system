@@ -13,6 +13,7 @@ public class DBTransactionMapper implements RowMapper<Transaction> {
     private static final String COLUMN_OPERATION = "operation";
     private static final String COLUMN_CODE = "code";
     private static final String COLUMN_BRANCH_ID = "branch_id";
+    private static final String COLUMN_BRANCH_ADDRESS = "branch_address";
 
     @Override
     public Transaction mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -21,7 +22,14 @@ public class DBTransactionMapper implements RowMapper<Transaction> {
         OperationType operationType = OperationType.valueOf(resultSet.getString(COLUMN_OPERATION));
         String code = resultSet.getString(COLUMN_CODE);
         int branchId = resultSet.getInt(COLUMN_BRANCH_ID);
+        String branchAddress = resultSet.getString(COLUMN_BRANCH_ADDRESS);
 
-        return new Transaction(id, operationType, code, branchId);
+        return Transaction.builder()
+                .withId(id)
+                .withOperationType(operationType)
+                .withCountryCode(code)
+                .withBranchId(branchId)
+                .withBranchAddress(branchAddress)
+                .build();
     }
 }

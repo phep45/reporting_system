@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 import com.google.common.base.Preconditions;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
@@ -24,21 +24,24 @@ public class TransactionMapper {
     public Transaction map(String transactionAsString) throws CorruptedDataException {
         Preconditions.checkArgument(transactionAsString.length() == VALID_LENGTH, "Invalid input. String should be " + VALID_LENGTH + " characters long.");
 
-        Transaction transaction = new Transaction();
-
         try {
-            transaction.setId(Integer.parseInt(transactionAsString.substring(ID_BEGIN, ID_END).trim()));
+            int id = Integer.parseInt(transactionAsString.substring(ID_BEGIN, ID_END).trim());
             String operation = transactionAsString.substring(OPERATION_BEGIN, OPERATION_END).trim();
-            transaction.setOperationType(OperationType.valueOf(operation));
-            transaction.setCountryCode(transactionAsString.substring(CODE_BEGIN, CODE_END).trim());
-            transaction.setBranchId(Integer.parseInt(transactionAsString.substring(BRANCH_ID_BEGIN)));
+            OperationType operationType = OperationType.valueOf(operation);
+            String code = transactionAsString.substring(CODE_BEGIN, CODE_END).trim();
+            int branchId = Integer.parseInt(transactionAsString.substring(BRANCH_ID_BEGIN));
+
+            return Transaction.builder()
+                    .withId(id)
+                    .withOperationType(operationType)
+                    .withCountryCode(code)
+                    .withBranchId(branchId)
+                    .build();
 
         } catch (IllegalArgumentException e) {
             log.info("Data < {} > corrupted.", transactionAsString);
             throw new CorruptedDataException(e);
         }
-
-        return transaction;
     }
 
 }

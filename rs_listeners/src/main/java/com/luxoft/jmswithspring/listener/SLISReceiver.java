@@ -25,7 +25,6 @@ public class SLISReceiver {
     @JmsListener(destination = "SLIS", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
         log.info("SLIS: Received < {} >", message);
-
         queue.add(message);
     }
 

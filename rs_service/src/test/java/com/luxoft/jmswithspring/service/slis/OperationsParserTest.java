@@ -1,9 +1,9 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.*;
-import com.luxoft.jmswithspring.service.*;
+import com.luxoft.jmswithspring.service.slis.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -85,7 +85,7 @@ public class OperationsParserTest {
 
         expectedTransaction = new Transaction();
         expectedTransaction.setId(ID);
-        expectedTransaction.setOperationType(OPERATION_TYPE);
+        expectedTransaction.setType(OPERATION_TYPE);
         expectedTransaction.setCountryCode(COUNTRY_CODE);
         expectedTransaction.setBranchId(BRANCH_ID);
 

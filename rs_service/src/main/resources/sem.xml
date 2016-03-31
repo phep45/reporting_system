@@ -7,7 +7,7 @@
         <br_date>23-05-2001</br_date>
     </user>
     <type>BUY</type>
-    <country_code>124</country_code>
+    <country_code>100</country_code>
     <!--124 US-->
     <!--125 KN-->
     <!--200 GB-->
@@ -18,11 +18,20 @@
 
 
     <lots>
-        <date>23-12-1999</date><!--//date ISO-->
-        <lot_id>123</lot_id>
-        <price>500.21</price>
-        <amount>5</amount>
-        <sec_id>655</sec_id>
+        <lot>
+            <date>23-12-1999</date><!--//date ISO-->
+            <lot_id>123</lot_id>
+            <price>500.21</price>
+            <amount>5</amount>
+            <sec_id>655</sec_id>
+        </lot>
+        <lot>
+            <date>08-03-2099</date><!--//date ISO-->
+            <lot_id>878</lot_id>
+            <price>34.2105</price>
+            <amount>700</amount>
+            <sec_id>340</sec_id>
+        </lot>
     </lots>
 </tran>
 
