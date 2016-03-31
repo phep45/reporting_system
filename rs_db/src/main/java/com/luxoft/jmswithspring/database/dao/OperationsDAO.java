@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class TransactionDAO extends GenericDAO<Transaction> {
+public class OperationsDAO extends GenericDAO<Transaction> {
 
     @Autowired
     private UserJDBCTemplate userJDBCTemplate;

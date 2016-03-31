@@ -26,15 +26,16 @@ public class TransactionMapperTest {
     @Before
     public void setUp() {
         transactionMapper = new TransactionMapper();
-        expectedTransaction = new Transaction();
     }
 
     @Test
     public void shouldReturnTransaction() throws CorruptedDataException {
-        expectedTransaction.setBranchId(BRANCH_ID);
-        expectedTransaction.setCountryCode(COUNTRY_CODE);
-        expectedTransaction.setType(OPERATION_TYPE);
-        expectedTransaction.setId(ID);
+        expectedTransaction = Transaction.builder()
+                .withBranchId(BRANCH_ID)
+                .withCountryCode(COUNTRY_CODE)
+                .withOperationType(OPERATION_TYPE)
+                .withId(ID)
+                .build();
 
         Transaction result = transactionMapper.map(INPUT);
 

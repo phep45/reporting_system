@@ -19,8 +19,6 @@ public class Transaction {
     private Branch branch = new Branch();
     private Lots lots = new Lots();
 
-    public Transaction() {}
-
     public static Builder builder() {
         return new Transaction().new Builder();
     }
