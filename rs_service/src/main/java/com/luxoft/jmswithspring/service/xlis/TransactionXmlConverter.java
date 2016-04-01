@@ -1,6 +1,7 @@
 package com.luxoft.jmswithspring.service.xlis;
 
 import com.luxoft.jmswithspring.model.Transaction;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -8,6 +9,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
+@Component
 public class TransactionXmlConverter extends XmlConverter<Transaction> {
     @Override
     public Transaction unmarshal(String xml) {

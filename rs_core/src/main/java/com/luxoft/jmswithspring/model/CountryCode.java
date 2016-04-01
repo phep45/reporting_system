@@ -15,7 +15,7 @@ public enum CountryCode {
 
     private Integer code;
 
-    private CountryCode(int code) {
+    CountryCode(int code) {
         this.code = code;
     }
 
@@ -25,7 +25,7 @@ public enum CountryCode {
 
     public static CountryCode match(Integer value) {
         for(CountryCode countryCode : values()) {
-            if(value == countryCode.code)
+            if(value.equals(countryCode.code))
                 return countryCode;
         }
         return null;

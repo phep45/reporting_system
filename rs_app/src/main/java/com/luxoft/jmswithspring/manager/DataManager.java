@@ -1,11 +1,14 @@
 package com.luxoft.jmswithspring.manager;
 
 import com.luxoft.jmswithspring.database.dao.GenericDAO;
+import com.luxoft.jmswithspring.database.dao.OperationsDAO;
 import com.luxoft.jmswithspring.database.dao.TablesDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
+import com.luxoft.jmswithspring.model.Transaction;
 import com.luxoft.jmswithspring.service.slis.LineCollector;
 import com.luxoft.jmswithspring.service.slis.OperationsParser;
+import com.luxoft.jmswithspring.service.xlis.TransactionXmlConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,10 @@ public class DataManager {
     private LineCollector lineCollector;
     @Autowired
     private GenericDAO<Operation> operationDAO;
+    @Autowired
+    private OperationsDAO xlisDAO;
+    @Autowired
+    private TransactionXmlConverter transactionXmlConverter;
 
     public void createDatabase() {
         tablesDAO.createTableUser();
@@ -52,6 +59,15 @@ public class DataManager {
         allOperations.forEach(operation -> {
             operationDAO.create(operation, 0);
         });
+    }
+
+    public void processXLIS(String xml) {
+        Transaction transaction = transactionXmlConverter.unmarshal(xml);
+        try {
+            xlisDAO.create(transaction,0);
+        } catch (CorruptedDataException e) {
+            log.info("Corrupted data", e);
+        }
     }
 
     public void showDataFromDatabase() {

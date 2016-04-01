@@ -47,6 +47,11 @@ public class Application {
                 log.info("SLIS: {}", slis);
                 dataManager.processSLIS(slis);
             }
+            String xlis = xlisQueue.poll();
+            if(xlis!=null) {
+                log.info("Xlis received");
+                dataManager.processXLIS(xlis);
+            }
         }
     }
 

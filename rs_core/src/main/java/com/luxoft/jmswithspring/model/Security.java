@@ -10,18 +10,13 @@ import java.math.BigDecimal;
 
 @TableName("Security")
 @XmlRootElement(name = "lot")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Security {
 
-    @XmlElement(name = "lot_id")
+
     private int lotId;
-    @XmlElement
     private BigDecimal price;
-    @XmlElement
     private int amount;
-    @XmlElement
     private String date;
-    @XmlElement(name = "sec_id")
     private int productId;
 
     private Security() {
@@ -67,6 +62,30 @@ public class Security {
         return new Security().new Builder();
     }
 
+    @XmlElement(name = "lot_id")
+    public void setLotId(int lotId) {
+        this.lotId = lotId;
+    }
+
+    @XmlElement
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @XmlElement
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @XmlElement
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @XmlElement(name = "sec_id")
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     public int getLotId() {
         return lotId;
