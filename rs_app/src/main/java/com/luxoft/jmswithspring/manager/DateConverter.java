@@ -18,13 +18,11 @@ public class DateConverter {
 
         String[] splitted = date.split("-");
 
-        iso = new StringBuilder()
-                .append(splitted[1])
-                .append("/")
-                .append(splitted[0])
-                .append("/")
-                .append(splitted[2])
-                .toString();
+        iso = splitted[1] +
+                "/" +
+                splitted[0] +
+                "/" +
+                splitted[2];
 
         return iso;
     }
