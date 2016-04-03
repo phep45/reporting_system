@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.service.xlis;
 
+import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,7 +12,7 @@ public class UserXmlConverterTest {
     private XmlConverter<User> userXmlConverter = new UserXmlConverter();
 
     @Test
-    public void shouldReturnUser() {
+    public void shouldReturnUser() throws CorruptedDataException {
 
         User userFromXml = userXmlConverter.unmarshal(input);
         User expectedUser = User.builder()

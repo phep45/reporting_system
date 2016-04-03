@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.service.xlis;
 
+import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Transaction;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class TransactionXmlConverter extends XmlConverter<Transaction> {
     @Override
-    public Transaction unmarshal(String xml) {
+    public Transaction unmarshal(String xml) throws CorruptedDataException {
         Transaction transaction = null;
 
         try {
@@ -23,7 +24,7 @@ public class TransactionXmlConverter extends XmlConverter<Transaction> {
 
         } catch (JAXBException e) {
             log.info("Unable to unmarshal",e);
-            return null;
+            throw new CorruptedDataException("This is not a proper XML");
         }
 
         return transaction;

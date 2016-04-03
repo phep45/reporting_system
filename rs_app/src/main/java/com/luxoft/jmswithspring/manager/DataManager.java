@@ -33,6 +33,8 @@ public class DataManager {
     private OperationsDAO xlisDAO;
     @Autowired
     private TransactionXmlConverter transactionXmlConverter;
+    @Autowired
+    private DateConverter dateConverter;
 
     public void createDatabase() {
         tablesDAO.createTableUser();
@@ -62,8 +64,12 @@ public class DataManager {
     }
 
     public void processXLIS(String xml) {
-        Transaction transaction = transactionXmlConverter.unmarshal(xml);
+        Transaction transaction = null;
         try {
+            transaction = transactionXmlConverter.unmarshal(xml);
+            transaction.getLots().getListOfLots().forEach(lot -> {
+                lot.setDate(dateConverter.usToIso(lot.getDate()));
+            });
             xlisDAO.create(transaction,0);
         } catch (CorruptedDataException e) {
             log.info("Corrupted data", e);

@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.service.xlis;
 
+import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,6 @@ public abstract class XmlConverter<T> {
 
     protected JAXBContext jaxbContext;
 
-    public abstract T unmarshal(String xml);
+    public abstract T unmarshal(String xml) throws CorruptedDataException;
 
 }

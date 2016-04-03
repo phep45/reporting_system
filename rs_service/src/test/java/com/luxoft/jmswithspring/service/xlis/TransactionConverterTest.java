@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.service.xlis;
 
+import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.OperationType;
 import com.luxoft.jmswithspring.model.Security;
 import com.luxoft.jmswithspring.model.Transaction;
@@ -60,7 +61,7 @@ public class TransactionConverterTest {
             .build();
 
     @Test
-    public void shouldParseCorrectly() {
+    public void shouldParseCorrectly() throws CorruptedDataException {
         TransactionXmlConverter transactionXmlConverter = new TransactionXmlConverter();
 
         Transaction result = transactionXmlConverter.unmarshal(XML);
