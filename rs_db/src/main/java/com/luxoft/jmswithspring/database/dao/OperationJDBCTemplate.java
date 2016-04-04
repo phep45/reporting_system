@@ -57,7 +57,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
 
     private boolean isCorrect(User user) {
         User userFromDB = userDAO.get(user.getUserId());
-        return userFromDB.getUserName().equals(user.getUserName());
+        return userFromDB.equals(user);
     }
 
     private void addToDatabase(int userId, Transaction transaction, List<Security> securities) {

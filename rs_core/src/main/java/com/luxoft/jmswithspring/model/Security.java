@@ -2,10 +2,16 @@ package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 
 @TableName("Security")
+@XmlRootElement(name = "lot")
 public class Security {
+
 
     private int lotId;
     private BigDecimal price;
@@ -56,6 +62,30 @@ public class Security {
         return new Security().new Builder();
     }
 
+    @XmlElement(name = "lot_id")
+    public void setLotId(int lotId) {
+        this.lotId = lotId;
+    }
+
+    @XmlElement
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @XmlElement
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @XmlElement
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @XmlElement(name = "sec_id")
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     public int getLotId() {
         return lotId;

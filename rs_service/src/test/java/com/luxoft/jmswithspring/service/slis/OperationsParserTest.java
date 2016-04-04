@@ -1,9 +1,9 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.*;
-import com.luxoft.jmswithspring.service.*;
+import com.luxoft.jmswithspring.service.slis.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -47,6 +47,8 @@ public class OperationsParserTest {
 
     private static final int USER_ID = 1;
     private static final String USER_NAME = "Stiven Meckalov";
+    private static final String FIRSTNAME = "Stiven";
+    private static final String SURNAME = "Meckalov";
 
     private static final int BRANCH_ID = 902002;
     private static final String COUNTRY_CODE = "US";
@@ -81,13 +83,19 @@ public class OperationsParserTest {
     }
 
     private void createExpectedOperation() {
-        expectedUser = new User(USER_ID, USER_NAME);
+        expectedUser = User.builder()
+                .withUserId(USER_ID)
+                .withFirstName(FIRSTNAME)
+                .withSurname(SURNAME)
+                .build();
 
-        expectedTransaction = new Transaction();
-        expectedTransaction.setId(ID);
-        expectedTransaction.setOperationType(OPERATION_TYPE);
-        expectedTransaction.setCountryCode(COUNTRY_CODE);
-        expectedTransaction.setBranchId(BRANCH_ID);
+        expectedTransaction = Transaction.builder()
+                .withId(ID)
+                .withBranchId(BRANCH_ID)
+                .withCountryCode(COUNTRY_CODE)
+                .withOperationType(OPERATION_TYPE)
+                .build();
+
 
         expectedOperation  =  new Operation();
         expectedOperation.setSecurities(expectedSecurities);

@@ -1,8 +1,8 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Security;
-import com.luxoft.jmswithspring.service.SecurityMapper;
+import com.luxoft.jmswithspring.service.slis.SecurityMapper;
 import org.junit.Before;
 import org.junit.Test;
 

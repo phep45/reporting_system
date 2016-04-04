@@ -1,6 +1,6 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
-import com.luxoft.jmswithspring.service.Extractor;
+import com.luxoft.jmswithspring.service.slis.Extractor;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

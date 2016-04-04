@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,6 @@ public class LineCollector {
 
     public List<String> collect(String string) {
         List<String> lines;
-
         lines = Arrays.asList(string.split(NEW_LINE));
 
         log.info("Collected {} lines.", lines.size());

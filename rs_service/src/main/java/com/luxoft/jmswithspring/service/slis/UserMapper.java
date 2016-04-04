@@ -1,4 +1,4 @@
-package com.luxoft.jmswithspring.service;
+package com.luxoft.jmswithspring.service.slis;
 
 import com.google.common.base.Preconditions;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
@@ -25,8 +25,16 @@ public class UserMapper {
         User user;
         try {
             int userId = Integer.parseInt(userAsString.substring(ID_BEGIN, ID_END).trim());
-            String userName = userAsString.substring(NAME_BEGIN, NAME_END).trim().replaceAll(TWO_OR_MORE_SPACES, StringUtils.SPACE);
-            user = new User(userId, userName);
+            String[] userName = userAsString.substring(NAME_BEGIN, NAME_END).trim().replaceAll(TWO_OR_MORE_SPACES, StringUtils.SPACE).split(StringUtils.SPACE);
+            if (userName.length == 1)
+                user = new User(userId, userName[0]);
+            else if(userName.length==2)
+                user = User.builder()
+                        .withUserId(userId)
+                        .withFirstName(userName[0])
+                        .withSurname(userName[1])
+                        .build();
+            else throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
             log.info("Data < {} > corrupted.", userAsString);
             throw new CorruptedDataException(e);

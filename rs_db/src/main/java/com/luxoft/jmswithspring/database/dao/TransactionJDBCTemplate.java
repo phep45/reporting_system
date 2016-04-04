@@ -14,26 +14,26 @@ import java.util.List;
 public class TransactionJDBCTemplate extends GenericDAO<Transaction> {
     private static final Logger log = LoggerFactory.getLogger(TransactionJDBCTemplate.class);
 
-    private static final String INSERT_TRANSACTION = "insert into Transaction (id, operation, code, branch_id, user_id) values (?, ?, ?, ?, ?)";
+    private static final String INSERT_TRANSACTION = "insert into Transaction (id, operation, code, branch_id, branch_address, user_id) values (?, ?, ?, ?, ?, ?)";
     private static final String SELECT_TRANSACTION = "select * from Transaction where id = ?";
     private static final String SELECT_ALL = "select * from Transaction";
     private static final String DELETE_TRANSACTION = "delete from Transaction where id = ?";
-    private static final String UPDATE_TRANSACTION = "update Transaction set operation = ?, code = ?, branch_id =?, where id = ?";
+    private static final String UPDATE_TRANSACTION = "update Transaction set operation = ?, code = ?, branch_id =?, branch_address = ?, where id = ?";
 
-    public void create(int id, OperationType operationType, String code, int branchId, int userId) {
+    public void create(int id, OperationType operationType, String code, int branchId, String branchAddress, int userId) {
         String sql = INSERT_TRANSACTION;
-        jdbcTemplate.update(sql, id, operationType.toString(), code, branchId, userId);
+        jdbcTemplate.update(sql, id, operationType.toString(), code, branchId, branchAddress, userId);
         log.info("Create: {}", sql);
     }
 
     @Override
     public void create(Transaction transaction, int userId) {
-        create(transaction.getId(), transaction.getOperationType(), transaction.getCountryCode(), transaction.getBranchId(), userId);
+        create(transaction.getId(), transaction.getType(), transaction.getCountryCode().toString(), transaction.getBranchId(), transaction.getBranchAddress(), userId);
     }
 
     @Override
     public void update(Transaction transaction, int foreignKeyId) {
-        update(transaction.getId(), transaction.getOperationType(), transaction.getCountryCode(), transaction.getBranchId(), foreignKeyId);
+        update(transaction.getId(), transaction.getType(), transaction.getCountryCode().toString(), transaction.getBranchId(), foreignKeyId);
     }
 
     @Override
