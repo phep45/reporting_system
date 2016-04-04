@@ -2,7 +2,6 @@ package com.luxoft.jmswithspring.manager;
 
 import com.luxoft.jmswithspring.database.dao.GenericDAO;
 import com.luxoft.jmswithspring.database.dao.OperationsDAO;
-import com.luxoft.jmswithspring.database.dao.TablesDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.model.Transaction;
@@ -22,8 +21,6 @@ public class DataManager {
     private static final Logger log = LoggerFactory.getLogger(DataManager.class);
 
     @Autowired
-    private TablesDAO tablesDAO;
-    @Autowired
     private OperationsParser operationsParser;
     @Autowired
     private LineCollector lineCollector;
@@ -35,14 +32,6 @@ public class DataManager {
     private TransactionXmlConverter transactionXmlConverter;
     @Autowired
     private DateConverter dateConverter;
-
-    public void createDatabase() {
-        tablesDAO.createTableUser();
-        tablesDAO.createTableTransaction();
-        tablesDAO.createTableSecurity();
-        tablesDAO.createTableBranch();
-        tablesDAO.createTableSecIds();
-    }
 
     public void processSLIS(String slis) {
         List<String> listOfLines = lineCollector.collect(slis);

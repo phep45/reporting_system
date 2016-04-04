@@ -19,6 +19,7 @@
             <price>500.21</price>
             <amount>5</amount>
             <sec_id>655</sec_id>
+            <des>PEPSI LTD</des>
         </lot>
         <lot>
             <date>08-03-2099</date>
@@ -26,6 +27,7 @@
             <price>34.2105</price>
             <amount>700</amount>
             <sec_id>340</sec_id>
+            <des>MCSF LTD</des>
         </lot>
     </lots>
 </tran>
