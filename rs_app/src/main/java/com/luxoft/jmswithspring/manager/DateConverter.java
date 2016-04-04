@@ -1,30 +1,45 @@
 package com.luxoft.jmswithspring.manager;
 
 import com.google.common.base.Preconditions;
-import com.luxoft.jmswithspring.model.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
 public class DateConverter {
 
-    public static final String US_DATE_REGEX = "^(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])-(19|20)\\d\\d$";
+    private static final Logger log = LoggerFactory.getLogger(DateConverter.class);
 
-    public String usToIso(String date) {
-        Preconditions.checkArgument(isInUsFormat(date), "Date must be in US format.");
-        String iso = null;
+    private static final String US_DATE_REGEX = "^(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])-(19|20)\\d\\d$";
 
-        String[] splitted = date.split("-");
+    /**
+     * Converts date from MM-dd-yyyy (US format) to dd/MM/yyyy (ISO format)
+     *
+     * @param dateInUsFormat date to convert
+     * @return date in dd/MM/yyyy format
+     */
+    public String usToIso(String dateInUsFormat) {
+        Preconditions.checkArgument(isInUsFormat(dateInUsFormat), "Date must be in US format.");
 
-        iso = splitted[1] +
-                "/" +
-                splitted[0] +
-                "/" +
-                splitted[2];
+        String isoDate = dateInUsFormat;
 
-        return iso;
+        SimpleDateFormat usFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat isoFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            Date date = usFormat.parse(isoDate);
+            isoDate = isoFormat.format(date);
+        } catch (ParseException e) {
+            log.info("Unable to parse {} date.", dateInUsFormat);
+        }
+
+        return isoDate;
     }
 
     private boolean isInUsFormat(String date) {
@@ -32,5 +47,4 @@ public class DateConverter {
         Matcher matcher = pattern.matcher(date);
         return matcher.find();
     }
-
 }
