@@ -34,9 +34,4 @@ public class SLISReceiver {
         SlisEvent slisEvent = new SlisEvent(str);
         applicationEventPublisher.publishEvent(slisEvent);
     }
-//
-//    @Override
-//    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-//        this.applicationEventPublisher = applicationEventPublisher;
-//    }
 }
