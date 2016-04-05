@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.config;
 
+import com.luxoft.jmswithspring.database.dao.TableCreator;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,10 +15,9 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.jms.JMSException;
 import javax.sql.DataSource;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
@@ -28,7 +28,6 @@ public class OperationsConfig {
 
     @Autowired
     private Environment env;
-
     @Autowired
     private DataSource dataSource;
 
@@ -49,17 +48,6 @@ public class OperationsConfig {
     }
 
     @Bean
-    Queue<String> slisQueue() {
-        return new LinkedBlockingQueue<>();
-    }
-
-    @Bean
-    Queue<String> xlisQueue() {
-        return new LinkedBlockingQueue<>();
-    }
-
-
-    @Bean
     public JmsListenerContainerFactory<?> dataJmsContainerFactory() throws JMSException {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory());
@@ -69,6 +57,11 @@ public class OperationsConfig {
 
     private ActiveMQConnectionFactory connectionFactory() {
         return new ActiveMQConnectionFactory("tcp://localhost:61616");
+    }
+
+    @PostConstruct
+    public void createTables() {
+        TableCreator.createAll(new JdbcTemplate((dataSource)));
     }
 
 }

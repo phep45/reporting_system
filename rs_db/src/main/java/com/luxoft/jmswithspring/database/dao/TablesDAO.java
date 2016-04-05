@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 public class TablesDAO {
     private static final Logger log = LoggerFactory.getLogger(TablesDAO.class);
@@ -13,8 +14,8 @@ public class TablesDAO {
     private static final String DROP_USER = "drop table if exists User;";
     private static final String CREATE_TABLE_USER = "create table User (id INT NOT NULL, name VARCHAR(20), birth_date VARCHAR(10), UNIQUE KEY (id));";
 
-    private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE Transaction (id INT NOT NULL, operation VARCHAR(6), code VARCHAR(2), branch_id int, branch_address VARCHAR(50), user_id int, UNIQUE KEY(id), FOREIGN KEY(user_id) REFERENCES User(id));";
     private static final String DROP_TRANSACTION = "DROP TABLE IF EXISTS Transaction;";
+    private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE Transaction (id INT NOT NULL, operation VARCHAR(6), code VARCHAR(2), branch_id int, branch_address VARCHAR(50), user_id int, UNIQUE KEY(id), FOREIGN KEY(user_id) REFERENCES User(id));";
 
     private static final String DROP_SECURITY = "DROP TABLE IF EXISTS Security;";
     private static final String CREATE_TABLE_SECURITY = "CREATE TABLE Security (id INT, price DOUBLE , amount INT, date VARCHAR(10), product_id int, transaction_id int, FOREIGN KEY(transaction_id) REFERENCES Transaction(id));";

@@ -22,7 +22,9 @@ public class OperationsDAO {
     @Autowired
     private SecurityJDBCTemplate securityJDBCTemplate;
 
+
     public void create(Transaction transaction, int foreignKeyId) throws CorruptedDataException {
+
         User user = transaction.getUser();
         if(existsInDatabase(user)) {
             addTransactionToUser(transaction, user.getUserId());
