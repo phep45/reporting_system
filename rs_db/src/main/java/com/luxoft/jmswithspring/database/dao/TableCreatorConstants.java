@@ -20,4 +20,6 @@ public class TableCreatorConstants {
     public static final String DROP_TABLE_SECURITY = "DROP TABLE IF EXISTS SECURITY;";
     public static final String CREATE_TABLE_SECURITY = "CREATE TABLE SECURITY (ID INT NOT NULL, DES VARCHAR(100));";
 
+    private TableCreatorConstants() {}
+
 }

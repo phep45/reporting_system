@@ -17,6 +17,8 @@ public class DateConverter {
     private static final Logger log = LoggerFactory.getLogger(DateConverter.class);
 
     private static final String US_DATE_REGEX = "^(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])-(19|20)\\d\\d$";
+    private static final String US_DATE_FORMAT = "MM-dd-yyyy";
+    private static final String ISO_DATE_FORMAT = "dd/MM/yyyy";
 
     /**
      * Converts date from MM-dd-yyyy (US format) to dd/MM/yyyy (ISO format)
@@ -29,14 +31,15 @@ public class DateConverter {
 
         String isoDate = dateInUsFormat;
 
-        SimpleDateFormat usFormat = new SimpleDateFormat("MM-dd-yyyy");
-        SimpleDateFormat isoFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat usFormat = new SimpleDateFormat(US_DATE_FORMAT);
+        SimpleDateFormat isoFormat = new SimpleDateFormat(ISO_DATE_FORMAT);
 
         try {
             Date date = usFormat.parse(isoDate);
             isoDate = isoFormat.format(date);
         } catch (ParseException e) {
-            log.info("Unable to parse {} date.", dateInUsFormat);
+            log.error("Unable to parse {} date.", dateInUsFormat);
+            return null;
         }
 
         return isoDate;
