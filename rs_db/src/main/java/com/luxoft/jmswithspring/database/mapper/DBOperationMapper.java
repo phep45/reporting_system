@@ -35,12 +35,12 @@ public class DBOperationMapper implements RowMapper<Operation> {
         String date = resultSet.getString(COLUMN_DATE);
         int productId = resultSet.getInt(COLUMN_PRODUCT_ID);
 
-        Security security = Security.builder()
+        Lot lot = Lot.builder()
                 .withLotId(lotId)
                 .withPrice(price)
                 .withAmount(amount)
                 .withDate(date)
-                .withProductId(productId)
+                .withSecurityId(productId)
                 .build();
 
         int id = resultSet.getInt(COLUMN_TRANSACTION_ID);

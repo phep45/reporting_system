@@ -9,7 +9,7 @@
     <type>BUY</type>
     <country_code>100</country_code>
     <branch>
-        <id>123</id>
+        <branchId>123</branchId>
         <address>Scotland str. test 54</address>
     </branch>
     <lots>

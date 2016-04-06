@@ -8,21 +8,21 @@ public class Operation {
 
     private User user;
     private Transaction transaction;
-    private List<Security> securities;
+    private List<Lot> securities;
 
     public Operation(){}
 
-    public Operation(User user, Transaction transaction, List<Security> securities) {
+    public Operation(User user, Transaction transaction, List<Lot> securities) {
         this.user = user;
         this.transaction = transaction;
         this.securities = securities;
     }
 
-    public List<Security> getSecurities() {
+    public List<Lot> getSecurities() {
         return securities;
     }
 
-    public void setSecurities(List<Security> securities) {
+    public void setSecurities(List<Lot> securities) {
         this.securities = securities;
     }
 

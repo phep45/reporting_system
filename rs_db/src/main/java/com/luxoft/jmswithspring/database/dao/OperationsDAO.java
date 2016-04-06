@@ -1,7 +1,7 @@
 package com.luxoft.jmswithspring.database.dao;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
-import com.luxoft.jmswithspring.model.Security;
+import com.luxoft.jmswithspring.model.Lot;
 import com.luxoft.jmswithspring.model.Transaction;
 import com.luxoft.jmswithspring.model.User;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class OperationsDAO {
     @Autowired
     private TransactionJDBCTemplate transactionJDBCTemplate;
     @Autowired
-    private SecurityJDBCTemplate securityJDBCTemplate;
+    private LotJDBCTemplate lotJDBCTemplate;
 
 
     public void create(Transaction transaction, int foreignKeyId) throws CorruptedDataException {
@@ -32,8 +32,8 @@ public class OperationsDAO {
         }
         userJDBCTemplate.create(user, user.getUserId());
         transactionJDBCTemplate.create(transaction.getId(), transaction.getType(), transaction.getCountryCode().toString(), transaction.getBranchId(), transaction.getBranchAddress(), transaction.getUser().getUserId());
-        List<Security> securities = transaction.getLots().getListOfLots();
-        securities.forEach(security -> securityJDBCTemplate.create(security, transaction.getId()));
+        List<Lot> securities = transaction.getLots().getListOfLots();
+        securities.forEach(security -> lotJDBCTemplate.create(security, transaction.getId()));
     }
 
     private void addTransactionToUser(Transaction transaction, int userId) throws CorruptedDataException {
@@ -53,7 +53,7 @@ public class OperationsDAO {
         log.info("New transaction added");
 
         transaction.getLots().getListOfLots().forEach(security -> {
-            securityJDBCTemplate.create(security, transaction.getId());
+            lotJDBCTemplate.create(security, transaction.getId());
             log.info("New security added");
         });
     }
@@ -69,8 +69,8 @@ public class OperationsDAO {
         User user = transaction.getUser();
         userJDBCTemplate.update(user, user.getUserId());
         transactionJDBCTemplate.update(transaction, user.getUserId());
-        List<Security> securities = transaction.getLots().getListOfLots();
-        securities.forEach(security -> securityJDBCTemplate.update(security, transaction.getId()));
+        List<Lot> securities = transaction.getLots().getListOfLots();
+        securities.forEach(security -> lotJDBCTemplate.update(security, transaction.getId()));
     }
 
     public Transaction get(int id) {

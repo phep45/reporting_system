@@ -2,7 +2,7 @@ package com.luxoft.jmswithspring.service.slis;
 
 import com.google.common.base.Preconditions;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
-import com.luxoft.jmswithspring.model.Security;
+import com.luxoft.jmswithspring.model.Lot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,9 +27,9 @@ public class SecurityMapper {
 
     private static final int VALID_LENGTH = 44;
 
-    public List<Security> map(String securitiesAsString) throws CorruptedDataException {
+    public List<Lot> map(String securitiesAsString) throws CorruptedDataException {
         Preconditions.checkArgument(securitiesAsString.length() >= VALID_LENGTH, "Invalid input. String should not be shorter then " + VALID_LENGTH + " characters.");
-        List<Security> securities = new LinkedList<>();
+        List<Lot> securities = new LinkedList<>();
 
         List<String> list = splitInput(securitiesAsString);
 
@@ -41,15 +41,15 @@ public class SecurityMapper {
                 String date = str.substring(DATE_BEGIN, DATE_END).trim();
                 int productId = Integer.parseInt(str.substring(PRODUCT_ID_BEGIN).trim());
 
-                Security security = Security.builder()
+                Lot lot = Lot.builder()
                         .withLotId(lotId)
                         .withPrice(price)
                         .withAmount(amount)
                         .withDate(date)
-                        .withProductId(productId)
+                        .withSecurityId(productId)
                         .build();
 
-                securities.add(security);
+                securities.add(lot);
 
             } catch (NumberFormatException e) {
                 log.info("Data < {} > corrupted.", str);

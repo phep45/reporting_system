@@ -5,58 +5,53 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class SecurityBranch {
+public class SecuritiesForBranches {
 
     @XmlAttribute
-    private int id;
+    private int branchId;
     @XmlAttribute
     private String date;
     @XmlAttribute
     private AccessType accessType;
     @XmlElement
-    private SecuritiesIds securitiesIds = new SecuritiesIds();
+    private int securityId;
 
     public static Builder builder() {
-        return new SecurityBranch().new Builder();
+        return new SecuritiesForBranches().new Builder();
     }
 
     public class Builder {
         public Builder withId(int id) {
-            SecurityBranch.this.id = id;
+            SecuritiesForBranches.this.branchId = id;
             return this;
         }
 
         public Builder withDate(String date) {
-            SecurityBranch.this.date = date;
+            SecuritiesForBranches.this.date = date;
             return this;
         }
 
         public Builder withAccessType(AccessType accessType) {
-            SecurityBranch.this.accessType = accessType;
+            SecuritiesForBranches.this.accessType = accessType;
             return this;
         }
 
-        public Builder withSecuritiesIds(SecuritiesIds securitiesIds) {
-            SecurityBranch.this.securitiesIds = securitiesIds;
+        public Builder withSecurityIds(int securitiyIds) {
+            SecuritiesForBranches.this.securityId = securitiyIds;
             return this;
         }
 
-        public Builder withAnotherSecurityId(int secId) {
-            SecurityBranch.this.securitiesIds.add(secId);
-            return this;
-        }
-
-        public SecurityBranch build() {
-            return SecurityBranch.this;
+        public SecuritiesForBranches build() {
+            return SecuritiesForBranches.this;
         }
     }
 
-    public int getId() {
-        return id;
+    public int getBranchId() {
+        return branchId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
     }
 
     public String getDate() {
@@ -75,11 +70,11 @@ public class SecurityBranch {
         this.accessType = accessType;
     }
 
-    public SecuritiesIds getSecuritiesIds() {
-        return securitiesIds;
+    public int getSecurityId() {
+        return securityId;
     }
 
-    public void setSecuritiesIds(SecuritiesIds securitiesIds) {
-        this.securitiesIds = securitiesIds;
+    public void setSecurityId(int securityId) {
+        this.securityId = securityId;
     }
 }

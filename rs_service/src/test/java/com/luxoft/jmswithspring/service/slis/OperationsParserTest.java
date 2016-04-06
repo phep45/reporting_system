@@ -3,7 +3,6 @@ package com.luxoft.jmswithspring.service.slis;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.*;
-import com.luxoft.jmswithspring.service.slis.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -36,9 +35,9 @@ public class OperationsParserTest {
     private static final String INPUT = "000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500";
 
     private Operation expectedOperation;
-    private List<Security> expectedSecurities = Arrays.asList(
-            Security.builder().withLotId(130).withPrice(BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(2).withDate("02/12/2015").withProductId(122).build(),
-            Security.builder().withLotId(140).withPrice(BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(15).withDate("02/12/2015").withProductId(9500).build()
+    private List<Lot> expectedLots = Arrays.asList(
+            Lot.builder().withLotId(130).withPrice(BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(2).withDate("02/12/2015").withSecurityId(122).build(),
+            Lot.builder().withLotId(140).withPrice(BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(15).withDate("02/12/2015").withSecurityId(9500).build()
     );
 
     private static final String USER_AS_STRING = "00001     Stiven Meckalov";
@@ -67,7 +66,7 @@ public class OperationsParserTest {
 
         when(userMapperMock.map(USER_AS_STRING)).thenReturn(expectedUser);
         when(transactionMapperMock.map(TRANSACTION_AS_STRING)).thenReturn(expectedTransaction);
-        when(securityMapperMock.map(SECURITIES_AS_STRING)).thenReturn(expectedSecurities);
+        when(securityMapperMock.map(SECURITIES_AS_STRING)).thenReturn(expectedLots);
 
         Operation result = operationsParser.parse(INPUT);
 
@@ -98,7 +97,7 @@ public class OperationsParserTest {
 
 
         expectedOperation  =  new Operation();
-        expectedOperation.setSecurities(expectedSecurities);
+        expectedOperation.setSecurities(expectedLots);
         expectedOperation.setTransaction(expectedTransaction);
         expectedOperation.setUser(expectedUser);
 

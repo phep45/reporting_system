@@ -1,11 +1,10 @@
 package com.luxoft.jmswithspring.database.dao;
 
-import com.luxoft.jmswithspring.database.mapper.DBOperationMapper;
-import com.luxoft.jmswithspring.database.mapper.DBSecurityMapper;
+import com.luxoft.jmswithspring.database.mapper.DBLotMapper;
 import com.luxoft.jmswithspring.database.mapper.DBUserMapper;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
+import com.luxoft.jmswithspring.model.Lot;
 import com.luxoft.jmswithspring.model.Operation;
-import com.luxoft.jmswithspring.model.Security;
 import com.luxoft.jmswithspring.model.Transaction;
 import com.luxoft.jmswithspring.model.User;
 import org.slf4j.Logger;
@@ -28,12 +27,12 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
     private GenericDAO<Transaction> transactionDAO;
 
     @Autowired
-    private GenericDAO<Security> securityDAO;
+    private GenericDAO<Lot> securityDAO;
 
     public void create(Operation operation) throws CorruptedDataException {
         User user = operation.getUser();
         Transaction transaction = operation.getTransaction();
-        List<Security> securities = operation.getSecurities();
+        List<Lot> securities = operation.getSecurities();
 
         if (existsInDatabase(user)) {
             addOperationToUser(user, transaction, securities);
@@ -46,7 +45,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
         addToDatabase(user.getUserId(), transaction, securities);
     }
 
-    private void addOperationToUser(User user, Transaction transaction, List<Security> securities) throws CorruptedDataException {
+    private void addOperationToUser(User user, Transaction transaction, List<Lot> securities) throws CorruptedDataException {
         if (isCorrect(user)) {
             log.info("User with id: {} exists in database", user.getUserId());
             addToDatabase(user.getUserId(), transaction, securities);
@@ -60,7 +59,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
         return userFromDB.equals(user);
     }
 
-    private void addToDatabase(int userId, Transaction transaction, List<Security> securities) {
+    private void addToDatabase(int userId, Transaction transaction, List<Lot> securities) {
         if (existsInDatabase(transaction)) {
             log.info("Transaction with id: {} exists in database");
             return;
@@ -112,7 +111,7 @@ public class OperationJDBCTemplate extends GenericDAO<Operation> {
             operation.setTransaction(transaction);
             int transactionId = transaction.getId();
             String sql = "SELECT * FROM SECURITY WHERE TRANSACTION_ID=?";
-            List<Security> securities = jdbcTemplate.query(sql, new Object[]{transactionId}, new DBSecurityMapper());
+            List<Lot> securities = jdbcTemplate.query(sql, new Object[]{transactionId}, new DBLotMapper());
             operation.setSecurities(securities);
 
             sql = "SELECT ID,NAME FROM (select USER.ID, USER.NAME, TRANSACTION.ID AS TR_ID FROM USER LEFT JOIN TRANSACTION ON TRANSACTION.USER_ID=USER.ID) WHERE TR_ID=?";

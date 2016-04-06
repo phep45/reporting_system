@@ -1,8 +1,8 @@
 package com.luxoft.jmswithspring.service.slis;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
+import com.luxoft.jmswithspring.model.Lot;
 import com.luxoft.jmswithspring.model.Operation;
-import com.luxoft.jmswithspring.model.Security;
 import com.luxoft.jmswithspring.model.Transaction;
 import com.luxoft.jmswithspring.model.User;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class OperationsParser {
 
     }
 
-    private List<Security> parseSecurities(String line) throws CorruptedDataException {
+    private List<Lot> parseSecurities(String line) throws CorruptedDataException {
         String securitiesStr = extractor.extractSecurities(line);
         return securityMapper.map(securitiesStr);
     }

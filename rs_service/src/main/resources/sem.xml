@@ -12,7 +12,7 @@
     <!--125 KN-->
     <!--200 GB-->
     <branch>
-        <id>123</id>
+        <branchId>123</branchId>
         <address>Ckotland str. test 54</address>
     </branch>
 

@@ -142,6 +142,10 @@ public class Transaction {
         return lots;
     }
 
+    public Branch getBranch() {
+        return branch;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -157,7 +161,7 @@ public class Transaction {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Transaction)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Transaction that = (Transaction) o;
 

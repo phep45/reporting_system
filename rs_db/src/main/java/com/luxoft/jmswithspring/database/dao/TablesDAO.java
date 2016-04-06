@@ -17,8 +17,8 @@ public class TablesDAO {
     private static final String DROP_TRANSACTION = "DROP TABLE IF EXISTS Transaction;";
     private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE Transaction (id INT NOT NULL, operation VARCHAR(6), code VARCHAR(2), branch_id int, branch_address VARCHAR(50), user_id int, UNIQUE KEY(id), FOREIGN KEY(user_id) REFERENCES User(id));";
 
-    private static final String DROP_SECURITY = "DROP TABLE IF EXISTS Security;";
-    private static final String CREATE_TABLE_SECURITY = "CREATE TABLE Security (id INT, price DOUBLE , amount INT, date VARCHAR(10), product_id int, transaction_id int, FOREIGN KEY(transaction_id) REFERENCES Transaction(id));";
+    private static final String DROP_SECURITY = "DROP TABLE IF EXISTS Lot;";
+    private static final String CREATE_TABLE_SECURITY = "CREATE TABLE Lot (id INT, price DOUBLE , amount INT, date VARCHAR(10), product_id int, transaction_id int, FOREIGN KEY(transaction_id) REFERENCES Transaction(id));";
 
     private static final String DROP_TABLE_BRANCHES = "DROP TABLE IF EXISTS BRANCH;";
     private static final String CREATE_TABLE_BRANCHES = "CREATE TABLE BRANCH (ID INT NOT NULL, DATE VARCHAR(10), TYPE VARCHAR(6));";
@@ -53,7 +53,7 @@ public class TablesDAO {
         log.info("{}", sql);
         sql = CREATE_TABLE_SECURITY;
         jdbcTemplate.execute(sql);
-        log.info("Table Security created: {}", sql);
+        log.info("Table Lot created: {}", sql);
     }
 
     public void createTableBranch() {

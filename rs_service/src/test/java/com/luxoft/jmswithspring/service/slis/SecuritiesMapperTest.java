@@ -1,8 +1,7 @@
 package com.luxoft.jmswithspring.service.slis;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
-import com.luxoft.jmswithspring.model.Security;
-import com.luxoft.jmswithspring.service.slis.SecurityMapper;
+import com.luxoft.jmswithspring.model.Lot;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,9 +14,9 @@ import static org.junit.Assert.assertEquals;
 public class SecuritiesMapperTest {
 
     private SecurityMapper securityMapper;
-    private List<Security> expectedSecurities = Arrays.asList(
-            Security.builder().withLotId(130).withPrice(BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(2).withDate("02/12/2015").withProductId(122).build(),
-            Security.builder().withLotId(140).withPrice(BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(15).withDate("02/12/2015").withProductId(9500).build()
+    private List<Lot> expectedSecurities = Arrays.asList(
+            Lot.builder().withLotId(130).withPrice(BigDecimal.valueOf(1233.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(2).withDate("02/12/2015").withSecurityId(122).build(),
+            Lot.builder().withLotId(140).withPrice(BigDecimal.valueOf(1033.002).setScale(5, BigDecimal.ROUND_HALF_UP)).withAmount(15).withDate("02/12/2015").withSecurityId(9500).build()
     );
 
     private static final String INPUT = "0000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500";
@@ -31,7 +30,7 @@ public class SecuritiesMapperTest {
 
     @Test
     public void shouldReturnSecurities() throws CorruptedDataException {
-        List<Security> result = securityMapper.map(INPUT);
+        List<Lot> result = securityMapper.map(INPUT);
         assertEquals(expectedSecurities, result);
     }
 
