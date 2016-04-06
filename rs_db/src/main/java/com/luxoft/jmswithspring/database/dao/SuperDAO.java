@@ -12,7 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class SuperDAO {
 
+    //TODO: split this class to UserDAO, TransactionDAO, SecurityDAO, LotDAO, SecForBranchDAO, BranchDAO
+    //TODO: create BaseDAO<T>, and maybe one "SuperDAO" to handle everything
+
     private static final Logger log = LoggerFactory.getLogger(SuperDAO.class);
+
     public static final String INSERT_USER = "INSERT INTO USER (ID, NAME, BIRTH_DATE) VALUES (?, ?, ?)";
     public static final String INSERT_TRANSACTION = "INSERT INTO TRANSACTION (ID, TYPE, CODE, BRANCH_ID, USER_ID) VALUES (?, ?, ?, ?, ?,)";
     public static final String INSERT_SECURITY = "INSERT INTO SECURITY (ID, DES) VALUES (?, ?)";
