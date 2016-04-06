@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
-@PropertySource( value = {"classpath:jmswithspring/db.properties"})
+@PropertySource( value = {"classpath:jmswithspring/application_dev.properties"})
 @SpringBootApplication
 @EnableJms
 public class OperationsConfig {
@@ -56,7 +56,7 @@ public class OperationsConfig {
     }
 
     private ActiveMQConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory("tcp://localhost:61616");
+        return new ActiveMQConnectionFactory(env.getProperty("mqserver.url"));
     }
 
     @PostConstruct
