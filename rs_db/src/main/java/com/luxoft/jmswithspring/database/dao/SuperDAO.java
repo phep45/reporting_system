@@ -1,5 +1,8 @@
 package com.luxoft.jmswithspring.database.dao;
 
+import com.luxoft.jmswithspring.database.mapper.DBBranchMapper;
+import com.luxoft.jmswithspring.database.mapper.DBLotMapper;
+import com.luxoft.jmswithspring.database.mapper.DBTransactionMapper;
 import com.luxoft.jmswithspring.database.mapper.DBUserMapper;
 import com.luxoft.jmswithspring.model.*;
 import org.slf4j.Logger;
@@ -9,6 +12,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class SuperDAO {
 
@@ -17,26 +23,36 @@ public class SuperDAO {
 
     private static final Logger log = LoggerFactory.getLogger(SuperDAO.class);
 
-    public static final String INSERT_USER = "INSERT INTO USER (ID, NAME, BIRTH_DATE) VALUES (?, ?, ?)";
-    public static final String INSERT_TRANSACTION = "INSERT INTO TRANSACTION (ID, TYPE, CODE, BRANCH_ID, USER_ID) VALUES (?, ?, ?, ?, ?,)";
-    public static final String INSERT_SECURITY = "INSERT INTO SECURITY (ID, DES) VALUES (?, ?)";
-    public static final String INSERT_SEC_FOR_BRANCH = "INSERT INTO SECURITIES_FOR_BRANCH";
-    public static final String INSERT_LOT = "INSERT INTO LOT (ID, TRAN_ID, SEC_ID, DATE, PRICE, AMOUNT) VALUES (?, ?, ?, ?, ?, ?)";
-    public static final String INSERT_BRANCH = "INSERT INTO BRANCH(ID, ADDRESS) VALUES (?, ?)";
-    public static final String SELECT_USER = "SELECT * FROM USER WHERE ID = ?";
-    public static final String UPDATE_USER = "UPDATE USER SET NAME = ?, SET BIRTH_DATE = ? WHERE ID = ?";
+    private static final String INSERT_USER = "INSERT INTO USER (ID, NAME, BIRTH_DATE) VALUES (?, ?, ?)";
+    private static final String INSERT_TRANSACTION = "INSERT INTO TRANSACTION (ID, TYPE, CODE, BRANCH_ID, USER_ID) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_SECURITY = "INSERT INTO SECURITY (ID, DESC) VALUES (?, ?)";
+    private static final String INSERT_SEC_FOR_BRANCH = "INSERT INTO SECURITIES_FOR_BRANCH";
+    private static final String INSERT_LOT = "INSERT INTO LOT (ID, TRAN_ID, SEC_ID, DATE, PRICE, AMOUNT) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_BRANCH = "INSERT INTO BRANCH(ID, ADDRESS) VALUES (?, ?)";
+    private static final String SELECT_USER = "SELECT * FROM USER WHERE ID = ?";
+    private static final String UPDATE_USER = "UPDATE USER SET NAME = ?, SET BIRTH_DATE = ? WHERE ID = ?";
+    private static final String SELECT_TRANSACTION = "SELECT * FROM TRANSACTION WHERE ID = ?";
+    private static final String UPDATE_TRANSACTION = "UPDATE TRANSACTION SET TYPE = ?, SET CODE = ?, SET BRANCH_ID = ?, SET USER_ID = ? WHERE ID = ?";
+    private static final String SELECT_SECURITY = "SELECT ID FROM SECURITY WHERE ID = ?";
+    private static final String UPDATE_SECURITY = "UPDATE SECURITY SET DESC = ? WHERE ID = ?";
+    private static final String SELECT_LOT = "SELECT * FROM LOT WHERE ID = ?";
+    private static final String UPDATE_LOT = "UPDATE LOT SET TRAN_ID = ?, SET SEC_ID = ?, SET DATE = ?, SET PRICE = ?, SET AMOUNT = ? WHERE ID = ?";
+    private static final String SELECT_LOTS_BY_TRAN_ID = "SELECT * FROM LOT WHERE TRAN_ID = ?";
+    private static final String SELECT_BRANCH = "SELECT * FROM BRANCH WHERE ID = ?";
+    private static final String UPDATE_BRANCH = "UPDATE BRANCH SET ADDRESS = ? WHERE ID = ?";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void insert(Transaction transaction) {
-        insertUser(transaction.getUser());
-        insertBranch(transaction.getBranch());
+    public void safelyInsert(Transaction transaction) {
+        safelyInsertUser(transaction.getUser());
+        safelyInsertBranch(transaction.getBranch());
+        safelyInsertTransaction(transaction);
         transaction.getLots().getListOfLots().forEach(lot -> {
-            insertSecurity(lot);
-            insertLot(lot, transaction.getId());
+            safelyInsertSecurity(lot);
+            safelyInsertLot(lot, transaction.getId());
         });
-        insertTransaction(transaction);
+
 
     }
 
@@ -74,30 +90,59 @@ public class SuperDAO {
     }
 
     public void safelyInsertTransaction(Transaction transaction) {
-        //TODO
+        if(getTransaction(transaction.getBranchId()) == null) {
+            insertTransaction(transaction);
+        }
+        else {
+            updateTransaction(transaction);
+        }
     }
 
     public void insertTransaction(Transaction transaction) {
         String sql = INSERT_TRANSACTION;
-        jdbcTemplate.update(sql, transaction.getId(), transaction.getType().toString(), transaction.getBranchId(), transaction.getUser().getUserId());
+        jdbcTemplate.update(sql, transaction.getId(), transaction.getType().toString(), transaction.getCountryCode().toString(), transaction.getBranchId(), transaction.getUser().getUserId());
         log.info("TRANSACTION inserted");
     }
 
     public void updateTransaction(Transaction transaction) {
-        //TODO
+        String sql = UPDATE_TRANSACTION;
+        jdbcTemplate.update(sql, transaction.getType().toString(), transaction.getCountryCode().toString(), transaction.getBranchId(), transaction.getUser(), transaction.getId());
+        log.info("TRANSACTION updated");
     }
 
     public Transaction getTransaction(int id) {
-        //TODO
-        return null;
+        String sql = SELECT_TRANSACTION;
+        Transaction transaction;
+        try {
+            transaction = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBTransactionMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+        log.info("TRANSACTION selected");
+        User user = getUser(transaction.getUser().getUserId());
+        transaction.setUser(user);
+        List<Lot> lotList = getLotByTranId(transaction.getId());
+        Lots lots = new Lots();
+        lots.setListOfLots(lotList);
+        transaction.setLots(lots);
+        Branch branch = getBranch(transaction.getBranchId());
+        transaction.setBranch(branch);
+        return transaction;
     }
 
     public void safelyInsertSecurity(Lot lot) {
-        //TODO
+        if(getSecurityId(lot.getSecurityId()) < 0) {
+            insertSecurity(lot);
+        }
+        else {
+            updateSecurity(lot);
+        }
     }
 
     public void updateSecurity(Lot lot) {
-        //TODO
+        String sql = UPDATE_SECURITY;
+        jdbcTemplate.update(sql, lot.getDescription(), lot.getSecurityId());
+        log.info("SECURITY updated");
     }
 
     public void insertSecurity(Lot lot) {
@@ -107,8 +152,14 @@ public class SuperDAO {
     }
 
     public int getSecurityId(int id) {
-        //TODO
-        return 0;
+        String sql= SELECT_SECURITY;
+        int secId = -1;
+        try {
+            secId = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        } catch (EmptyResultDataAccessException e) {
+            return -1;
+        }
+        return secId;
     }
 
     public void insertSecurityForBranch(int branchId, int securityId, String date, AccessType accessType) {
@@ -117,8 +168,13 @@ public class SuperDAO {
         log.info("SEC_FOR_BRANCH inserted");
     }
 
-    public void safelyInsertLot(Lot lot) {
-        //TODO
+    public void safelyInsertLot(Lot lot, int transactionId) {
+        if(getLot(lot.getId()) == null) {
+            insertLot(lot, transactionId);
+        }
+        else {
+            updateLot(lot, transactionId);
+        }
     }
 
     public void insertLot(Lot lot, int transactionId) {
@@ -127,17 +183,43 @@ public class SuperDAO {
         log.info("LOT inserted");
     }
 
-    public void updateLot(Lot lot) {
-        //TODO
+    public void updateLot(Lot lot, int transactionId) {
+        String sql = UPDATE_LOT;
+        jdbcTemplate.update(sql, transactionId, lot.getSecurityId(), lot.getDate(), lot.getPrice(), lot.getAmount(), lot.getId());
+        log.info("LOT updated");
     }
 
     public Lot getLot(int id) {
-        //TODO
-        return null;
+        String sql = SELECT_LOT;
+        Lot lot;
+        try {
+            lot = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBLotMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+        log.info("LOT selected");
+        return lot;
+    }
+
+    public List<Lot> getLotByTranId(int transactionId) {
+        String sql = SELECT_LOTS_BY_TRAN_ID;
+        List<Lot> list;
+        try {
+            list = jdbcTemplate.query(sql, new Object[]{transactionId}, new DBLotMapper());
+        } catch (EmptyResultDataAccessException e) {
+            log.info("getLotByTranId empty result set exception");
+            return new ArrayList<>();
+        }
+        return list;
     }
 
     public void safelyInsertBranch(Branch branch) {
-        //TODO
+        if(getBranch(branch.getId()) == null) {
+            insertBranch(branch);
+        }
+        else {
+            updateBranch(branch);
+        }
     }
 
     public void insertBranch(Branch branch) {
@@ -147,12 +229,20 @@ public class SuperDAO {
     }
 
     public void updateBranch(Branch branch) {
-        //TODO
+        String sql = UPDATE_BRANCH;
+        jdbcTemplate.update(sql, branch.getAddress(), branch.toString());
+        log.info("BRANCH updated");
     }
 
     public Branch getBranch(int id) {
-        //TODO
-        return null;
+        String sql = SELECT_BRANCH;
+        Branch branch;
+        try {
+            branch = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBBranchMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+        return branch;
     }
 
 }

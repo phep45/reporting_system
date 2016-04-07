@@ -2,6 +2,7 @@ package com.luxoft.jmswithspring.manager;
 
 import com.luxoft.jmswithspring.database.dao.GenericDAO;
 import com.luxoft.jmswithspring.database.dao.OperationsDAO;
+import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Operation;
 import com.luxoft.jmswithspring.model.Transaction;
@@ -32,6 +33,8 @@ public class DataManager {
     private TransactionXmlConverter transactionXmlConverter;
     @Autowired
     private DateConverter dateConverter;
+    @Autowired
+    private SuperDAO superDAO;
 
     public void processSLIS(String slis) {
         List<String> listOfLines = lineCollector.collect(slis);
@@ -59,7 +62,10 @@ public class DataManager {
             transaction.getLots().getListOfLots().forEach(lot -> {
                 lot.setDate(dateConverter.usToIso(lot.getDate()));
             });
-            xlisDAO.create(transaction,0);
+
+            superDAO.safelyInsert(transaction);
+
+//            xlisDAO.create(transaction,0);
         } catch (CorruptedDataException e) {
             log.info("Corrupted data", e);
         }
