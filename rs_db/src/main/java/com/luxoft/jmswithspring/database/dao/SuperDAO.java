@@ -1,9 +1,6 @@
 package com.luxoft.jmswithspring.database.dao;
 
-import com.luxoft.jmswithspring.model.AccessType;
-import com.luxoft.jmswithspring.model.Branch;
-import com.luxoft.jmswithspring.model.Transaction;
-import com.luxoft.jmswithspring.model.User;
+import com.luxoft.jmswithspring.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +13,6 @@ public class SuperDAO {
 
     private static final Logger log = LoggerFactory.getLogger(SuperDAO.class);
 
-    private static final String INSERT_SEC_FOR_BRANCH = "INSERT INTO SECURITIES_FOR_BRANCH";
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -29,6 +24,8 @@ public class SuperDAO {
     private LotDAO lotDAO;
     @Autowired
     private BaseDAO<Branch> branchDAO;
+    @Autowired
+    private BaseDAO<SecuritiesForBranches> securitiesForBranchesDAO;
 
     @Transactional
     public void safelyInsert(Transaction transaction) {
@@ -39,14 +36,13 @@ public class SuperDAO {
             lotDAO.safelyInsertSecurity(lot);
             lotDAO.safelyInsert(lot, transaction.getId());
         });
+        log.info("Whole transaction added to database.");
     }
 
-    public void insertSecurityForBranch(int branchId, int securityId, String date, AccessType accessType) {
-        String sql = INSERT_SEC_FOR_BRANCH;
-        jdbcTemplate.update(sql, branchId, securityId, date, accessType.toString());
-        log.info("SEC_FOR_BRANCH inserted");
+    public void safelyInsert(SecuritiesForBranches securitiesForBranches) {
+        securitiesForBranchesDAO.safelyInsert(securitiesForBranches);
+        log.info("All securities for branch added to database.");
     }
-
 
 
 }

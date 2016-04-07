@@ -2,9 +2,11 @@ package com.luxoft.jmswithspring.manager;
 
 import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
+import com.luxoft.jmswithspring.model.SecuritiesForBranches;
 import com.luxoft.jmswithspring.model.Transaction;
 import com.luxoft.jmswithspring.service.slis.LineCollector;
 import com.luxoft.jmswithspring.service.slis.SlisParser;
+import com.luxoft.jmswithspring.service.xlis.SecurityXmlConverter;
 import com.luxoft.jmswithspring.service.xlis.TransactionXmlConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,8 @@ public class DataManager {
     private LineCollector lineCollector;
     @Autowired
     private TransactionXmlConverter transactionXmlConverter;
+    @Autowired
+    private SecurityXmlConverter securityXmlConverter;
     @Autowired
     private DateConverter dateConverter;
     @Autowired
@@ -55,11 +59,12 @@ public class DataManager {
     public void processXLIS(String xml) {
         Transaction transaction = null;
 
-        Pattern pattern = Pattern.compile(SEC_FOR_BRANCHES_REGEX);
+        Pattern pattern = Pattern.compile(SEC_FOR_BRANCHES_REGEX, Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(xml);
 
         if(matcher.find()) {
             processSecuritiesForBranches(xml);
+            log.info("XLIS processed successfully");
             return;
         }
 
@@ -79,6 +84,8 @@ public class DataManager {
     }
 
     private void processSecuritiesForBranches(String xml) {
+        SecuritiesForBranches securitiesForBranches = securityXmlConverter.unmarshal(xml);
+        superDAO.safelyInsert(securitiesForBranches);
 
     }
 
