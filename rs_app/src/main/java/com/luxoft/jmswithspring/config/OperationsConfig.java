@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.config;
 
+import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.database.dao.TableCreator;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PostConstruct;
 import javax.jms.JMSException;
@@ -24,6 +28,7 @@ import javax.sql.DataSource;
 @PropertySource( value = {"classpath:jmswithspring/application_dev.properties"})
 @SpringBootApplication
 @EnableJms
+@EnableTransactionManagement
 public class OperationsConfig {
 
     @Autowired
@@ -57,6 +62,11 @@ public class OperationsConfig {
 
     private ActiveMQConnectionFactory connectionFactory() {
         return new ActiveMQConnectionFactory(env.getProperty("mqserver.url"));
+    }
+
+    @Bean
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 
     @PostConstruct

@@ -3,6 +3,7 @@ package com.luxoft.jmswithspring.database.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.luxoft.jmswithspring.database.dao.TableCreatorConstants.*;
 

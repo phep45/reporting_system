@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class SuperDAO {
@@ -29,6 +30,7 @@ public class SuperDAO {
     @Autowired
     private BaseDAO<Branch> branchDAO;
 
+    @Transactional
     public void safelyInsert(Transaction transaction) {
         userDAO.safelyInsert(transaction.getUser());
         branchDAO.safelyInsert(transaction.getBranch());
