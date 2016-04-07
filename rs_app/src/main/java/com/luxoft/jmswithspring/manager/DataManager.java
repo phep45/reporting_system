@@ -13,10 +13,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class DataManager {
     private static final Logger log = LoggerFactory.getLogger(DataManager.class);
+
+    private static final String SEC_FOR_BRANCHES_REGEX = "<securities_branches>.*</securities_branches>";
 
     @Autowired
     private SlisParser slisParser;
@@ -50,6 +54,15 @@ public class DataManager {
 
     public void processXLIS(String xml) {
         Transaction transaction = null;
+
+        Pattern pattern = Pattern.compile(SEC_FOR_BRANCHES_REGEX);
+        Matcher matcher = pattern.matcher(xml);
+
+        if(matcher.find()) {
+            processSecuritiesForBranches(xml);
+            return;
+        }
+
         try {
             transaction = transactionXmlConverter.unmarshal(xml);
             transaction.getLots().getListOfLots().forEach(lot -> {
@@ -63,6 +76,10 @@ public class DataManager {
         }
 
         log.info("XLIS processed successfully");
+    }
+
+    private void processSecuritiesForBranches(String xml) {
+
     }
 
 }

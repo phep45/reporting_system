@@ -1,80 +1,29 @@
 package com.luxoft.jmswithspring.model;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import com.google.common.base.MoreObjects;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
-@XmlRootElement
+@XmlRootElement(name = "securities_branches")
 public class SecuritiesForBranches {
 
-    @XmlAttribute
-    private int branchId;
-    @XmlAttribute
-    private String date;
-    @XmlAttribute
-    private AccessType accessType;
-    @XmlElement
-    private int securityId;
+    private List<Security> securities;
 
-    public static Builder builder() {
-        return new SecuritiesForBranches().new Builder();
+    public List<Security> getSecurities() {
+        return securities;
     }
 
-    public class Builder {
-        public Builder withId(int id) {
-            SecuritiesForBranches.this.branchId = id;
-            return this;
-        }
-
-        public Builder withDate(String date) {
-            SecuritiesForBranches.this.date = date;
-            return this;
-        }
-
-        public Builder withAccessType(AccessType accessType) {
-            SecuritiesForBranches.this.accessType = accessType;
-            return this;
-        }
-
-        public Builder withSecurityIds(int securitiyIds) {
-            SecuritiesForBranches.this.securityId = securitiyIds;
-            return this;
-        }
-
-        public SecuritiesForBranches build() {
-            return SecuritiesForBranches.this;
-        }
+    @XmlElement(name = "security")
+    public void setSecurities(List<Security> securities) {
+        this.securities = securities;
     }
 
-    public int getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(int branchId) {
-        this.branchId = branchId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public AccessType getAccessType() {
-        return accessType;
-    }
-
-    public void setAccessType(AccessType accessType) {
-        this.accessType = accessType;
-    }
-
-    public int getSecurityId() {
-        return securityId;
-    }
-
-    public void setSecurityId(int securityId) {
-        this.securityId = securityId;
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("securities", securities)
+                .toString();
     }
 }
