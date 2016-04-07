@@ -44,6 +44,8 @@ public class DataManager {
         });
 
         allOperations.forEach(superDAO::safelyInsert);
+
+        log.info("SLIS processed successfully");
     }
 
     public void processXLIS(String xml) {
@@ -59,6 +61,8 @@ public class DataManager {
         } catch (CorruptedDataException e) {
             log.info("Corrupted data", e);
         }
+
+        log.info("XLIS processed successfully");
     }
 
 }
