@@ -57,17 +57,21 @@ public class DataManager {
     }
 
     public void processXLIS(String xml) {
-        Transaction transaction = null;
-
+        //Check if XML contains transaction or securities for branch
         Pattern pattern = Pattern.compile(SEC_FOR_BRANCHES_REGEX, Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(xml);
 
         if(matcher.find()) {
             processSecuritiesForBranches(xml);
-            log.info("XLIS processed successfully");
-            return;
+        }else {
+            processTransaction(xml);
         }
 
+        log.info("XLIS processed successfully");
+    }
+
+    private void processTransaction(String xml) {
+        Transaction transaction;
         try {
             transaction = transactionXmlConverter.unmarshal(xml);
             transaction.getLots().getListOfLots().forEach(lot -> {
@@ -79,8 +83,6 @@ public class DataManager {
         } catch (CorruptedDataException e) {
             log.info("Corrupted data", e);
         }
-
-        log.info("XLIS processed successfully");
     }
 
     private void processSecuritiesForBranches(String xml) {
