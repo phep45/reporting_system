@@ -14,7 +14,7 @@ public class DBLotMapper implements RowMapper<Lot> {
     private static final String COLUMN_AMOUNT = "AMOUNT";
     private static final String COLUMN_DATE = "DATE";
     private static final String COLUMN_PRODUCT_ID = "SEC_ID";
-    private static final String COLUMN_DES = "DES";
+//    private static final String COLUMN_DES = "DESC";
 
     private static final int SCALE = 5;
 
@@ -26,7 +26,7 @@ public class DBLotMapper implements RowMapper<Lot> {
         int amount = resultSet.getInt(COLUMN_AMOUNT);
         String date = resultSet.getString(COLUMN_DATE);
         int secId = resultSet.getInt(COLUMN_PRODUCT_ID);
-        String des = resultSet.getString(COLUMN_DES);
+//        String des = resultSet.getString(COLUMN_DES);
 
         return Lot.builder()
                 .withLotId(lotId)
@@ -34,7 +34,7 @@ public class DBLotMapper implements RowMapper<Lot> {
                 .withAmount(amount)
                 .withDate(date)
                 .withSecurityId(secId)
-                .withDescription(des)
+//                .withDescription(des)
                 .build();
     }
 }

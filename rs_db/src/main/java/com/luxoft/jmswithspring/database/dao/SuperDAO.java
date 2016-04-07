@@ -30,16 +30,17 @@ public class SuperDAO {
     private static final String INSERT_LOT = "INSERT INTO LOT (ID, TRAN_ID, SEC_ID, DATE, PRICE, AMOUNT) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String INSERT_BRANCH = "INSERT INTO BRANCH(ID, ADDRESS) VALUES (?, ?)";
     private static final String SELECT_USER = "SELECT * FROM USER WHERE ID = ?";
-    private static final String UPDATE_USER = "UPDATE USER SET NAME = ?, SET BIRTH_DATE = ? WHERE ID = ?";
+    private static final String UPDATE_USER = "UPDATE USER SET NAME = ?, BIRTH_DATE = ? WHERE ID = ?";
     private static final String SELECT_TRANSACTION = "SELECT * FROM TRANSACTION WHERE ID = ?";
-    private static final String UPDATE_TRANSACTION = "UPDATE TRANSACTION SET TYPE = ?, SET CODE = ?, SET BRANCH_ID = ?, SET USER_ID = ? WHERE ID = ?";
+    private static final String UPDATE_TRANSACTION = "UPDATE TRANSACTION SET TYPE = ?, CODE = ?, BRANCH_ID = ?, USER_ID = ? WHERE ID = ?";
     private static final String SELECT_SECURITY = "SELECT ID FROM SECURITY WHERE ID = ?";
     private static final String UPDATE_SECURITY = "UPDATE SECURITY SET DESC = ? WHERE ID = ?";
     private static final String SELECT_LOT = "SELECT * FROM LOT WHERE ID = ?";
-    private static final String UPDATE_LOT = "UPDATE LOT SET TRAN_ID = ?, SET SEC_ID = ?, SET DATE = ?, SET PRICE = ?, SET AMOUNT = ? WHERE ID = ?";
+    private static final String UPDATE_LOT = "UPDATE LOT SET TRAN_ID = ?, SEC_ID = ?, DATE = ?, PRICE = ?, AMOUNT = ? WHERE ID = ?";
     private static final String SELECT_LOTS_BY_TRAN_ID = "SELECT * FROM LOT WHERE TRAN_ID = ?";
     private static final String SELECT_BRANCH = "SELECT * FROM BRANCH WHERE ID = ?";
     private static final String UPDATE_BRANCH = "UPDATE BRANCH SET ADDRESS = ? WHERE ID = ?";
+    public static final String SELECT_DESC_FROM_SECURITY = "SELECT DESC FROM SECURITY WHERE ID = ?";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -73,7 +74,7 @@ public class SuperDAO {
 
     public void updateUser(User user) {
         String sql = UPDATE_USER;
-        jdbcTemplate.update(sql, user.getUserName()+" "+user.getSurname(), user.getBirthDate());
+        jdbcTemplate.update(sql, user.getUserName()+" "+user.getSurname(), user.getBirthDate(), user.getUserId());
         log.info("USER updated");
     }
 
@@ -162,6 +163,17 @@ public class SuperDAO {
         return secId;
     }
 
+    public String getSecurityDescription(int id) {
+        String sql = SELECT_DESC_FROM_SECURITY;
+        String desc;
+        try {
+            desc = jdbcTemplate.queryForObject(sql, String.class, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+        return desc;
+    }
+
     public void insertSecurityForBranch(int branchId, int securityId, String date, AccessType accessType) {
         String sql = INSERT_SEC_FOR_BRANCH;
         jdbcTemplate.update(sql, branchId, securityId, date, accessType.toString());
@@ -194,6 +206,8 @@ public class SuperDAO {
         Lot lot;
         try {
             lot = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBLotMapper());
+            String des = getSecurityDescription(lot.getSecurityId());
+            lot.setDescription(des);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -230,7 +244,7 @@ public class SuperDAO {
 
     public void updateBranch(Branch branch) {
         String sql = UPDATE_BRANCH;
-        jdbcTemplate.update(sql, branch.getAddress(), branch.toString());
+        jdbcTemplate.update(sql, branch.getAddress(), branch.getId());
         log.info("BRANCH updated");
     }
 
