@@ -53,8 +53,11 @@ public class SuperDAO {
             safelyInsertSecurity(lot);
             safelyInsertLot(lot, transaction.getId());
         });
+    }
 
-
+    public void safelyInsert(Operation operation) {
+        safelyInsertUser(operation.getUser());
+        safelyInsertTransaction(operation.getTransaction());
     }
 
     public void safelyInsertUser(User user) {
