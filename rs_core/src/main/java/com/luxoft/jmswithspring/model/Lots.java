@@ -14,18 +14,18 @@ import java.util.List;
 public class Lots {
 
     @XmlElement(name = "lot")
-    private List<Security> lots = new LinkedList<>();
+    private List<Lot> lots = new LinkedList<>();
 
-    public List<Security> getListOfLots() {
+    public List<Lot> getListOfLots() {
         return lots;
     }
 
-    public void setListOfLots(List<Security> listOfLots) {
+    public void setListOfLots(List<Lot> listOfLots) {
         this.lots = listOfLots;
     }
 
-    public Lots addLot(Security security) {
-        lots.add(security);
+    public Lots addLot(Lot lot) {
+        lots.add(lot);
         return this;
     }
 

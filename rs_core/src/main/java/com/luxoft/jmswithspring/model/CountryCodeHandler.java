@@ -9,13 +9,16 @@ public class CountryCodeHandler extends XmlAdapter<Integer, CountryCode>  {
     @Override
     public CountryCode unmarshal(Integer v) throws InvalidCountryCodeException {
         CountryCode code = CountryCode.match(v);
-        if(code != null)
+        if(code != null) {
             return code;
-        throw new InvalidCountryCodeException("No value for this code");
+        }
+        else {
+            throw new IllegalArgumentException("No code fot this value");
+        }
     }
 
     @Override
     public Integer marshal(CountryCode v) throws Exception {
-        return v.getCode();
+        throw new UnsupportedOperationException();
     }
 }

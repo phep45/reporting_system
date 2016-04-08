@@ -2,43 +2,25 @@ package com.luxoft.jmswithspring.model;
 
 import com.google.common.base.MoreObjects;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.math.BigDecimal;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
 
-@TableName("Security")
-@XmlRootElement(name = "lot")
+@XmlRootElement(name = "security")
 public class Security {
 
-
-    private int lotId;
-    private BigDecimal price;
-    private int amount;
+    private int branchId;
     private String date;
-    private int productId;
+    private AccessType accessType;
+    private List<Integer> securityIds;
 
-    private Security() {
+    public static Builder builder() {
+        return new Security().new Builder();
     }
 
     public class Builder {
-
-        private Builder() {
-        }
-
-        public Builder withLotId(int lotId) {
-            Security.this.lotId = lotId;
-            return this;
-        }
-
-        public Builder withPrice(BigDecimal price) {
-            Security.this.price = price;
-            return this;
-        }
-
-        public Builder withAmount(int amount) {
-            Security.this.amount = amount;
+        public Builder withId(int id) {
+            Security.this.branchId = id;
             return this;
         }
 
@@ -47,100 +29,65 @@ public class Security {
             return this;
         }
 
-        public Builder withProductId(int productId) {
-            Security.this.productId = productId;
+        public Builder withAccessType(AccessType accessType) {
+            Security.this.accessType = accessType;
+            return this;
+        }
+
+        public Builder withSecurityId(int securitiyIds) {
+            Security.this.securityIds.add(securitiyIds);
             return this;
         }
 
         public Security build() {
             return Security.this;
         }
-
     }
 
-    public static Builder builder() {
-        return new Security().new Builder();
+    public int getBranchId() {
+        return branchId;
     }
 
-    @XmlElement(name = "lot_id")
-    public void setLotId(int lotId) {
-        this.lotId = lotId;
-    }
-
-    @XmlElement
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @XmlElement
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    @XmlElement
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    @XmlElement(name = "sec_id")
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getLotId() {
-        return lotId;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public int getAmount() {
-        return amount;
+    @XmlAttribute(name = "branch_id")
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
     }
 
     public String getDate() {
         return date;
     }
 
-    public int getProductId() {
-        return productId;
+    @XmlAttribute
+    public void setDate(String date) {
+        this.date = date;
     }
 
+    public AccessType getAccessType() {
+        return accessType;
+    }
+
+    @XmlAttribute(name = "type")
+    @XmlJavaTypeAdapter(AccessTypeHandler.class)
+    public void setAccessType(AccessType accessType) {
+        this.accessType = accessType;
+    }
+
+    public List<Integer> getSecurityIds() {
+        return securityIds;
+    }
+
+    @XmlElement(name = "sec_id")
+    public void setSecurityIds(List<Integer> securityIds) {
+        this.securityIds = securityIds;
+    }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("lotId", lotId)
-                .add("price", price)
-                .add("amount", amount)
+                .add("branchId", branchId)
                 .add("date", date)
-                .add("productId", productId)
+                .add("accessType", accessType)
+                .add("securityIds", securityIds)
                 .toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Security)) return false;
-
-        Security security = (Security) o;
-
-        if (lotId != security.lotId) return false;
-        if (amount != security.amount) return false;
-        if (productId != security.productId) return false;
-        if (price != null ? !price.equals(security.price) : security.price != null) return false;
-        return date != null ? date.equals(security.date) : security.date == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = lotId;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + amount;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + productId;
-        return result;
     }
 }

@@ -9,9 +9,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class TransactionXmlConverter extends XmlConverter<Transaction> {
+
     @Override
     public Transaction unmarshal(String xml) throws CorruptedDataException {
         Transaction transaction = null;

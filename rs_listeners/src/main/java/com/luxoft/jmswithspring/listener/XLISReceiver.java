@@ -13,13 +13,14 @@ import javax.annotation.Resource;
 import java.util.Queue;
 
 @Component
-public class XLISReceiver implements ApplicationEventPublisherAware {
+public class XLISReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(XLISReceiver.class);
 
     @Autowired
     private ConfigurableApplicationContext context;
 
+    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     @JmsListener(destination = "XLIS", containerFactory = "dataJmsContainerFactory")
@@ -33,8 +34,4 @@ public class XLISReceiver implements ApplicationEventPublisherAware {
         applicationEventPublisher.publishEvent(xlisEvent);
     }
 
-    @Override
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
-    }
 }

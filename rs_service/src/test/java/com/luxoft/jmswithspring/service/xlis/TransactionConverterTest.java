@@ -1,11 +1,8 @@
 package com.luxoft.jmswithspring.service.xlis;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
-import com.luxoft.jmswithspring.model.OperationType;
-import com.luxoft.jmswithspring.model.Security;
-import com.luxoft.jmswithspring.model.Transaction;
-import com.luxoft.jmswithspring.model.User;
-import com.luxoft.jmswithspring.model.Lots;
+import com.luxoft.jmswithspring.model.*;
+import com.luxoft.jmswithspring.model.Lot;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -27,7 +24,7 @@ public class TransactionConverterTest {
             "    <country_code>100</country_code>\n" +
             "    <branch>\n" +
             "        <id>123</id>\n" +
-            "        <address>Ckotland str. test 54</address>\n" +
+            "        <address>Scotland str. test 54</address>\n" +
             "    </branch>\n" +
             "    <lots>\n" +
             "        <lot>\n" +
@@ -36,19 +33,23 @@ public class TransactionConverterTest {
             "            <price>500.21</price>\n" +
             "            <amount>5</amount>\n" +
             "            <sec_id>655</sec_id>\n" +
+            "            <des>PEPSI LTD</des>\n" +
             "        </lot>\n" +
             "        <lot>\n" +
-            "            <date>08-03-2099</date><!--//date ISO-->\n" +
+            "            <date>08-03-2099</date>\n" +
             "            <lot_id>878</lot_id>\n" +
             "            <price>34.2105</price>\n" +
             "            <amount>700</amount>\n" +
             "            <sec_id>340</sec_id>\n" +
+            "            <des>MCSF LTD</des>\n" +
             "        </lot>\n" +
             "    </lots>\n" +
             "</tran>";
 
-    private static final Lots LOTS = new Lots().addLot(Security.builder().withDate("23-12-1999").withLotId(123).withPrice(BigDecimal.valueOf(500.21)).withAmount(5).withProductId(655).build())
-            .addLot(Security.builder().withDate("08-03-2099").withLotId(878).withPrice(BigDecimal.valueOf(34.2105)).withAmount(700).withProductId(340).build());
+
+    private static final Lots LOTS = new Lots()
+            .addLot(Lot.builder().withDate("23-12-1999").withLotId(123).withPrice(BigDecimal.valueOf(500.21)).withAmount(5).withSecurityId(655).withDescription("PEPSI LTD").build())
+            .addLot(Lot.builder().withDate("08-03-2099").withLotId(878).withPrice(BigDecimal.valueOf(34.2105)).withAmount(700).withSecurityId(340).withDescription("MCSF LTD").build());
 
     private static final Transaction expectedTransaction = Transaction.builder()
             .withId(120)
@@ -56,7 +57,7 @@ public class TransactionConverterTest {
             .withOperationType(OperationType.BUY)
             .withCountryCode(100)
             .withBranchId(123)
-            .withBranchAddress("Ckotland str. test 54")
+            .withBranchAddress("Scotland str. test 54")
             .withLots(LOTS)
             .build();
 

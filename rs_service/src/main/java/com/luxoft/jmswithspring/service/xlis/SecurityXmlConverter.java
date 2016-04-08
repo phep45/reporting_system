@@ -1,43 +1,34 @@
 package com.luxoft.jmswithspring.service.xlis;
 
-import com.luxoft.jmswithspring.model.Security;
-import com.luxoft.jmswithspring.model.User;
-import org.apache.commons.lang3.math.NumberUtils;
+import com.luxoft.jmswithspring.model.SecuritiesForBranches;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class SecurityXmlConverter extends XmlConverter<Security> {
-
-    private static final String SEC_REGEX = "";
+@Component
+public class SecurityXmlConverter extends XmlConverter<SecuritiesForBranches> {
 
     @Override
-    public Security unmarshal(String xml) {
-        Security security = null;
+    public SecuritiesForBranches unmarshal(String xml) {
+        SecuritiesForBranches securitiesForBranches;
 
-        Pattern pattern = Pattern.compile(SEC_REGEX);
-        Matcher matcher = pattern.matcher(xml);
+        try {
+            jaxbContext = JAXBContext.newInstance(SecuritiesForBranches.class);
 
-        if(matcher.find()) {
-            String str = matcher.group();
-            try {
-                jaxbContext = JAXBContext.newInstance(User.class);
-
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-                security = (Security) unmarshaller.unmarshal(new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8)));
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            securitiesForBranches = (SecuritiesForBranches) unmarshaller.unmarshal(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
 
 
-            } catch (JAXBException e) {
-                log.info("",e);
-                return null;
-            }
+        } catch (JAXBException e) {
+            log.info("", e);
+            return null;
         }
 
-        return security;
+        return securitiesForBranches;
     }
+
 }

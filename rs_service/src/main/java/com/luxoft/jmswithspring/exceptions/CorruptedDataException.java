@@ -25,7 +25,4 @@ public class CorruptedDataException extends Exception {
         this.corruptedLine = corruptedLine;
     }
 
-    public String getCorruptedLine() {
-        return corruptedLine;
-    }
 }

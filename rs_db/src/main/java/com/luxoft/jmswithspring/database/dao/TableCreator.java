@@ -3,6 +3,7 @@ package com.luxoft.jmswithspring.database.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.luxoft.jmswithspring.database.dao.TableCreatorConstants.*;
 
@@ -11,7 +12,7 @@ public enum TableCreator {
     USER(DROP_TABLE_USER, CREATE_TABLE_USER),
     TRANSACTION(DROP_TABLE_TRANSACTION, CREATE_TABLE_TRANSACTION),
     BRANCH(DROP_TABLE_BRANCH, CREATE_TABLE_BRANCH),
-    TRAN_LOTS(DROP_TABLE_TRAN_LOTS, CREATE_TABLE_TRAN_LOTS),
+    SEC_FOR_BRANCH(DROP_TABLE_SEC_FOR_BRANCH, CREATE_TABLE_SEC_FOR_BRANCH),
     LOT(DROP_TABLE_LOT, CREATE_TABLE_LOT),
     SECURITY(DROP_TABLE_SECURITY, CREATE_TABLE_SECURITY);
 
