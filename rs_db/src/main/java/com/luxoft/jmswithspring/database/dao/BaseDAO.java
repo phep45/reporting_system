@@ -18,3 +18,4 @@ public abstract class BaseDAO<T> {
     public abstract T get(int id);
     public abstract void update(T t);
 }
+//

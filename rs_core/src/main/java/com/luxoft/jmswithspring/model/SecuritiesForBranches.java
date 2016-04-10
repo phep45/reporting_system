@@ -26,4 +26,20 @@ public class SecuritiesForBranches {
                 .add("securities", securities)
                 .toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SecuritiesForBranches that = (SecuritiesForBranches) o;
+
+        return securities != null ? securities.equals(that.securities) : that.securities == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return securities != null ? securities.hashCode() : 0;
+    }
 }

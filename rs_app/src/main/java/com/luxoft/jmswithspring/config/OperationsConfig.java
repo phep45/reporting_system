@@ -1,6 +1,5 @@
 package com.luxoft.jmswithspring.config;
 
-import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.database.dao.TableCreator;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

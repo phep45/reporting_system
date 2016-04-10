@@ -31,6 +31,7 @@ public class SuperDAO {
     public void safelyInsert(Transaction transaction) {
         userDAO.safelyInsert(transaction.getUser());
         branchDAO.safelyInsert(transaction.getBranch());
+        
         transactionDAO.safelyInsert(transaction);
         transaction.getLots().getListOfLots().forEach(lot -> {
             lotDAO.safelyInsertSecurity(lot);
