@@ -3,40 +3,33 @@ package com.luxoft.jmswithspring.service.xlis;
 import com.luxoft.jmswithspring.model.AccessType;
 import com.luxoft.jmswithspring.model.SecuritiesForBranches;
 import com.luxoft.jmswithspring.model.Security;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SecurityXmlConverterTest {
 
+    private static final File INPUT_FILE = new File("src/test/resources/security_branches.xml");
     private SecurityXmlConverter securityXmlConverter = new SecurityXmlConverter();
 
-    private static final String INPUT =
-            "<securities_branches>\n" +
-            "    <security branch_id=\"124\" date=\"21-11-2001\" type=\"allow\">\n" +
-            "        <sec_id>654</sec_id>\n" +
-            "        <sec_id>655</sec_id>\n" +
-            "        <sec_id>656</sec_id>\n" +
-            "    </security>\n" +
-            "    <security branch_id=\"124\" date=\"21-11-2001\" type=\"forbid\">\n" +
-            "        <sec_id>123</sec_id>\n" +
-            "        <sec_id>321</sec_id>\n" +
-            "        <sec_id>321</sec_id>\n" +
-            "    </security>\n" +
-            "    <security branch_id=\"122\" date=\"21-11-2001\" type=\"allow\">\n" +
-            "        <sec_id>6542</sec_id>\n" +
-            "        <sec_id>6553</sec_id>\n" +
-            "        <sec_id>6562</sec_id>\n" +
-            "    </security>\n" +
-            "</securities_branches>";
+    private String input;
+
+    @Before
+    public void setUp() throws IOException {
+        input = FileUtils.readFileToString(INPUT_FILE);
+    }
 
     @Test
     public void shouldUnmarshalCorrectly() {
         SecuritiesForBranches expected = new SecuritiesForBranches();
         expected.setSecurities(createList());
-        SecuritiesForBranches result =  securityXmlConverter.unmarshal(INPUT);
+        SecuritiesForBranches result =  securityXmlConverter.unmarshal(input);
 
         Assert.assertEquals(expected, result);
     }

@@ -1,0 +1,17 @@
+<securities_branches>
+    <security branch_id="124" date="21-11-2001" type="allow">
+        <sec_id>654</sec_id>
+        <sec_id>655</sec_id>
+        <sec_id>656</sec_id>
+    </security>
+    <security branch_id="124" date="21-11-2001" type="forbid">
+        <sec_id>123</sec_id>
+        <sec_id>321</sec_id>
+        <sec_id>321</sec_id>
+    </security>
+    <security branch_id="122" date="21-11-2001" type="allow">
+        <sec_id>6542</sec_id>
+        <sec_id>6553</sec_id>
+        <sec_id>6562</sec_id>
+    </security>
+</securities_branches>
