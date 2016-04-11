@@ -19,4 +19,20 @@
         <camel:jmxAgent id="agent" createConnector="true"/>
     </camel:camelContext>
 
+    <broker:broker useJmx="true" persistent="false" brokerName="myBroker">
+        <broker:transportConnectors>
+            <broker:transportConnector name="vm" uri="vm://myBroker"/>
+            <broker:transportConnector name="tcp" uri="tcp://localhost:${tcp.port}"/>
+        </broker:transportConnectors>
+    </broker:broker>
+
+    <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="vm://myBroker"/>
+                <property name="trustAllPackages" value="true" />
+            </bean>
+        </property>
+    </bean>
+
     </beans>

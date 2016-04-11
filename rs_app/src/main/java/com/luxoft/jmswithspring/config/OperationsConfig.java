@@ -75,7 +75,7 @@ public class OperationsConfig {
         TableCreator.createAll(new JdbcTemplate((dataSource)));
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void startBroker() throws Exception {
         BrokerService brokerService = new BrokerService();
         TransportConnector transportConnector = new TransportConnector();
