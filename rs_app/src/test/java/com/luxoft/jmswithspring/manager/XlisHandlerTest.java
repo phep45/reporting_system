@@ -19,12 +19,14 @@ public class XlisHandlerTest {
     @Mock
     private DataManager dataManager;
 
+    private static final String INPUT = "some input";
+
     @Test
     public void shouldHandle() {
-        XlisEvent xlisEvent = new XlisEvent(anyString());
+        XlisEvent xlisEvent = new XlisEvent(INPUT);
         xlisHandler.onApplicationEvent(xlisEvent);
 
-        verify(dataManager).processXLIS(anyString());
+        verify(dataManager).processXLIS(INPUT);
     }
 
 }

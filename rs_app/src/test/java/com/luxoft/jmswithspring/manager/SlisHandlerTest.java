@@ -19,12 +19,14 @@ public class SlisHandlerTest {
     @Mock
     private DataManager dataManager;
 
+    private static final String INPUT = "some input";
+
     @Test
     public void shouldHandle() {
-        SlisEvent slisEvent = new SlisEvent(anyString());
+        SlisEvent slisEvent = new SlisEvent(INPUT);
         slisHandler.onApplicationEvent(slisEvent);
 
-        verify(dataManager).processSLIS(anyString());
+        verify(dataManager).processSLIS(INPUT);
     }
 
 }
