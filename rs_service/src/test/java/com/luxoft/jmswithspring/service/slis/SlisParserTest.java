@@ -33,6 +33,7 @@ public class SlisParserTest {
     private SecurityMapper securityMapperMock;
 
     private static final String INPUT = "000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000202/12/2015001220000000140000001033.00200001502/12/201509500";
+    private static final String INPUT2 = "000000000200001     Stiven Meckalov   BUYUS0009020020000000130000001233.00200000200/00/0000001220000000140000001033.00200001502/12/201509500";
 
     private Transaction expectedOutput;
     private List<Lot> expectedLots = Arrays.asList(

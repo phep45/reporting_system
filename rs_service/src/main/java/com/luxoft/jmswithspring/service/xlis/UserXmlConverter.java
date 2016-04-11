@@ -18,7 +18,7 @@ public class UserXmlConverter extends XmlConverter<User> {
     public User unmarshal(String xml) {
         User user = null;
 
-        Pattern pattern = Pattern.compile(USER_REGEX);
+        Pattern pattern = Pattern.compile(USER_REGEX, Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(xml);
 
         if(matcher.find()) {
