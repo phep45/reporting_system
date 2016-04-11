@@ -2,12 +2,12 @@ package com.luxoft.jmswithspring.config;
 
 import com.luxoft.jmswithspring.database.dao.TableCreator;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.broker.TransportConnector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.PostConstruct;
 import javax.jms.JMSException;
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
@@ -71,6 +73,15 @@ public class OperationsConfig {
     @PostConstruct
     public void createTables() {
         TableCreator.createAll(new JdbcTemplate((dataSource)));
+    }
+
+    @PostConstruct
+    public void startBroker() throws Exception {
+        BrokerService brokerService = new BrokerService();
+        TransportConnector transportConnector = new TransportConnector();
+        transportConnector.setUri(new URI("tcp:localhost:61610"));
+        brokerService.addConnector(transportConnector);
+        brokerService.start();
     }
 
 }

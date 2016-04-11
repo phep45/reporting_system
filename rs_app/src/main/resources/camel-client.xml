@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camel:camelContext id="camel-client">
+        <camel:template id="camelTemplate" />
+    </camel:camelContext>
+
+    <context:property-placeholder location="classpath:camel.properties,file:target/custom.properties" ignore-resource-not-found="true" />
+
+    <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="tcp://localhost:${tcp.port}"/>
+                <property name="trustAllPackages" value="true" />
+            </bean>
+        </property>
+    </bean>
+
+
+</beans>
