@@ -4,6 +4,7 @@ import com.luxoft.jmswithspring.database.config.TestConfig;
 import com.luxoft.jmswithspring.database.config.TestDAOConfig;
 import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.model.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class DatabaseAccessTest {
     private JdbcTemplate jdbcTemplate;
 
     @Test
+    @Ignore
     public void shouldClearAllTables() {
         JdbcTestUtils.deleteFromTables(jdbcTemplate,
                 TABLE_SECURITIES_FOR_BRANCH,
