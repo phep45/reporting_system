@@ -14,6 +14,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
@@ -91,6 +92,28 @@ public class DatabaseAccessTest {
         assertEquals(rowsInTableTransaction, countRowsInTable(jdbcTemplate, TABLE_TRANSACTION));
     }
 
+    @Test
+    public void shouldInsertSecuritiesForBranch() {
+        int rowsInSecForBranch = countRowsInTable(jdbcTemplate, TABLE_SECURITIES_FOR_BRANCH);
+
+        SecuritiesForBranches securitiesForBranches = createTestSecuritiesForBranches();
+
+        superDAO.safelyInsert(securitiesForBranches);
+
+        assertEquals(rowsInSecForBranch + INTEGER_ONE, countRowsInTable(jdbcTemplate, TABLE_SECURITIES_FOR_BRANCH));
+    }
+
+    @Test
+    public void transactionManagerShouldRollbackInvalidSecuritiesForBranch() {
+        int rowsInSecForBranch = countRowsInTable(jdbcTemplate, TABLE_SECURITIES_FOR_BRANCH);
+
+        SecuritiesForBranches securitiesForBranches = createInvalidSecuritiesForBranch();
+
+        superDAO.safelyInsert(securitiesForBranches);
+
+        assertEquals(rowsInSecForBranch, countRowsInTable(jdbcTemplate, TABLE_SECURITIES_FOR_BRANCH));
+    }
+
     private Transaction createTestTransaction() {
         return Transaction.builder()
                 .withId(150)
@@ -102,7 +125,7 @@ public class DatabaseAccessTest {
                         .withBirthDate("15/03/1987")
                         .build())
                 .withOperationType(OperationType.MOVE_O)
-                .withBranch(new Branch(54,"some address"))
+                .withBranch(new Branch(54, "some address"))
                 .withLots(new Lots().addLot(Lot.builder()
                         .withDescription("serious company ltd")
                         .withAmount(100).withDate("05/09/2014")
@@ -124,7 +147,7 @@ public class DatabaseAccessTest {
                         .withBirthDate("15/03/1987")
                         .build())
                 .withOperationType(OperationType.MOVE_O)
-                .withBranch(new Branch(54,"some address"))
+                .withBranch(new Branch(54, "some address"))
                 .withLots(new Lots().addLot(Lot.builder()
                         .withDescription("serious company ltd")
                         .withAmount(100).withDate("05/09/2014")
@@ -132,5 +155,24 @@ public class DatabaseAccessTest {
                         .withSecurityId(540)
                         .build()))
                 .build();
+    }
+
+    private SecuritiesForBranches createTestSecuritiesForBranches() {
+        SecuritiesForBranches securitiesForBranches = new SecuritiesForBranches();
+
+        securitiesForBranches.setSecurities(Arrays.asList
+                (Security.builder().withId(100).withAccessType(AccessType.ALLOW).withDate("05/05/2000").withSecurityId(500).build()));
+
+        return securitiesForBranches;
+    }
+
+    private SecuritiesForBranches createInvalidSecuritiesForBranch() {
+        SecuritiesForBranches securitiesForBranches = new SecuritiesForBranches();
+
+        securitiesForBranches.setSecurities(Arrays.asList
+                (Security.builder().withId(100).withAccessType(AccessType.ALLOW).withDate("it's not even a date").withSecurityId(500).build()));
+
+        return securitiesForBranches;
+
     }
 }

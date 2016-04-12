@@ -64,12 +64,11 @@ public class SuperDAO {
         try {
             securitiesForBranchesDAO.safelyInsert(securitiesForBranches);
             txManager.commit(status);
+            log.info("All Securities for branches added");
         } catch(DataAccessException e) {
             txManager.rollback(status);
             log.error("Transaction failed. Rollback.", e);
-            return;
         }
-        log.info("All securities for branch added to database.");
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
