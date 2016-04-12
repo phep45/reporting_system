@@ -119,4 +119,7 @@ public class LotDAO {
         return secId;
     }
 
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 }

@@ -1,0 +1,25 @@
+<tran>
+    <tran_id>121</tran_id>
+    <user>
+        <user_id>13</user_id>
+        <f_name>Jan</f_name>
+        <s_name>Nowak</s_name>
+        <br_date>04-09-2031</br_date>
+    </user>
+    <type>SELL</type>
+    <country_code>100</country_code>
+    <branch>
+        <id>123</id>
+        <address>Scotland str. test 54</address>
+    </branch>
+    <lots>
+        <lot>
+            <date>03-12-1999</date>
+            <lot_id>133</lot_id>
+            <price>600</price>
+            <amount>34</amount>
+            <sec_id>654</sec_id>
+            <des>COKE LTD</des>
+        </lot>
+    </lots>
+</tran>

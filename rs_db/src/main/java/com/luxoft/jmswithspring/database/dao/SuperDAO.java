@@ -72,5 +72,31 @@ public class SuperDAO {
         log.info("All securities for branch added to database.");
     }
 
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
+    public void setTxManager(PlatformTransactionManager txManager) {
+        this.txManager = txManager;
+    }
+
+    public void setUserDAO(BaseDAO<User> userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public void setTransactionDAO(BaseDAO<Transaction> transactionDAO) {
+        this.transactionDAO = transactionDAO;
+    }
+
+    public void setLotDAO(LotDAO lotDAO) {
+        this.lotDAO = lotDAO;
+    }
+
+    public void setBranchDAO(BaseDAO<Branch> branchDAO) {
+        this.branchDAO = branchDAO;
+    }
+
+    public void setSecuritiesForBranchesDAO(BaseDAO<SecuritiesForBranches> securitiesForBranchesDAO) {
+        this.securitiesForBranchesDAO = securitiesForBranchesDAO;
+    }
 }
