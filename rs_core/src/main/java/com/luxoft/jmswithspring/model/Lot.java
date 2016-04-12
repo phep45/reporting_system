@@ -110,7 +110,10 @@ public class Lot {
     }
 
     public String getDate() {
-        return date;
+        if (date == null || "".equals(date)) {
+            return "00/00/0000";
+        } else
+            return date;
     }
 
     public int getSecurityId() {

@@ -14,7 +14,8 @@ public class User {
     private String surname;
     private String birthDate;
 
-    public User(){}
+    public User() {
+    }
 
     @Deprecated
     /**
@@ -57,7 +58,10 @@ public class User {
     }
 
     public String getBirthDate() {
-        return birthDate;
+        if (birthDate == null|| "".equals(birthDate))
+            return "00/00/0000";
+        else
+            return birthDate;
     }
 
     @XmlElement(name = "br_date")
@@ -66,7 +70,8 @@ public class User {
     }
 
     public class Builder {
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder withUserId(int id) {
             User.this.userId = id;
