@@ -79,7 +79,7 @@ public class OperationsConfig {
     public void startBroker() throws Exception {
         BrokerService brokerService = new BrokerService();
         TransportConnector transportConnector = new TransportConnector();
-        transportConnector.setUri(new URI("tcp:localhost:61610"));
+        transportConnector.setUri(new URI(env.getProperty("mqserver.url")));
         brokerService.addConnector(transportConnector);
         brokerService.start();
     }
