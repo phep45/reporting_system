@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class DBTransactionMapper implements RowMapper<Transaction> {
 
     private static final String COLUMN_ID = "id";
-    private static final String COLUMN_OPERATION = "operation";
+    private static final String COLUMN_OPERATION = "type";
     private static final String COLUMN_CODE = "code";
     private static final String COLUMN_BRANCH_ID = "branch_id";
     private static final String COLUMN_USER_ID = "USER_ID";

@@ -4,6 +4,7 @@ import com.luxoft.jmswithspring.database.config.TestConfig;
 import com.luxoft.jmswithspring.database.config.TestDAOConfig;
 import com.luxoft.jmswithspring.database.dao.BaseDAO;
 import com.luxoft.jmswithspring.model.Branch;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.jdbc.JdbcTestUtils;
 
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.junit.Assert.assertEquals;
@@ -38,7 +40,6 @@ public class BranchDAOTest {
     private BaseDAO<Branch> dao;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
 
     @Test
     public void shouldInsertBranch() {
