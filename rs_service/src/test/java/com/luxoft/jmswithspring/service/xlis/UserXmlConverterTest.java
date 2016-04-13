@@ -32,7 +32,7 @@ public class UserXmlConverterTest {
                 .withUserId(12)
                 .withFirstName("Oleksii")
                 .withSurname("Fri")
-                .withBirthDate("23-05-2001")
+                .withBirthDate("03-05-2001")
                 .build();
 
         Assert.assertEquals(expectedUser, userFromXml);

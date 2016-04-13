@@ -2,6 +2,7 @@ package com.luxoft.jmswithspring.database.dao;
 
 import com.luxoft.jmswithspring.database.mapper.DBLotMapper;
 import com.luxoft.jmswithspring.model.Lot;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +89,7 @@ public class LotDAO {
     }
 
     public void safelyInsertSecurity(Lot lot) {
-        if(getSecurityId(lot.getSecurityId()) < 0) {
+        if(getSecurityId(lot.getSecurityId()) < NumberUtils.INTEGER_ZERO) {
             insertSecurity(lot);
         }
         else {
@@ -110,13 +111,16 @@ public class LotDAO {
 
     public int getSecurityId(int id) {
         String sql= SELECT_SECURITY;
-        int secId = -1;
+        int secId = NumberUtils.INTEGER_MINUS_ONE;
         try {
             secId = jdbcTemplate.queryForObject(sql, Integer.class, id);
         } catch (EmptyResultDataAccessException e) {
-            return -1;
+            return NumberUtils.INTEGER_MINUS_ONE;
         }
         return secId;
     }
 
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 }

@@ -17,5 +17,8 @@ public abstract class BaseDAO<T> {
     public abstract void safelyInsert(T t);
     public abstract T get(int id);
     public abstract void update(T t);
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 }
-//

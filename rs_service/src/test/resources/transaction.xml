@@ -4,7 +4,7 @@
         <user_id>12</user_id>
         <f_name>Oleksii</f_name>
         <s_name>Fri</s_name>
-        <br_date>23-05-2001</br_date>
+        <br_date>03-05-2001</br_date>
     </user>
     <type>BUY</type>
     <country_code>100</country_code>
@@ -14,7 +14,7 @@
     </branch>
     <lots>
         <lot>
-            <date>23-12-1999</date>
+            <date>03-12-1999</date>
             <lot_id>123</lot_id>
             <price>500.21</price>
             <amount>5</amount>

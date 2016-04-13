@@ -33,12 +33,12 @@ public class TransactionConverterTest {
     }
 
     private static final Lots LOTS = new Lots()
-            .addLot(Lot.builder().withDate("23-12-1999").withLotId(123).withPrice(BigDecimal.valueOf(500.21)).withAmount(5).withSecurityId(655).withDescription("PEPSI LTD").build())
+            .addLot(Lot.builder().withDate("03-12-1999").withLotId(123).withPrice(BigDecimal.valueOf(500.21)).withAmount(5).withSecurityId(655).withDescription("PEPSI LTD").build())
             .addLot(Lot.builder().withDate("08-03-2099").withLotId(878).withPrice(BigDecimal.valueOf(34.2105)).withAmount(700).withSecurityId(340).withDescription("MCSF LTD").build());
 
     private static final Transaction expectedTransaction = Transaction.builder()
             .withId(120)
-            .withUser(User.builder().withUserId(12).withFirstName("Oleksii").withSurname("Fri").withBirthDate("23-05-2001").build())
+            .withUser(User.builder().withUserId(12).withFirstName("Oleksii").withSurname("Fri").withBirthDate("03-05-2001").build())
             .withOperationType(OperationType.BUY)
             .withCountryCode(100)
             .withBranchId(123)
