@@ -1,14 +1,18 @@
 package com.luxoft.jmswithspring.app;
 
+import com.luxoft.jmswithspring.camel.CamelConfig;
 import com.luxoft.jmswithspring.config.OperationsConfig;
 import com.luxoft.jmswithspring.database.dao.TableCreator;
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.manager.DataManager;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileSystemUtils;
 
@@ -29,8 +33,16 @@ public class Application {
 //        "000000000800301     Adam Nowak     CANCELEU0002224420000005050000000330.00005400206/23/201600901";
 //
 
-    public static void main(String[] args) throws IOException, CorruptedDataException, InterruptedException {
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(OperationsConfig.class);
+    public static void main(String[] args) throws Exception {
+//        ConfigurableApplicationContext applicationContext = SpringApplication.run(OperationsConfig.class);
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
+        context.register(CamelConfig.class);
+
+        Main main = new Main();
+        main.enableHangupSupport();
+        main.addRouteBuilder((RouteBuilder) context.getBean("reportsRouteBuilder"));
+        main.run();
 
         //do nothing until 'q' is pressed...
         try (Scanner scanner = new Scanner(System.in) ) {
@@ -40,7 +52,7 @@ public class Application {
             }
         }
 
-        applicationContext.close();
+        context.close();
     }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Queue;
 
-@Component
+//@Component
 public class XLISReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(XLISReceiver.class);
@@ -23,7 +23,7 @@ public class XLISReceiver {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    @JmsListener(destination = "XLIS", containerFactory = "dataJmsContainerFactory")
+//    @JmsListener(destination = "XLIS", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
         log.info("XLIS received {} characters", message.length());
         publish(message);

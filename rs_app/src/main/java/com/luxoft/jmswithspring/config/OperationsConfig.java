@@ -5,9 +5,11 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -22,7 +24,6 @@ import javax.annotation.PostConstruct;
 import javax.jms.JMSException;
 import javax.sql.DataSource;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 @Configuration
 @ComponentScan("com.luxoft.jmswithspring.*")
@@ -48,22 +49,22 @@ public class OperationsConfig {
         return dataSource;
     }
 
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource);
-    }
-
-    @Bean
-    public JmsListenerContainerFactory<?> dataJmsContainerFactory() throws JMSException {
-        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory());
-
-        return factory;
-    }
-
-    private ActiveMQConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory(env.getProperty("mqserver.url"));
-    }
+//    @Bean
+//    public JdbcTemplate jdbcTemplate() {
+//        return new JdbcTemplate(dataSource);
+//    }
+//
+//    @Bean
+//    public JmsListenerContainerFactory<?> dataJmsContainerFactory() throws JMSException {
+//        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+//        factory.setConnectionFactory(connectionFactory());
+//
+//        return factory;
+//    }
+//
+//    private ActiveMQConnectionFactory connectionFactory() {
+//        return new ActiveMQConnectionFactory(env.getProperty(mqserver.url));
+//    }
 
     @Bean
     public PlatformTransactionManager txManager() {
@@ -71,17 +72,11 @@ public class OperationsConfig {
     }
 
     @PostConstruct
-    public void createTables() {
+    public void createTables() throws Exception {
         TableCreator.createAll(new JdbcTemplate((dataSource)));
+
+
     }
 
-//    @PostConstruct
-    public void startBroker() throws Exception {
-        BrokerService brokerService = new BrokerService();
-        TransportConnector transportConnector = new TransportConnector();
-        transportConnector.setUri(new URI(env.getProperty("mqserver.url")));
-        brokerService.addConnector(transportConnector);
-        brokerService.start();
-    }
 
 }
