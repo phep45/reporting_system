@@ -49,6 +49,7 @@ public class TransactionDAO extends BaseDAO<Transaction> {
         try {
             transaction = jdbcTemplate.queryForObject(sql, new Object[]{id}, new DBTransactionMapper());
         } catch (EmptyResultDataAccessException e) {
+            log.info("No transaction in db with id: " + id);
             return null;
         }
         log.info("TRANSACTION selected");
