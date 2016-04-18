@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Queue;
 
-@Component
+//@Component
 public class SLISReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(SLISReceiver.class);
@@ -24,7 +24,7 @@ public class SLISReceiver {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    @JmsListener(destination = "SLIS", containerFactory = "dataJmsContainerFactory")
+//    @JmsListener(destination = "SLIS", containerFactory = "dataJmsContainerFactory")
     public void receiveMessage(String message) {
         log.info("SLIS: Received < {} >", message);
         publish(message);

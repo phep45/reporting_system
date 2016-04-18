@@ -8,6 +8,7 @@ import com.luxoft.jmswithspring.service.slis.LineCollector;
 import com.luxoft.jmswithspring.service.slis.SlisParser;
 import com.luxoft.jmswithspring.service.xlis.SecurityXmlConverter;
 import com.luxoft.jmswithspring.service.xlis.TransactionXmlConverter;
+import org.apache.camel.CamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ public class DataManager {
     private static final Logger log = LoggerFactory.getLogger(DataManager.class);
 
     private static final String SEC_FOR_BRANCHES_REGEX = "<securities_branches>.*</securities_branches>";
-
+    @Autowired
+    private CamelContext camelContext;
     @Autowired
     private SlisParser slisParser;
     @Autowired

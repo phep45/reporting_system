@@ -35,7 +35,7 @@
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.191" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-test:4.2.5.RELEASE" level="project" />
-    <orderEntry type="module" module-name="rs_core" />
+    <orderEntry type="library" name="Maven: com.luxoft:rs_core:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
     <orderEntry type="module" module-name="rs_service" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
