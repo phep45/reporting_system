@@ -19,14 +19,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 
+import static com.jayway.awaitility.Awaitility.await;
 import static org.apache.activemq.camel.component.ActiveMQComponent.activeMQComponent;
+import static org.springframework.test.jdbc.JdbcTestUtils.countRowsInTable;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {OperationsConfig.class, CamelConfig.class},
@@ -57,21 +57,12 @@ public class ApplicationIT extends CamelTestSupport {
     public void shouldHandleSLIS() {
 
         sendExchange(SLIS_MSG);
-        Awaitility.await().until(newTransactionAdded());
+        await().until(() -> countRowsInTable(jdbcTemplate, "TRANSACTION") == 1);
 
-        assertEquals(1, JdbcTestUtils.countRowsInTable(jdbcTemplate, "TRANSACTION"));
+        assertEquals(1, countRowsInTable(jdbcTemplate, "TRANSACTION"));
 
         assertEquals(expectedSLISTransaction(), transactionDAO.get(TRANSACTION_ID));
 
-    }
-
-    private Callable<Boolean> newTransactionAdded() {
-        return new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return JdbcTestUtils.countRowsInTable(jdbcTemplate, "TRANSACTION") == 1;
-            }
-        };
     }
 
     private void sendExchange(final Object expectedBody) {
