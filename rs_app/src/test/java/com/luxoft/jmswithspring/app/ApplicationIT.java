@@ -1,6 +1,5 @@
 package com.luxoft.jmswithspring.app;
 
-import com.jayway.awaitility.Awaitility;
 import com.luxoft.jmswithspring.camel.CamelConfig;
 import com.luxoft.jmswithspring.camel.CamelSlisHandler;
 import com.luxoft.jmswithspring.camel.CamelXlisHandler;
@@ -56,7 +55,7 @@ public class ApplicationIT extends CamelTestSupport {
     @Test
     public void shouldHandleSLIS() {
 
-        sendExchange(SLIS_MSG);
+        sendMessageToSlisQueue(SLIS_MSG);
         await().until(() -> countRowsInTable(jdbcTemplate, "TRANSACTION") == 1);
 
         assertEquals(1, countRowsInTable(jdbcTemplate, "TRANSACTION"));
@@ -65,7 +64,7 @@ public class ApplicationIT extends CamelTestSupport {
 
     }
 
-    private void sendExchange(final Object expectedBody) {
+    private void sendMessageToSlisQueue(final Object expectedBody) {
         template.sendBodyAndHeader(startEndpointUri, expectedBody, "test", 123);
     }
 
