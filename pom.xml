@@ -282,9 +282,7 @@
         <module>rs_core</module>
         <module>rs_db</module>
         <module>rs_service</module>
-        <module>rs_old</module>
         <module>rs_app</module>
-        <module>rs_listeners</module>
     </modules>
 
 </project>
