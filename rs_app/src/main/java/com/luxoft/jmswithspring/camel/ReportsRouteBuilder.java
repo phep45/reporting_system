@@ -9,7 +9,9 @@ import java.util.List;
 @Component
 public class ReportsRouteBuilder extends RouteBuilder {
 
-    private static final String ACTIVEMQ_QUEUE_SLIS_XLIS = "activemq:queue:%s";
+
+
+    private static final String ACTIVEMQ_QUEUE_SLIS_XLIS = "mqComponent:queue:%s";
     private static final String XLIS = "XLIS";
     private static final String SLIS = "SLIS";
 
@@ -20,12 +22,12 @@ public class ReportsRouteBuilder extends RouteBuilder {
         mqs.forEach(val -> {
             from(String.format(ACTIVEMQ_QUEUE_SLIS_XLIS, val))
                     .id(val)
-                    .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=DEBUG")
+                    .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
                     .choice()
-                        .when(v -> SLIS.equals(v.getFromRouteId())).bean(SlisHandler.class)
-                        .when(v -> XLIS.equals(v.getFromRouteId())).bean(XlisHandler.class)
+                        .when(v -> SLIS.equals(v.getFromRouteId())).bean(CamelSlisHandler.class)
+                        .when(v -> XLIS.equals(v.getFromRouteId())).bean(CamelXlisHandler.class)
                     .end()
-                    .to("activemq:queue:TEST");
+                    .to("mqComponent:queue:TEST");
         });
     }
 }

@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class XlisHandler implements CamelHandler {
+public class CamelSlisHandler implements CamelHandler {
 
     @Autowired
     private DataManager dataManager;
 
     @Override
     public void handle(String msg) {
-        dataManager.processXLIS(msg);
+        dataManager.processSLIS(msg);
     }
 }

@@ -1,26 +1,11 @@
 package com.luxoft.jmswithspring.app;
 
-import com.luxoft.jmswithspring.camel.CamelConfig;
 import com.luxoft.jmswithspring.config.OperationsConfig;
-import com.luxoft.jmswithspring.database.dao.TableCreator;
-import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
-import com.luxoft.jmswithspring.manager.DataManager;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.util.FileSystemUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.util.Queue;
 import java.util.Scanner;
 
 @Component
@@ -34,20 +19,12 @@ public class Application {
 //
 
     public static void main(String[] args) throws Exception {
-//        ConfigurableApplicationContext applicationContext = SpringApplication.run(OperationsConfig.class);
-
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(OperationsConfig.class);
-        context.register(CamelConfig.class);
-
-        Main main = new Main();
-        main.enableHangupSupport();
-        main.addRouteBuilder((RouteBuilder) context.getBean("reportsRouteBuilder"));
-        main.run();
 
         //do nothing until 'q' is pressed...
-        try (Scanner scanner = new Scanner(System.in) ) {
-            while(true) {
-                if("q".equals(scanner.nextLine()))
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                if ("q".equals(scanner.nextLine()))
                     break;
             }
         }
