@@ -1,0 +1,33 @@
+<tran>
+    <tran_id>120</tran_id>
+    <user>
+        <user_id>12</user_id>
+        <f_name>Oleksii</f_name>
+        <s_name>Fri</s_name>
+        <br_date>03-05-2001</br_date>
+    </user>
+    <type>BUY</type>
+    <country_code>100</country_code>
+    <branch>
+        <id>123</id>
+        <address>Scotland str. test 54</address>
+    </branch>
+    <lots>
+        <lot>
+            <date>03-12-1999</date>
+            <lot_id>123</lot_id>
+            <price>500.21</price>
+            <amount>5</amount>
+            <sec_id>655</sec_id>
+            <des>PEPSI LTD</des>
+        </lot>
+        <lot>
+            <date>08-03-2099</date>
+            <lot_id>878</lot_id>
+            <price>34.2105</price>
+            <amount>700</amount>
+            <sec_id>340</sec_id>
+            <des>MCSF LTD</des>
+        </lot>
+    </lots>
+</tran>
