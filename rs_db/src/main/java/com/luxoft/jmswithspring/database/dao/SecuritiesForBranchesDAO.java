@@ -1,5 +1,6 @@
 package com.luxoft.jmswithspring.database.dao;
 
+import com.luxoft.jmswithspring.model.AccessType;
 import com.luxoft.jmswithspring.model.SecuritiesForBranches;
 import com.luxoft.jmswithspring.model.Security;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import java.util.List;
 public class SecuritiesForBranchesDAO extends BaseDAO<SecuritiesForBranches> {
 
     public static final String INSERT_SECURITY = "INSERT INTO SECURITIES_FOR_BRANCH (BRANCH_ID, SEC_ID, DATE, ACCESS) VALUES (?, ?, ?, ?)";
+    public static final String GET_ACCESS_BY_SEC_ID = "SELECT ACCESS FROM SECURITIES_FOR_BRANCH WHERE SEC_ID = ?";
 
     @Override
     @Transactional
@@ -40,5 +42,12 @@ public class SecuritiesForBranchesDAO extends BaseDAO<SecuritiesForBranches> {
     @Override
     public void update(SecuritiesForBranches securitiesForBranches) {
         //TODO
+    }
+
+    public AccessType getAccessType(int securityId) {
+        String sql = GET_ACCESS_BY_SEC_ID;
+        String accessType = jdbcTemplate.queryForObject(sql, String.class, securityId);
+        log.info("SELECT access type for sec_id = {}", securityId);
+        return AccessType.valueOf(accessType);
     }
 }

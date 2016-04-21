@@ -23,11 +23,20 @@ public class ReportsRouteBuilder extends RouteBuilder {
             from(String.format(ACTIVEMQ_QUEUE_SLIS_XLIS, val))
                     .id(val)
                     .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
-                    .choice()
-                        .when(v -> SLIS.equals(v.getFromRouteId())).bean(CamelSlisHandler.class)
-                        .when(v -> XLIS.equals(v.getFromRouteId())).bean(CamelXlisHandler.class)
-                    .end()
+                    .to("direction:transformation")
+                    .to("data:")
+                    .to("server")
                     .to("mqComponent:queue:TEST");
         });
+
+//        from("transformation")
+//                .bean()
     }
+
+    //transformation
+    //validate route
+    //save route
+    //enrichment
+    //output
+
 }
