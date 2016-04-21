@@ -19,8 +19,6 @@ public class MessageProcessor {
     @Autowired
     private SlisParser slisParser;
     @Autowired
-    private LineCollector lineCollector;
-    @Autowired
     private TransactionXmlConverter transactionXmlConverter;
     @Autowired
     private SecurityXmlConverter securityXmlConverter;
