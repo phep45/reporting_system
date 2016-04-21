@@ -1,5 +1,7 @@
 package com.luxoft.jmswithspring.camel;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +25,26 @@ public class ReportsRouteBuilder extends RouteBuilder {
             from(String.format(ACTIVEMQ_QUEUE_SLIS_XLIS, val))
                     .id(val)
                     .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
-                    .to("direction:transformation")
-                    .to("data:")
-                    .to("server")
-                    .to("mqComponent:queue:TEST");
+                    .choice()
+                        .when(SLIS::equals).to("bean:slisHandler")
+                        .when(XLIS::equals).to("bean:xlisDistinguisher")
+                    .end();
+
+//                    .to("direction:transformation")
+//                    .to("data:")
+//                    .to("server")
+//                    .to("mqComponent:queue:TEST");
         });
+
+        from("bean:slisHandler").to("bean:save?method=saveTransaction");
+
+        from("bean:xlisDistinguisher")
+                .choice()
+                    .when(body().isEqualTo(true)).to("bean:save?method=saveTransaction")
+                    .when(body().isEqualTo(false)).to("bean:save?method=saveSecForBranch")
+                .end();
+
+        from("bean:save?method=saveTransaction").to("mqComponent:queue:OUT");
 
 //        from("transformation")
 //                .bean()
