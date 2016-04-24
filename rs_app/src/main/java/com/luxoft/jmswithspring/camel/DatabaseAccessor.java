@@ -5,14 +5,16 @@ import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.model.SecuritiesForBranches;
 import com.luxoft.jmswithspring.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+@Qualifier("save")
 public class DatabaseAccessor {
 
     @Autowired
     private SuperDAO superDAO;
-    @Autowired
+//    @Autowired
     private InternalId internalId;
 
     /**

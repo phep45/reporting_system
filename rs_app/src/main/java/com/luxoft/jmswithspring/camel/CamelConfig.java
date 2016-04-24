@@ -60,7 +60,7 @@ public class CamelConfig extends CamelConfiguration {
         return new XlisDistinguisher();
     }
 
-    @Bean(name = "save")
+    @Bean
     public DatabaseAccessor databaseAccessor() {
         return databaseAccessor;
     }

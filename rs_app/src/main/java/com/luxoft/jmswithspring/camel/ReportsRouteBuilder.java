@@ -3,6 +3,7 @@ package com.luxoft.jmswithspring.camel;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -19,6 +20,9 @@ public class ReportsRouteBuilder extends RouteBuilder {
 
     private static final List<String> mqs = Arrays.asList(SLIS, XLIS);
 
+    @Autowired
+    DatabaseAccessor databaseAccessor;
+
     @Override
     public void configure() throws Exception {
         mqs.forEach(val -> {
@@ -26,25 +30,25 @@ public class ReportsRouteBuilder extends RouteBuilder {
                     .id(val)
                     .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
                     .choice()
-                        .when(SLIS::equals).to("bean:slisHandler")
-                        .when(XLIS::equals).to("bean:xlisDistinguisher")
+                        .when(SLIS::equals).to("direct:slisHandler")
+                        .when(XLIS::equals).to("direct:xlisDistinguisher")
                     .end();
 
-//                    .to("direction:transformation")
+//                    .to("direct:transformation")
 //                    .to("data:")
 //                    .to("server")
 //                    .to("mqComponent:queue:TEST");
         });
 
-        from("bean:slisHandler").to("bean:save?method=saveTransaction");
+        from("direct:slisHandler").to("bean:save?method=saveTransaction");
 
-        from("bean:xlisDistinguisher")
+        from("direct:xlisDistinguisher")
                 .choice()
                     .when(body().isEqualTo(true)).to("bean:save?method=saveTransaction")
                     .when(body().isEqualTo(false)).to("bean:save?method=saveSecForBranch")
                 .end();
 
-        from("bean:save?method=saveTransaction").to("mqComponent:queue:OUT");
+//        from("bean:save?method=saveTransaction").to("mqComponent:queue:OUT");
 
 //        from("transformation")
 //                .bean()

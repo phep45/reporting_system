@@ -3,10 +3,10 @@ package com.luxoft.jmswithspring.camel.internalid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class IntIDController {
 
-    @Autowired
+//    @Autowired
     private InternalId internalId;
 
     public IntIDController() {

@@ -1,11 +1,13 @@
 package com.luxoft.jmswithspring.camel;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@Qualifier("xlisDistinguisher")
 public class XlisDistinguisher {
     private static final String SEC_FOR_BRANCHES_REGEX = "<securities_branches>.*</securities_branches>";
 

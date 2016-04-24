@@ -8,14 +8,15 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 
-@Component
+//@Component
 public class InternalId {
     private static final Logger log = LoggerFactory.getLogger(InternalId.class);
-    private static final File DEFAULT_INTERNAL_ID_FILE = new File("src/main/resources/internal_id");
+    private static final File DEFAULT_INTERNAL_ID_FILE = new File("resources\\internal_id");
     private static final int INTERSPACE = 100;
 
     private final File internalIdFile;
     private int uniqueId;
+
 
     public InternalId() throws IOException {
         this.internalIdFile = DEFAULT_INTERNAL_ID_FILE;

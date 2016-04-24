@@ -2,9 +2,11 @@ package com.luxoft.jmswithspring.camel.handler;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Transaction;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+@Qualifier("xlisHandler")
 public class CamelXlisHandler extends CamelHandler<Transaction> {
     @Override
     public Transaction handle(String msg) {
