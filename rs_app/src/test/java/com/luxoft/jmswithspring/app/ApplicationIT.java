@@ -1,8 +1,8 @@
 package com.luxoft.jmswithspring.app;
 
 import com.luxoft.jmswithspring.camel.CamelConfig;
-import com.luxoft.jmswithspring.camel.CamelSlisHandler;
-import com.luxoft.jmswithspring.camel.CamelXlisHandler;
+import com.luxoft.jmswithspring.camel.handler.CamelSlisHandler;
+import com.luxoft.jmswithspring.camel.handler.CamelXlisHandler;
 import com.luxoft.jmswithspring.camel.ReportsRouteBuilder;
 import com.luxoft.jmswithspring.config.OperationsConfig;
 import com.luxoft.jmswithspring.database.dao.TransactionDAO;

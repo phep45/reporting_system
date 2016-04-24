@@ -1,5 +1,7 @@
 package com.luxoft.jmswithspring.camel;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -24,10 +26,34 @@ public class ReportsRouteBuilder extends RouteBuilder {
                     .id(val)
                     .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
                     .choice()
-                        .when(v -> SLIS.equals(v.getFromRouteId())).bean(CamelSlisHandler.class)
-                        .when(v -> XLIS.equals(v.getFromRouteId())).bean(CamelXlisHandler.class)
-                    .end()
-                    .to("mqComponent:queue:TEST");
+                        .when(SLIS::equals).to("bean:slisHandler")
+                        .when(XLIS::equals).to("bean:xlisDistinguisher")
+                    .end();
+
+//                    .to("direction:transformation")
+//                    .to("data:")
+//                    .to("server")
+//                    .to("mqComponent:queue:TEST");
         });
+
+        from("bean:slisHandler").to("bean:save?method=saveTransaction");
+
+        from("bean:xlisDistinguisher")
+                .choice()
+                    .when(body().isEqualTo(true)).to("bean:save?method=saveTransaction")
+                    .when(body().isEqualTo(false)).to("bean:save?method=saveSecForBranch")
+                .end();
+
+        from("bean:save?method=saveTransaction").to("mqComponent:queue:OUT");
+
+//        from("transformation")
+//                .bean()
     }
+
+    //transformation
+    //validate route
+    //save route
+    //enrichment
+    //output
+
 }

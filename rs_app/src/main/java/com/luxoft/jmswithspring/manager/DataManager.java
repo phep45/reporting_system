@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Deprecated
 @Component
 public class DataManager {
     private static final Logger log = LoggerFactory.getLogger(DataManager.class);
