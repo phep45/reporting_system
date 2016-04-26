@@ -2,22 +2,23 @@ package com.luxoft.jmswithspring.camel.handler;
 
 import com.luxoft.jmswithspring.exceptions.CorruptedDataException;
 import com.luxoft.jmswithspring.model.Transaction;
+import org.apache.camel.Exchange;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 @Qualifier("slisHandler")
-public class CamelSlisHandler extends CamelHandler<Transaction> {
+public class CamelSlisHandler extends CamelHandler {
 
     @Override
-    public Transaction handle(String msg) {
-        System.out.println("handling slis");
+    public void handle(Exchange msg) {
+        String messageStr = (String) msg.getIn().getBody();
+        log.info("Handling SLIS message");
         try {
-            return processor.processSlis(msg);
-
+            msg.getOut().setBody(processor.processSlis(messageStr), Transaction.class);
         } catch (CorruptedDataException e) {
             log.error("Corrupted data.",e);
-            return null;
+            msg.getOut().setBody(null, Transaction.class);
         }
     }
 }

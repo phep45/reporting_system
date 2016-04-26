@@ -37,7 +37,7 @@ public class CamelConfig extends CamelConfiguration {
     @Bean(name = "slisHandler")
     public CamelSlisHandler camelSlisHandler() {
         CamelSlisHandler handler = new CamelSlisHandler();
-        handler.setProcessor(processor);
+//        handler.setProcessor(processor);
         return handler;
     }
 
@@ -58,11 +58,6 @@ public class CamelConfig extends CamelConfiguration {
     @Bean(name = "xlisDistinguisher")
     public XlisDistinguisher xlisDistinguisher() {
         return new XlisDistinguisher();
-    }
-
-    @Bean
-    public DatabaseAccessor databaseAccessor() {
-        return databaseAccessor;
     }
 
     private ActiveMQConnectionFactory connectionFactory() {

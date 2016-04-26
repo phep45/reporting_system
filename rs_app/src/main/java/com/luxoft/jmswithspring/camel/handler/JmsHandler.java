@@ -1,5 +1,7 @@
 package com.luxoft.jmswithspring.camel.handler;
 
-public interface JmsHandler<T> {
-    T handle(String jmsMessage);
+import org.apache.camel.Exchange;
+
+public interface JmsHandler {
+    void handle(Exchange msg);
 }

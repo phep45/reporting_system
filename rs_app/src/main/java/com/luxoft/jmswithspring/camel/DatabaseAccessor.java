@@ -4,6 +4,7 @@ import com.luxoft.jmswithspring.camel.internalid.InternalId;
 import com.luxoft.jmswithspring.database.dao.SuperDAO;
 import com.luxoft.jmswithspring.model.SecuritiesForBranches;
 import com.luxoft.jmswithspring.model.Transaction;
+import org.apache.camel.Exchange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -20,12 +21,13 @@ public class DatabaseAccessor {
     /**
      * Save transaction in database.
      *
-     * @param transaction that will be saved
+     * @param transactionMsg that will be saved
      * @return transaction id
      */
-    public int saveTransaction(Transaction transaction) {
+    public int saveTransaction(Exchange transactionMsg) {
+        Transaction transaction = (Transaction) transactionMsg.getIn().getBody();
         superDAO.safelyInsert(transaction);
-        internalId.increment();
+//        internalId.increment();
         return transaction.getId();
     }
 
@@ -34,8 +36,8 @@ public class DatabaseAccessor {
      *
      * @param securitiesForBranches that will be saved
      */
-    public void saveSecuritiesForBranch(SecuritiesForBranches securitiesForBranches) {
-        superDAO.safelyInsert(securitiesForBranches);
+    public void saveSecuritiesForBranch(Exchange securitiesForBranches) {
+        superDAO.safelyInsert((SecuritiesForBranches) securitiesForBranches.getIn().getBody());
     }
 
 }
