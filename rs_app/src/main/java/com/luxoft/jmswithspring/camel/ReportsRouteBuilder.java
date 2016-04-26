@@ -55,15 +55,6 @@ public class ReportsRouteBuilder extends RouteBuilder {
 //                    .end();
 //        });
 
-//        mqs.forEach(val -> {
-//            from(String.format(ACTIVEMQ_QUEUE_SLIS_XLIS, val))
-//                    .id(val)
-//                    .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
-//                    .choice()
-//                        .when(SLIS::equals).to("direct:slisHandler")
-//                        .when(XLIS::equals).to("direct:xlisDistinguisher")
-//                    .end();
-//        });
 
         from("mqComponent:queue:SLIS").to("direct:slisHandler");
         from("mqComponent:queue:XLIS").to("direct:xlisDistinguisher");
@@ -88,16 +79,6 @@ public class ReportsRouteBuilder extends RouteBuilder {
                 .bean(camelSecForBranchHandler)
                 .bean(databaseAccessor, "saveSecuritiesForBranch");
 
-//        from("direct:xlisDistinguisher")
-//                .choice()
-//                    .when(body().isEqualTo(true)).to("bean:save?method=saveTransaction")
-//                    .when(body().isEqualTo(false)).to("bean:save?method=saveSecForBranch")
-//                .end();
-
-//        from("bean:save?method=saveTransaction").to("mqComponent:queue:OUT");
-
-//        from("transformation")
-//                .bean()
     }
 
     //transformation
