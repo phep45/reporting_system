@@ -44,7 +44,7 @@ public class ReportsRouteBuilder extends RouteBuilder {
 //            from(String.format(ACTIVEMQ_QUEUE_SLIS_XLIS, val))
 //                    .id(val)
 //                    .to("log:com.luxoft.cameltest.route.MyRouteBuilder?level=INFO")
-//                    .to("direct:slisHandler")
+////                    .to("direct:slisHandler")
 //                    .choice()
 //                        .when(SLIS::equals).bean(camelSlisHandler, "handle").bean(databaseAccessor, "saveTransaction")
 //                        .when(XLIS::equals).bean(xlisDistinguisher)

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @Qualifier("xlisDistinguisher")
 public class XlisDistinguisher {
     private static final String SEC_FOR_BRANCHES_REGEX = "<securities_branches>.*</securities_branches>";
-    
+
     public static final String HEADER_TITLE = "type";
     public static final String TRANSACTION = "transaction";
     public static final String SECURITIES_FOR_BRANCH = "secforbranch";

@@ -34,31 +34,7 @@ public class CamelConfig extends CamelConfiguration {
         return jmsComponent;
     }
 
-    @Bean(name = "slisHandler")
-    public CamelSlisHandler camelSlisHandler() {
-        CamelSlisHandler handler = new CamelSlisHandler();
-//        handler.setProcessor(processor);
-        return handler;
-    }
 
-    @Bean(name = "xlisHandler")
-    public CamelXlisHandler camelXlisHandler() {
-        CamelXlisHandler handler = new CamelXlisHandler();
-        handler.setProcessor(processor);
-        return handler;
-    }
-
-    @Bean(name = "secForBranchHandler")
-    public CamelSecForBranchHandler camelSecForBranchHandler() {
-        CamelSecForBranchHandler handler = new CamelSecForBranchHandler();
-        handler.setProcessor(processor);
-        return handler;
-    }
-
-    @Bean(name = "xlisDistinguisher")
-    public XlisDistinguisher xlisDistinguisher() {
-        return new XlisDistinguisher();
-    }
 
     private ActiveMQConnectionFactory connectionFactory() {
         return new ActiveMQConnectionFactory(env.getProperty("mqserver.url"));
