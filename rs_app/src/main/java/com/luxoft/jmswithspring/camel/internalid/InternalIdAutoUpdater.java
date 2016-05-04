@@ -13,12 +13,10 @@ public class InternalIdAutoUpdater {
 
     private InternalId internalId;
 
-    private Toolkit toolkit;
     private Timer timer;
 
     public InternalIdAutoUpdater(InternalId internalId) {
         this.internalId = internalId;
-        toolkit = Toolkit.getDefaultToolkit();
         timer = new Timer();
     }
 
@@ -33,7 +31,6 @@ public class InternalIdAutoUpdater {
     private class InternalIdTask extends TimerTask {
         @Override
         public void run() {
-            toolkit.beep();
             internalId.updateInternalIdFile();
             timer.cancel();
         }

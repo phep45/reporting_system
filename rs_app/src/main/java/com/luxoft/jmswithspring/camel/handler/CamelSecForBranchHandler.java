@@ -1,12 +1,14 @@
 package com.luxoft.jmswithspring.camel.handler;
 
 import com.luxoft.jmswithspring.model.SecuritiesForBranches;
+import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CamelSecForBranchHandler extends CamelHandler<SecuritiesForBranches> {
+public class CamelSecForBranchHandler extends CamelHandler {
     @Override
-    public SecuritiesForBranches handle(String msg) {
-        return processor.processSecForBranchesXlis(msg);
+    public void handle(Exchange msg) {
+        String messageStr = (String) msg.getIn().getBody();
+        msg.getOut().setBody(processor.processSecForBranchesXlis(messageStr), SecuritiesForBranches.class);
     }
 }
