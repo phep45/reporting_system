@@ -16,7 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource( value = {"classpath:jmswithspring/application_dev.properties"})
+//@PropertySource( value = {"application_dev.properties"})
 public class TestConfig {
 
     @Autowired

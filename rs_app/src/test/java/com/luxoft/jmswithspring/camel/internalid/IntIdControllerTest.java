@@ -1,6 +1,7 @@
 package com.luxoft.jmswithspring.camel.internalid;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class IntIdControllerTest {
     @Autowired
     private IntIDController idController;
 
+    @Ignore
     @Test
     public void shouldIncrementEveryFiveSeconds() throws IOException, InterruptedException {
         idController.updateId();
