@@ -1,6 +1,9 @@
 package com.luxoft.jmswithspring.app;
 
 import com.luxoft.jmswithspring.camel.CamelConfig;
+import com.luxoft.jmswithspring.camel.DatabaseAccessor;
+import com.luxoft.jmswithspring.camel.XlisDistinguisher;
+import com.luxoft.jmswithspring.camel.handler.CamelSecForBranchHandler;
 import com.luxoft.jmswithspring.camel.handler.CamelSlisHandler;
 import com.luxoft.jmswithspring.camel.handler.CamelXlisHandler;
 import com.luxoft.jmswithspring.camel.ReportsRouteBuilder;
@@ -27,6 +30,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.jayway.awaitility.Awaitility.await;
+import static com.luxoft.jmswithspring.camel.XlisDistinguisher.HEADER_TITLE;
+import static com.luxoft.jmswithspring.camel.XlisDistinguisher.SECURITIES_FOR_BRANCH;
+import static com.luxoft.jmswithspring.camel.XlisDistinguisher.TRANSACTION;
 import static org.apache.activemq.camel.component.ActiveMQComponent.activeMQComponent;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.springframework.test.jdbc.JdbcTestUtils.countRowsInTable;
@@ -35,6 +41,17 @@ import static org.springframework.test.jdbc.JdbcTestUtils.countRowsInTable;
 @ContextConfiguration(classes = {OperationsConfig.class, CamelConfig.class},
         loader = AnnotationConfigContextLoader.class)
 public class ApplicationIT extends CamelTestSupport {
+
+    @Autowired
+    private DatabaseAccessor databaseAccessor;
+    @Autowired
+    private CamelSlisHandler camelSlisHandler;
+    @Autowired
+    private CamelXlisHandler camelXlisHandler;
+    @Autowired
+    private CamelSecForBranchHandler camelSecForBranchHandler;
+    @Autowired
+    private XlisDistinguisher xlisDistinguisher;
 
     public static final String EMBEDDED = "vm://localhost?broker.persistent=false";
     private static final String ACTIVE_MQ = "tcp://localhost:61616";
@@ -52,6 +69,7 @@ public class ApplicationIT extends CamelTestSupport {
             e.printStackTrace();
         }
     }
+
     public static final String TABLE_TRANSACTION = "TRANSACTION";
 
     @Autowired
@@ -101,7 +119,7 @@ public class ApplicationIT extends CamelTestSupport {
     protected CamelContext createCamelContext() throws Exception {
         CamelContext context = super.createCamelContext();
 
-        context.addComponent("testmq", activeMQComponent(ACTIVE_MQ));
+        context.addComponent("testmq", activeMQComponent(EMBEDDED));
 
         return context;
     }
@@ -113,18 +131,34 @@ public class ApplicationIT extends CamelTestSupport {
             private final String XLIS = "XLIS";
             private final String SLIS = "SLIS";
             private final List<String> mqs = Arrays.asList(SLIS, XLIS);
+
             @Override
             public void configure() throws Exception {
-                mqs.forEach(val -> {
-                    from(String.format(ACTIVEMQ_QUEUE_SLIS_XLIS, val))
-                            .id(val)
-                            .choice()
-                            .when(v -> SLIS.equals(v.getFromRouteId())).bean(CamelSlisHandler.class)
-                            .when(v -> XLIS.equals(v.getFromRouteId())).bean(CamelXlisHandler.class)
-                            .end()
-                            .to("testmq:queue:TEST");
-                });
+                from("testmq:queue:SLIS").to("direct:slisHandler");
+                from("testmq:queue:XLIS").to("direct:xlisDistinguisher");
+
+
+                from("direct:slisHandler")
+                        .bean(camelSlisHandler)
+                        .bean(databaseAccessor, "saveTransaction");
+
+                from("direct:xlisDistinguisher")
+                        .bean(xlisDistinguisher)
+                        .choice()
+                        .when(header(HEADER_TITLE).isEqualTo(TRANSACTION)).to("direct:xlisHandler")
+                        .when(header(HEADER_TITLE).isEqualTo(SECURITIES_FOR_BRANCH)).to("direct:secForBranchHandler")
+                        .end();
+
+                from("direct:xlisHandler")
+                        .bean(camelXlisHandler)
+                        .bean(databaseAccessor, "saveTransaction");
+
+                from("direct:secForBranchHandler")
+                        .bean(camelSecForBranchHandler)
+                        .bean(databaseAccessor, "saveSecuritiesForBranch");
+
             }
+
         };
     }
 
