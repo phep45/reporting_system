@@ -1,12 +1,11 @@
 package com.luxoft.jmswithspring.autosys;
 
+import com.google.common.base.Preconditions;
 import org.apache.commons.io.FileUtils;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 
-@Component
 public class JobGenerator {
 
 
@@ -31,9 +30,10 @@ public class JobGenerator {
     }
 
     public void generateJob(File property, File template) throws IOException {
+        Preconditions.checkArgument(property.isFile() && template.isFile());
+
         String[] properties = FileUtils.readFileToString(property).split("\n");
         String env = "";
-        StringBuilder templateString = new StringBuilder();
 
         String str = FileUtils.readFileToString(template);
 
