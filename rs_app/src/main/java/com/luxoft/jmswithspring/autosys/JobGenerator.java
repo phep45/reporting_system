@@ -43,22 +43,12 @@ public class JobGenerator {
 
             str = str.replaceAll("\\$\\{" + name + "\\}", value);
 
-//            templateString.append(FileUtils.readFileToString(template).replaceAll("\\$\\{" + name + "\\}", value));
-
             if ("ENV".equals(name)) {
                 env = value;
             }
         }
 
-//        FileUtils.writeStringToFile(new File("rs_app/jils/"+env.toLowerCase()+"/"+template.getName()+env+".jil"), str);
         FileUtils.writeStringToFile(new File(outputDir+"/"+env.toLowerCase()+"/"+template.getName()+env+".jil"), str);
-
-    }
-
-    public static void main(String[] args) throws IOException {
-        JobGenerator jobGenerator = new JobGenerator("rs_app/src/main/resources/autosys/properties", "rs_app/src/main/resources/autosys/templates", "rs_app/jils");
-
-        jobGenerator.generate();
 
     }
 
