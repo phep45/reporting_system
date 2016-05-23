@@ -26,7 +26,6 @@ public class JobGenerator {
                 generateJob(property, template);
             }
         }
-
     }
 
     public void generateJob(File property, File template) throws IOException {
