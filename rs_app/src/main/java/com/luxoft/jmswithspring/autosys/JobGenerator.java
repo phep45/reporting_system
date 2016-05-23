@@ -49,7 +49,6 @@ public class JobGenerator {
         }
 
         FileUtils.writeStringToFile(new File(outputDir+"/"+env.toLowerCase()+"/"+template.getName()+env+".jil"), str);
-
     }
 
 }
