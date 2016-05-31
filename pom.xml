@@ -82,7 +82,10 @@
                     <includePluginDependencies>false</includePluginDependencies>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>com.luxoft</groupId>
+                <artifactId>jils-generator-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
