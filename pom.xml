@@ -26,21 +26,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <!--<archive>-->
-                    <!--<manifest>-->
-                    <!--<addClasspath>true</addClasspath>-->
-                    <!--<mainClass>com.luxoft.jmswithspring.app.Application</mainClass>-->
-                    <!--</manifest>-->
-                    <!--</archive>-->
-
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
 
@@ -85,6 +70,21 @@
             <plugin>
                 <groupId>com.luxoft</groupId>
                 <artifactId>jils-generator-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jils-plg</goal>
+                        </goals>
+                        <configuration>
+                            <!--<defaultProperties>src/main/resources/default.properties</defaultProperties>-->
+                            <propertiesDirPath>src/main/resources/properties</propertiesDirPath>
+                            <outputDirPath>target/jils</outputDirPath>
+                            <templatesDirPath>src/main/resources/templates</templatesDirPath>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
